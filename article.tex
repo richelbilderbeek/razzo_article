@@ -133,7 +133,7 @@ from DNA alignments in 1981 (\cite{felsenstein1981}), and
 the first Bayesian tools emerged in 1996 (\cite{rannala1996}),
 providing unprecedented flexibility in the setup of a phylogenetic model.
 
-Currently, the most popular Bayesian phylogenetics tools are \\ 
+Currently, the most popular Bayesian phylogenetics tools are
 BEAST (\cite{beast}) and its offshoot BEAST2 (\cite{beast2}), 
 MrBayes (\cite{mrbayes}) and RevBayes (\cite{revbayes}). 
 They allow to incorporate known or hypothesized structure of a phylogenetic 
@@ -156,35 +156,30 @@ clock model (\cite{baele_et_al_2012})
 or tree prior (\cite{moller2018, yang_and_ranalla_2005}) is known to affect
 the posterior.
 
-%Current phylogenetic tools use tree priors 
-%that assume speciation events are independent, 
-%whilst we know multiple examples of adaptive radiations 
-%in multiple species families can co-occur, 
-%for example 
-\richel{@gio: please add examples}.\gio{I've taken the freedom to change your proposed structure. Feel free to change whatever you don't like it. I might be not completely accurate on the biological background.}
+\gio{I've taken the freedom to change your proposed structure. Feel free to change whatever you don't like it. I might be not completely accurate on the biological background.}
+\richel{It's just fine :-)}
 
-Current phylogenetic tools use tree priors that assume that only a single speciation event can occur at the same time.
-While this assumption has been proved to be useful to construct a wide variety of successful models, MBD model relaxes this
-hypothesis allowing for a description of a different kind of events, where the environmental changes can act as species pump.
-This kind of feature can be particularly efficient to describe those kinds of diversification process 
-characterized by a tremendous tempo, 
-where a great number of species is produced in relatively short time intervals. 
-A prime example of that could be given by Cichlid fish diversification in the African Great Lakes: Malawi, Tanganyika and Victoria.
+Current phylogenetic tools assume that only a single speciation event can occur at the same time.
+While this assumption is useful to construct a wide variety of successful models \richel{@gio: citation here},
+they disallow for environmental changes that trigger speciation on a large scale,
+for example, the cichlid fish diversification in the 
+African Great Lakes: Malawi, Tanganyika and Victoria \richel{@gio: citation here}.
 
-The (constant-rate) birth-death (BD) model is a commonly 
-used tree prior, but it ignores the co-occurence of speciation.
-It even assume that two speciation events at exactly the same time
-has zero likelihood!
-The multiple birth-death (MBD) model, an extension of 
-the BD model, does incorporate the idea that speciation can co-occur.
+The (constant-rate) birth-death (BD) model embodies the common assumption that 
+only a single speciation event can occur at the same time.
+The MBD model relaxes this assumption, allowing events in which 
+large-scale environmental changes lead to a great number of species 
+in relatively short time intervals. 
 
-\richel{explain model here, example is below in the comments}
 \gio{If I described the process in the same way you report in the example I would probably end up writing the same things that we say a few lines below, where we describe the parameters. Don't you think?}
-% In this model, a branching event does not give rise to a new species, but to
-% a new species-to-be, called an incipient species. Such an incipient
-% species may go extinct, finish its speciation to become a good species, or give
-% rise to new incipient species. Protracted speciation may explain observed 
-% declines in lineage accumulation (\cite{etienne_and_rosindell_2012}).
+\richel{You described the model in the Methods. I moved it to here}
+In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
+to the usual per-species speciation and extinction rates. 
+The model also introduces two new parameters: 
+$\nu$ is the total rate for an environmental change to trigger, 
+which leads to a potentially multiple speciation event 
+\richel{How exactly? When the environment change is triggered, is the speciation rate $q$ or $\lambda + q$? What ends the change?}.
+If such event triggers each species present at that moment in time can undergo a speciation event with probability $q$.
 
 Unfortunately, a tree prior according to this model, 
 providing the probability of a species tree under the MBD model, 
@@ -215,21 +210,23 @@ a different clock and site model prior in inference.
 % Methods (but we are not allowed to use this header)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The MBD model has 4 parameters, depicted in table \ref{table:parameters}. Parameters $\lambda$ and $\mu$ correspond, respectively, to the usual per-species speciation and extinction rates. The model also introduces two new parameters: $\nu$ is the total rate for an environmental change to trigger, which leads to a potentially multiple speciation event. If such event triggers each species present at that moment in time can undergo a speciation event with probability $q$.
+The MBD model has 4 parameters, depicted in table \ref{table:parameters}. 
 
-\richel{@gio: describe parameter values used here, example is below}\gio{@richel: I described the meaning of each parameter. I guess it is fine in this way. For the setting I think we have to wait to decide which values are actually worth a try}
+\richel{describe parameter values used here, example is below}
+\gio{@richel: I described the meaning of each parameter. I guess it is fine in this way. For the setting I think we have to wait to decide which values are actually worth a try}
+\richel{I assume you have some idea of parameter values? For example, I think you will not use a $\lambda$ of -3 or 1234. Please put some reasonable values here, like I did in Figure 1 for you}
 % The per species speciation completion rates $\lambda$ we use are $0.1$, $0.3$, $1.0$ and $10^9$. This means that there is a $0.15 dt$ ($0.35 dt$, $1.0 dt$, $10^9 dt$) probability of speciation completion occurring in an infinitesimal time $dt$. 
 % We use per species extinction rates of $\mu = \mu_g = \mu_i$ $0.0$, $0.1$ and $0.2$.
 % For each combination of $\lambda$, $\mu$ and $n$, we use a speciation initiation rate $b = b_i = b_g$ that gives a given value of the expected number of species. We use expected mean tree sizes $n$ of 50, 100 and 200 good taxa and the corresponding speciation initiation rates for all parameter combinations are shown in table \ref{table:pbd_parameters}.
 % Our parameters are inspired by existing work on protracted speciation \cite{etienne_and_rosindell_2012}\cite{etienne2014}.
-
-
-We use \richel{@gio: parameter setting here} as our control for which the MBD model reduces to the BD model.
+We use \richel{please check me} $\nu = 0$ as our control for which the MBD model reduces to the BD model.
 
 We simulate protracted birth-death trees, using the MBD package (\cite{pbd}) in the R programming language (\cite{r}).
 The first tree has a random number generator seed of 1, which is incremented by 1 for each simulated tree.
-For each combination of $(\lambda, \mu, \nu, q) $\richel{@gio: parameter values here}, 
-we generate incipient species trees with a crown age of 15 million years \gio{are we sure we wanna try 15 million years. so far i've been trying only with 10 million years, which most of the time is working really well}.
+For each combination of $\lambda, \mu, \nu$ and $q$, 
+we generate species trees with a crown age of 15 million years 
+\gio{are we sure we wanna try 15 million years. so far i've been trying only with 10 million years, which most of the time is working really well}
+\richel{I suggest yes. Most papers associated with Rampal use 15 million years, including my raket paper. Just use lower speciation rates}.
 Only trees with the desired number of good taxa are kept.
 
 We create one data set to explore parameter space, 
