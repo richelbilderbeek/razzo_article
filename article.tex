@@ -156,12 +156,20 @@ clock model (\cite{baele_et_al_2012})
 or tree prior (\cite{moller2018, yang_and_ranalla_2005}) is known to affect
 the posterior.
 
-Current phylogenetic tools use tree priors 
-that assume speciation events are independent, 
-whilst we know multiple examples of adaptive radiations 
-in multiple species families can co-occur, 
-for example \richel{@gio: please add examples}.
- 
+%Current phylogenetic tools use tree priors 
+%that assume speciation events are independent, 
+%whilst we know multiple examples of adaptive radiations 
+%in multiple species families can co-occur, 
+%for example 
+\richel{@gio: please add examples}.\gio{I've taken the freedom to change your proposed structure. Feel free to change whatever you don't like it. I might be not completely accurate on the biological background.}
+
+Current phylogenetic tools use tree priors that assume that only a single speciation event can occur at the same time.
+While this assumption has been proved to be useful to construct a wide variety of successful models, MBD model relaxes this
+hypothesis allowing for a description of a different kind of events, where the environmental changes can act as species pump.
+This kind of feature can be particularly efficient to describe those kinds of diversification process 
+characterized by a tremendous tempo, 
+where a great number of species is produced in relatively short time intervals. 
+A prime example of that could be given by Cichlid fish diversification in the African Great Lakes: Malawi, Tanganyika and Victoria.
 
 The (constant-rate) birth-death (BD) model is a commonly 
 used tree prior, but it ignores the co-occurence of speciation.
@@ -171,6 +179,7 @@ The multiple birth-death (MBD) model, an extension of
 the BD model, does incorporate the idea that speciation can co-occur.
 
 \richel{explain model here, example is below in the comments}
+\gio{If I described the process in the same way you report in the example I would probably end up writing the same things that we say a few lines below, where we describe the parameters. Don't you think?}
 % In this model, a branching event does not give rise to a new species, but to
 % a new species-to-be, called an incipient species. Such an incipient
 % species may go extinct, finish its speciation to become a good species, or give
@@ -184,7 +193,7 @@ Whilst a likelihood equation has been derived (\richel{cite yourself here}),
 it has not been implemented as tree prior yet. 
 There are various reasons for this.
 First, the computation of the MBD likelihood involves solving a set of 
-non-linear differential equations, and while this computation is quite fast, 
+non-linear differential equations \gio{@richel: are they actually non-linear?}, and while this computation is quite fast, 
 it still takes much more time than the corresponding probability 
 of the BD model which is a simple analytical formula. 
 In a Bayesian MCMC chain, the tree prior probability must be calculated many times, 
@@ -206,20 +215,21 @@ a different clock and site model prior in inference.
 % Methods (but we are not allowed to use this header)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The MBD model has \richel{@gio: how many?} parameters, depicted in table \ref{table:parameters}. 
+The MBD model has 4 parameters, depicted in table \ref{table:parameters}. Parameters $\lambda$ and $\mu$ correspond, respectively, to the usual per-species speciation and extinction rates. The model also introduces two new parameters: $\nu$ is the total rate for an environmental change to trigger, which leads to a potentially multiple speciation event. If such event triggers each species present at that moment in time can undergo a speciation event with probability $q$.
 
-\richel{@gio: describe parameter values used here, example is below}
+\richel{@gio: describe parameter values used here, example is below}\gio{@richel: I described the meaning of each parameter. I guess it is fine in this way. For the setting I think we have to wait to decide which values are actually worth a try}
 % The per species speciation completion rates $\lambda$ we use are $0.1$, $0.3$, $1.0$ and $10^9$. This means that there is a $0.15 dt$ ($0.35 dt$, $1.0 dt$, $10^9 dt$) probability of speciation completion occurring in an infinitesimal time $dt$. 
 % We use per species extinction rates of $\mu = \mu_g = \mu_i$ $0.0$, $0.1$ and $0.2$.
 % For each combination of $\lambda$, $\mu$ and $n$, we use a speciation initiation rate $b = b_i = b_g$ that gives a given value of the expected number of species. We use expected mean tree sizes $n$ of 50, 100 and 200 good taxa and the corresponding speciation initiation rates for all parameter combinations are shown in table \ref{table:pbd_parameters}.
 % Our parameters are inspired by existing work on protracted speciation \cite{etienne_and_rosindell_2012}\cite{etienne2014}.
 
+
 We use \richel{@gio: parameter setting here} as our control for which the MBD model reduces to the BD model.
 
 We simulate protracted birth-death trees, using the MBD package (\cite{pbd}) in the R programming language (\cite{r}).
 The first tree has a random number generator seed of 1, which is incremented by 1 for each simulated tree.
-For each combination of \richel{@gio: parameter values here}, 
-we generate incipient species trees with a crown age of 15 million years.
+For each combination of $(\lambda, \mu, \nu, q) $\richel{@gio: parameter values here}, 
+we generate incipient species trees with a crown age of 15 million years \gio{are we sure we wanna try 15 million years. so far i've been trying only with 10 million years, which most of the time is working really well}.
 Only trees with the desired number of good taxa are kept.
 
 We create one data set to explore parameter space, 
