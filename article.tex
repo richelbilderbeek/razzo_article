@@ -156,11 +156,8 @@ clock model (\cite{baele_et_al_2012})
 or tree prior (\cite{moller2018, yang_and_ranalla_2005}) is known to affect
 the posterior.
 
-\gio{I've taken the freedom to change your proposed structure. Feel free to change whatever you don't like it. I might be not completely accurate on the biological background.}
-\richel{It's just fine :-)}
-
 Current phylogenetic tools assume that only a single speciation event can occur at the same time.
-While this assumption is useful to construct a wide variety of successful models \richel{@gio: citation here},
+While this assumption is useful to construct a wide variety of successful models \richel{@gio: citation here} \gio{@richel: basically all the models we know are based on this assumpion: DDD, PBD, BISSE, MUSSE, SECSSE, any other SSE, DAISIE etc. etc. It's a very very general feature. Maybe being specific could lead the reader to consider things that are, in the end, not essential to the story we want to tell here. Do you still think we need it?},
 they disallow for environmental changes that trigger speciation on a large scale,
 for example, the cichlid fish diversification in the 
 African Great Lakes: Malawi, Tanganyika and Victoria \richel{@gio: citation here}.
@@ -179,6 +176,7 @@ The model also introduces two new parameters:
 $\nu$ is the total rate for an environmental change to trigger, 
 which leads to a potentially multiple speciation event 
 \richel{How exactly? When the environment change is triggered, is the speciation rate $q$ or $\lambda + q$? What ends the change?}.
+\gio{If the environmental change triggers only $q$ is taken in consideration. $\lambda + q$ is not even a possibility, as $\lambda$ is a rate while $q$ is a probability. Do you think we need to be clearer on that?}
 If such event triggers each species present at that moment in time can undergo a speciation event with probability $q$.
 
 Unfortunately, a tree prior according to this model, 
@@ -226,7 +224,8 @@ The first tree has a random number generator seed of 1, which is incremented by 
 For each combination of $\lambda, \mu, \nu$ and $q$, 
 we generate species trees with a crown age of 15 million years 
 \gio{are we sure we wanna try 15 million years. so far i've been trying only with 10 million years, which most of the time is working really well}
-\richel{I suggest yes. Most papers associated with Rampal use 15 million years, including my raket paper. Just use lower speciation rates}.
+\richel{I suggest yes. Most papers associated with Rampal use 15 million years, including my raket paper. Just use lower speciation rates}
+\gio{In general it is ok for me. Keep in mind, though, that allowing multiple speciations may lead to an explosion in the number of species. Increasing the time by a factor of n usually means increasing the expected number of species at the present by a factor proportional to $e^n$}.
 Only trees with the desired number of good taxa are kept.
 
 We create one data set to explore parameter space, 
@@ -285,7 +284,7 @@ units) as the alignment.
 We ran the MCMC chain to generate 1111 states,
 of which we remove the first 10\% (also called the 'burn-in'). 
 Of the remaining
-1000 MCMC states, the effective sample size (ESS) of the posterior 
+1000 MCMC states, the effective sample size (ESS) \gio{@richel: could it be nicer, when citing the "effective sample size" for the first time (in order to use the acronym thereafter), to put all in capital letters "Effective Sample Size"} of the posterior 
 must at least be 200
 for a strong enough inference (\cite{beastbook}). An ESS can be increased by increasing
 the number of samples or decreasing the autocorrelation between samples. 
@@ -300,7 +299,7 @@ from zero (for identical phylogenies) to one. We use inference error
 and nLTT statistic interchangeably. Comparing the simulated species tree
 with each of the posterior species trees yields a distribution of nLTT statistics. 
 
-The input trees generated with a \richel{@gio: parameter that is set to reduce the MBD model to BD} 
+The input trees generated with a \richel{@gio: parameter that is set to reduce the MBD model to BD}\gio{@richel: setting $nu = 0$ denies any chance for multiple speciations to occur. If so, $q$ setting becomes unimportant. As a convention is possible to set $q=0$} 
 allow us to measure the noise of the experiment.
 
 We produce one data set as a comma-separated file.
@@ -361,6 +360,7 @@ in the supplementary information.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Bibliography
+\gio{bibliography is missing. The only bib file present does not correspond to the bibliography showed in the pdf file.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MEE style
 \bibliographystyle{mee}
@@ -397,9 +397,12 @@ in the supplementary information.
                           & Description & Values \\
     \hline
     \hline
-    $\lambda$             & \richel{@gio: MBD params here} & 0.1, 0.3, 1.0, $10^9$ \\
-    $\lambda$             & Speciation rate & 0.1, 0.3, 1.0, $10^9$ \\
-    $\mu$                 & Extinction rate & 0.0, 0.1, 0.2 \\
+    $\lambda$             & \gio{@richel: I insert some params that can make sense. Let's keep en eye on this anyways} & 0.1, 0.3, 1.0, $10^9$ \\
+    $\lambda$             & Per-species speciation rate & 0.2 \\
+    $\mu$                 & Per-species extinction rate & 0.0, 0.15 \\
+    $\nu$                 & Multiple speciation trigger rate & 1.5, 2.0, 2.5 \\
+    $q$                   & Per-species probability of multiple speciation  & 0.1, 0.15 \\
+    \hline
     \hline
     $n$                   & Number of good taxa & 50, 100, 200 \\
     $t_c$                 & Crown age & 15 \\
@@ -494,7 +497,7 @@ and for providing access to the Peregrine high performance computing cluster.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \richel{put this section here, as the journal does not request for this}
-RSE \richel{@gio: I assume this this is true?} conceived the idea for this experiment.
+RSE \richel{@gio: I assume this this is true?} \gio{@richel: it is true} conceived the idea for this experiment.
 GL created and tested the MBD package.
 RJCB created and tested the experiment.
 GL and RJCB wrote the first draft of the manuscript. 
