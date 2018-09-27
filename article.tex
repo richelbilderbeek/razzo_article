@@ -211,8 +211,10 @@ a different clock and site model prior in inference.
 
 The MBD model has 4 parameters, depicted in table \ref{table:parameters}. 
 We pick values of $\nu$ in such a way we expect a multiple speciation
-event to be triggered zero ($\nu = 0$), once, twice, four and eight times 
-\richel{I assume you can calculate the correct $\nu$}.
+event to be triggered zero ($\nu = 0$), once, twice , four and eight times 
+\richel{I assume you can calculate the correct $\nu$}. For each
+expected number of triggered events, we only keep those phylogenies
+that actually realized the expected number of triggered events.
 We pick values of $q$ that are 0.0 (a speciation barrier at the
 triggered event), 0.25, 0.5 and 1.0.
 We set our extinction rate $\mu$ to 0.1 in all simulation.
@@ -309,10 +311,8 @@ allow us to measure the noise of the experiment.
 
 We produce one data set as a comma-separated file.
 The general data set has ?144 \richel{recalc} different combinations
-of biological parameter combinations, site and clock models.
-The data set to investigate sampling has ?552 \richel{recalc} different combinations
-of biological parameter combinations, site models, clock models 
-and sampling methods. The experiment is computationally intensive:
+of parameter combinations.
+The experiment is computationally intensive:
 pilot experiments show that the experiment takes roughly 100 days
 of CPU time and 20 days of wall clock time (which includes the queued 
 waiting for computational resources) per replicate. 
@@ -320,7 +320,10 @@ Due to this, we choose to perform ten replicates, so that the complete
 experiment will take an acceptable time of roughly seven months. 
 
 We display the data set as an nLTT statistics distribution per
-parameter combination as a violin plot.
+parameter combination as a faceted violin plot, showing
+the effect of the number of species (a proxy for the amount of 
+information), the number of triggered events and the intensity of such
+a triggered event.
 We only show the nLTT distributions
 that were generated under the (correct) assumptions of a Jukes-Cantor site model
 and a strict clock model, separated per sampling method used. 
@@ -334,8 +337,7 @@ in the supplementary information.
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{fig_general.png}
   \caption{
-    nLTT statistic distribution per biological parameter set, using the
-    general data set, 
+    nLTT statistic distribution per setup,
     under the (correct) assumptions of a strict clock and Jukes-Cantor site model.
   }
 \end{figure}
@@ -366,6 +368,7 @@ in the supplementary information.
 
 % Bibliography
 \gio{bibliography is missing. The only bib file present does not correspond to the bibliography showed in the pdf file.}
+\richel{Weird. I see it both locally and on Overleaf. Sent email with my screenshots, show me yours to see if I can help}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MEE style
 \bibliographystyle{mee}
