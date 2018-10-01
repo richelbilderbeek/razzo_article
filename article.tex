@@ -157,11 +157,9 @@ or tree prior (\cite{moller2018, yang_and_ranalla_2005}) is known to affect
 the posterior.
 
 Current phylogenetic tools assume that only a single speciation event can occur at any given time.
-While this assumption is useful to construct a wide variety of successful models \richel{@gio: citation here} \gio{@richel: basically all the models we know are based on this assumpion: DDD, PBD, BISSE, MUSSE, SECSSE, any other SSE, DAISIE etc. etc. It's a very very general feature. Maybe being specific could lead the reader to consider things that are, in the end, not essential to the story we want to tell here. Do you still think we need it?},
-\richel{Yes, I think here would be a fine spot to cite some of those models, 
-I think BiSSE, DAISIE, DDD and PBD would be appropriate}\gio{CLOSED} 
-(for example as in \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating})
-they disallow for environmental changes that trigger speciation on a large scale.
+While this assumption is useful to construct a wide variety of successful 
+models (for example: \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}),
+they disallow for environmental changes that trigger speciations in multiple clades at a same point in time.
 
 The (constant-rate) birth-death (BD) model embodies the common assumption that 
 only a single speciation event can occur at any given time.
@@ -169,26 +167,41 @@ The MBD model relaxes this assumption, allowing events in which
 large-scale environmental changes lead to a great number of species 
 in relatively short time intervals. Such hypothesis can be useful to describe, for example, 
 systems like cichlid fish diversification in the 
-African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017})\richel{@gio: citation here}\gio{CLOSED}.
+African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017}).
 
-\gio{If I described the process in the same way you report in the example I would probably end up writing the same things that we say a few lines below, where we describe the parameters. Don't you think?}
-\richel{You described the model in the Methods. I moved it to here}\gio{CLOSED}
 In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
 to the usual per-species speciation and extinction rates. 
 Additionally, $\nu$ is the rate at which an environmental change is triggered.
 When such event is triggered, all species present in the phylogeny at that moment
 have a probability $q$ to speciate (independent on $\lambda$).
 The number of species that speciate due to this can also be zero. 
-\richel{Is this correct?}\gio{this is the code used for the simulation: "stats::rbinom(n = 1, size = N, prob = q)". It can actually yield zero. Now I am wondering if it is correct or not...}.
+\richel{Is this correct?}
+\gio{
+  this is the code used for the simulation: 
+  "stats::rbinom(n = 1, size = N, prob = q)". 
+  It can actually yield zero. 
+  Now I am wondering if it is correct or not...
+}
+\richel{
+  I read in the PDF describing the likelihood 
+  derivation 'The $L^\lambda_m$ term takes into account, being in 
+  the state $Q^k_m(t)$, all the possible ways to have at least one birth event from whichever pool'.
+  I would suggested changing the code to
+  "1 + stats::rbinom(n = 1, size = N, prob = q)"
+  and test it somehow to be sure the sim matches the likelihood
+}	.
 
 Unfortunately, a tree prior according to this model, 
 providing the probability of a species tree under the MBD model, 
 is unavailable in current Bayesian phylogenetic tools. 
-Whilst a likelihood equation has been derived (\richel{cite yourself here}\gio{CLOSED})(\cite{mbd}),
+Whilst a likelihood equation has been derived (\cite{mbd}),
 it has not been implemented as tree prior yet. 
 There are various reasons for this.
 First, the computation of the MBD likelihood involves solving a set of 
-non-linear differential equations \gio{@richel: are they actually non-linear?}, and while this computation is quite fast, 
+non-linear differential equations 
+\gio{are they actually non-linear?}
+\richel{Definitely, I see an exponentiation and combinatorial term, both are non-linear}, 
+and while this computation is quite fast, 
 it still takes much more time than the corresponding probability 
 of the BD model which is a simple analytical formula. 
 In a Bayesian MCMC chain, the tree prior probability must be calculated many times, 
@@ -210,10 +223,23 @@ a different clock and site model prior in inference.
 % Methods (but we are not allowed to use this header)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\richel{This setup is wrong, discuss described setup by Gio today}
 The MBD model has 4 parameters, depicted in table \ref{table:parameters}. 
 We pick values of $\nu$ in such a way we expect a multiple speciation
 event to be triggered zero ($\nu = 0$), once, twice , four and eight times 
-\richel{I assume you can calculate the correct $\nu$} \gio{I dunno if it's possible to do so. This kind of calculation, especially for $\mu>0$ might be very cumbersome. One thing Rampal and I discussed to do was to use an equivalent $\lambda$ in BD to have a similar amount of mutations for both kind of simulated trees. In the code there should be already something like that (it might be not completely accurate though). I explain myself better: a) you simulate with some MBD par setup; b) you count the amount of mutations you had; c) from this number you decide what $lambda$ to use to simulate the BD process to have the (expected) same amount of mutations. It's probably much much easier than going from BD to MBD.}. For each
+\gio{
+  One thing Rampal and I discussed to do was to use an 
+  equivalent $\lambda$ in BD to have a similar amount of mutations for both kind of simulated trees. 
+  In the code there should be already something like 
+  that (it might be not completely accurate though). I explain myself 
+  better: 
+  a) you simulate with some MBD par setup; 
+  b) you count the amount of mutations you had; 
+  c) from this number you decide what $lambda$ to use to simulate the BD process 
+  to have the (expected) same amount of mutations. It's probably much much easier 
+  than going from BD to MBD.
+}
+. For each
 expected number of triggered events, we only keep those phylogenies
 that actually realized the expected number of triggered events.
 We pick values of $q$ that are 0.0 (a speciation barrier at the
@@ -231,8 +257,6 @@ We simulate protracted birth-death trees, using the MBD package (\cite{mbd}) in 
 The first tree has a random number generator seed of 1, which is incremented by 1 for each simulated tree.
 For each combination of $\lambda, \mu, \nu$ and $q$, 
 we generate species trees with a crown age of 15 million years 
-\gio{In general [15 million years] is ok for me. Keep in mind, though, that allowing multiple speciations may lead to an explosion in the number of species. Increasing the time by a factor of n usually means increasing the expected number of species at the present by a factor proportional to $e^n$}
-\richel{I know}.
 Only trees with the desired number of good taxa are kept.
 
 From an (MBD) species tree, we create a BEAST2 posterior using
@@ -368,8 +392,7 @@ in the supplementary information.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Bibliography
-\gio{bibliography is missing. The only bib file present does not correspond to the bibliography showed in the pdf file.}
-\richel{Weird. I see it both locally and on Overleaf. Sent email with my screenshots, show me yours to see if I can help}\gio{CLOSED}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MEE style
 \bibliographystyle{mee}
