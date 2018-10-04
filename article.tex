@@ -111,38 +111,39 @@
 
 {\bf Keywords:} computational biology, evolution, phylogenetics, Bayesian analysis, tree prior
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\gio{@richel: A) I am throwing down some main points to follow to develop a convincing story that follows a clear logic. It might happen that some of these points are repeated and/or in the wrong order. We need to check that.}
-\gio{@richel: B) According to my fine graining approach we should at each step deepen every small section. At a certain level I think we can start to re-coarse-grain what we wrote to create the abstract.}
-\richel{I enjoy this approach! And I know Rampal does not :-)}
+\gio{According to my fine graining approach we should at each step deepen every small section. At a certain level I think we can start to re-coarse-grain what we wrote to create the abstract.}
+\richel{I enjoy this approach! Did some minor fine-graining}
 \richel{Have you already looked up for a target journal? I know how a journal's constraints have helped me 
-in writing an article}
+in writing an article, for example, by having a maximum number of pictures}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \begin{itemize}
 
-\item Tools like BEAST provide the possibility to infer a phylogeny from genetic data (DNA, RNA, proteins).
+\item There are many contemporary tools that provide the possibility to infer a phylogeny from genetic data (DNA, RNA, proteins). A popular Bayesian
+phylogenetic tool is called BEAST and its cousin BEAST2.
 
-\item There are a number of options that can be set up while using BEAST.
+\item BEAST is very flexible in setting up all possible phylogenetic priors (e.g. site/clock/speciation model).
 
 \item Current limits in current tools.
 
-\item BEAST2 gives us the possibility to introduce new tree priors to infer phylogenies based on different assumptions.
+\item BEAST2 gives us the possibility to introduce new tree priors to infer phylogenies based on different assumptions on how the speciation process
+takes place.
 
-\item One of these is the multiple birth hypothesis.
+\item One of such speciation processes is the multiple birth hypothesis,
+a new model (described below) and thus absent in BEAST.
 
-\item Multiple birth hypothesis can be useful to explain a phenomenon that have always puzzled evolutionary biologists: what are the drivers of the diversification processes for those phylogenies that show an impressive amount of speciation events in relatively short times.
+\item The Multiple birth hypothesis can be useful to explain a phenomenon that has always puzzled evolutionary biologists: what are the drivers of the diversification processes for those phylogenies that show an impressive amount of speciation events in relatively short times? 
 The (constant-rate) birth-death (BD) model embodies the common assumption that 
 only a single speciation event can occur at any given time.
-The MBD model relaxes this assumption, allowing events in which 
+The multiple-birth-death (MBD) model \richel{I feel MBSD (Multiple Birth Single Death) may be a better name: extinctions are still one at a time} relaxes this assumption, allowing events in which 
 large-scale environmental changes lead to a great number of species 
-in relatively short time intervals. Such hypothesis can be useful to describe, for example, 
-systems like cichlid fish diversification in the 
+in relatively short time intervals. Such a hypothesis may be a better fit to describe the burst in cichlid fish diversification in systems like in the 
 African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017}).
 
-\item However it can be argued that current tree priors could be good enough to detect such events involving, at the same time, a lower level of complexity. If this is the case one should always be more keen to adopt the simplest model.
+\item However, it may be that current BD tree priors are good enough at detecting such events, with a (preferred) lower level of complexity. If this is the case one should always be more keen to adopt the simplest model.
 
-\item Here we present our study with the aim of proving that there is indeed the necessity of a new tree prior for such cases.
+\item Here we present our study with the aim of exploring when using a more complex MBD tree prior is warranted.
 
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,18 +161,18 @@ they disallow for environmental changes that trigger speciations in multiple cla
 
 \item The (constant-rate) birth-death (BD) model embodies the common assumption that 
 only a single speciation event can occur at any given time.
-The Multiple-Birth-Death (MBD) model \richel{I feel MBSD (Multiple Birth Single Death) may be a better name: extinctions are still one at a time} relaxes this assumption, allowing events in which 
+The multiple-birth-death (MBD) model relaxes this assumption, allowing events in which 
 large-scale environmental changes lead to a great number of species 
 in relatively short time intervals. Such hypothesis can be useful to describe, for example, 
 systems like cichlid fish diversification in the 
 African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017}).
 
 \item In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
-to the usual per-species speciation and extinction rates. 
+to the common per-species speciation and extinction rates. 
 Additionally, $\nu$ is the rate at which an environmental change is triggered.
 When such event is triggered, all species present in the phylogeny at that moment
-have a probability $q$ to speciate (independent on $\lambda$).
-The number of species that speciate due to this can also be zero . 
+have a probability $q$ to speciate at that time, which is 
+independent on $\lambda$. 
 
 \item It is also possible to write down a likelihood function for such processes as in \cite{mbd}.
     
@@ -182,15 +183,15 @@ The number of species that speciate due to this can also be zero .
 
 \item To prove our hypothesis we simulate two twin datasets. All the simulations are produced in continuous time, using the Doob-Gillespie algorithm. 
 
-\item We start simulating a number (100?) of trees for the MBD model. We then use, for each tree, the 'pirouette' package (\cite{pirouette}) to obtain the sequence alignments corresponding to the given tree. 'pirouette' then calls BEAST to use these alignments to infer a posterior distribution of phylogenies. To perform this operation BEAST will use a BD prior.
+\item We start simulating 1000 \richel{I will measure the number of trees we'll be able to simulate within a short enough time, when the experiment is set up} MBD trees. From each MBD tree, a a DNA sequence alignment is simulated, after
+which that alignment starts a Bayesian analysis. We use 
+the 'pirouette' package (\cite{pirouette}) to call the BEAST2 tool 
+suite from R. We let the Bayesian analysis assume a BD prior, to investigate
+the error this inference makes due to this.
 
 \item For each tree 
-\gio{QUESTION 1: Do we convert each single tree or the entire distribution?} 
-\richel{SUGGEST 1: Each tree, as (1) it's easier (2) I so no benefit (nor difference) with the second option} 
-generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform the same analysis and compare the results. To do so we need to be sure that the comparison is fair. The method we adopt to achieve this goal is to impose that the average number of substitution will be the same 
-\gio{QUESTION 2: What criterion are we going to use? Same amount of information? Same number of tips? Something else? The answer has to be given mostly according to biological reasons, I think.}.
-\richel{SUGGEST 2: I would prefer the same amount of tips and mutations. See figure.}
-\item Here we explain how the conversion is done, with formulas if necessary.
+generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform the same analysis and compare the results. To do so we need to be sure that the comparison is fair. The method we adopt to achieve this goal is to impose that the amount of information used in the Bayesian information will be the same. These are the same number of taxa and the same (expected) 
+number of DNA mutations. See appendix for the exact procedure.
 
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{mbd.jpg}
@@ -200,14 +201,24 @@ generated under the MBD model we aim to generate a "twin" tree under the BD mode
   }
 \end{figure}
 
-\item We explained how we set the parameters for each twin BD tree. Using this rules we generate a BD dateset. We repeat the raket analysis, producing alignments for each tree and subsequently using BEAST to produce a posterior for each of them.
+\item We explained how we set the parameters for each twin BD tree. Using this rules we generate a BD dateset. We repeat the analysis, producing alignments for each tree and subsequently using BEAST to produce a posterior for each of them.
 
-\item Now we have to datasets of posteriors to compare, one for the BD model and one for the MBD model.
+\item Now we have two datasets of posteriors to compare, one for the BD model and one for the MBD model.
 
 \item To compare the results for the two models we measure the inference error using the nLTT statistic between known/true tree and posterior/inferred trees.
-\richel{Rewrote this a bit. I suggest to drop the Bayes factor for now. It can be used if we would let BEAST2 infer with different nucleotide substitution models (a.k.a. site models), to answer the question: which nucleotide substitution model should be used in inference? Using different site models was Rampal's idea and I hope we can cite the raket paper to demonstrate it does not matter}
+\richel{
+  I would love to describe this more concrete. For example, when do
+  we say something has an effect? If we avoid making such judgements,
+  how will we visualize?
+}
 
-\item The BF method allows us to compare the two marginal distributions. \gio{insert mathematical formula}
+\richel{I removed the Bayes factor text. It is useful when letting BEAST2
+pick more/overly complex models and see if that more complex model fits the
+data better (penalized by its increased complexity, similar to the AIC). It has
+its uses, but I am unsure if we already want to discuss this now
+or first focus on the proper tree twinning}
+
+
 
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -217,6 +228,17 @@ generated under the MBD model we aim to generate a "twin" tree under the BD mode
 \begin{itemize}
 
 \item
+\richel{
+  I guess you know I am a fan of the Open Science Framework,
+  in which you first register you work before you do the experiment
+  (note: I will do some small pilots to estimate the complete time
+  of the experiment). I think it is the proper and superior science,
+  which helps us against writing down bullshit stories after having
+  obtained the results (e.g. 'We expected A and indeed found it!').
+  It also helps me structure my work: first think
+  deeply about the experiment, then do it (instead of the mixing
+  up the two phases). What are your thoughts on that?
+}
 
 \item
 
@@ -232,6 +254,79 @@ generated under the MBD model we aim to generate a "twin" tree under the BD mode
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 
+\section{Creating twin trees}
+
+\richel{I put your work here and LaTeXed it. Maybe this moves
+to the Methods, but this seemed a good place to start}
+
+The expected number of mutations, $m$ of a phylogeny 
+with crown age $T$,
+depends on the number of DNA nucleotides $L$,
+per-site mutation rate $\mu$ and the number of species $n$
+of time as such:
+
+\begin{equation}
+m = L \cdot \mu \cdot \int_{t=0}^{T} n_t\ dt
+\end{equation}
+
+\richel{I suggest to use a different symbol for mutation rate, 
+  for example $\alpha$ or $\rho$. Using lambda here as well feels
+  needlessly confusing.
+}
+
+It can be easily seen considering that $\mu$ is the number of mutations
+per unit time per site. For this reason it's needed to multiply by
+time and number of sites.
+
+To obtain twin trees with an equal amount of information, we impose
+that the expected number of mutations in an MBD tree, $m_{MBD}$ equals
+the expected number of mutations in a BD tree, $m_{BD}$:
+
+\begin{equation}
+m_{MBD} = m_{BD}
+\end{equation}
+
+From which follows:
+
+\begin{equation}
+m_{BD} = L \cdot \mu \cdot \int_{t=0}^{T} n_{BD}(t)\ dt
+\end{equation}
+
+Obviously we cannot know $n_{BD}(t)$ before running the simulations but
+we can replace it with a proxy, for example the average number of
+species in time according to the BD model
+\richel{I suggest $n_{BD} = n_{MBD}$ and only 
+change $\mu_{BD}$ to reach $m_{MBD} = m_{BD}$}
+
+\gio{START}
+
+$$
+<n_{BD}(t)> = n(t=0) * exp[(mu - lambda) * t] (6)
+$$
+
+The relation to use to get the equivalent lambda should therefore be
+
+$$
+m_{MBD} 
+  = L * mu * integral[exp[(mu - lambda) * t] dt] 
+  = (L * mu * exp[(mu - lambda) * t]) / (mu - lambda) (7)
+$$
+
+Here everything is known but lambda. So solve the lambda and use that value.
+
+My doubt is if we need to use $m_{MBD}$ for the single tree or the same
+quantity averaged on the full MBD dataset $<m_{MBD}>$.
+
+Does it make sense to you? Do you think is better to use the
+individual $m_{MBD}$ for each tree or the average across the whole
+dataset?
+
+\gio{END}
+
+\richel{I think I see your point: in single trees stochasticity works per tree twin, in a distribution per distribution. To circumvent this: what if I would be 
+able to measure the actual number of mutations? Then twinning trees by
+having an exact equal amount of mutations would be very clean. Let me know: 
+you think I should investigate this?}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
