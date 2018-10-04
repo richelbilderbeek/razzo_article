@@ -61,6 +61,7 @@
 
 \maketitle
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
   % From 'How to construct a Nature summary paragraph'
@@ -70,33 +71,22 @@
   % One or two sentences providing a basic
   % introduction to the field,
   % comprehensible to a scientist in any discipline.
-  The tools for reconstructing phylogenetic relationships between taxonomic 
-  units (e.g. species) have become very advanced in the last three decades. 
+  
 
   % Two to three sentences of
   % more detailed background, comprehensible to
   % scientists in related disciplines.
-  Among the most popular tools are Bayesian approaches, 
-  such as \\ BEAST, MrBayes and RevBayes, 
-  that use efficient tree sampling routines to create a posterior probability distribution 
-  of the phylogenetic tree. 
-  A feature of these approaches is the possibility to incorporate known 
-  or hypothesized structure of the phylogenetic tree through the tree prior. 
-  It has been shown that the effect of the prior on the posterior distribution 
-  of trees can be substantial. 
+  
 
   % One sentence clearly stating the general
   % problem being addressed by this particular
   % study.
-  Currently implemented tree priors assume that speciation events are independent,
-  where we know that speciation can coincide, for example, when trigger by a
-  larger geographic change.
+  
 
   % One sentence summarising the main
   % result (with the words “here we show”
   % their equivalent).
-  Here we explore the effects of ignoring 
-  speciation co-occurence with an extensive simulation study. 
+  
 
   % Two or three sentences explaining what
   % the main result reveals in direct
@@ -115,52 +105,30 @@
   % by their inclusion. Under these circumstances, the length of the paragraph can be up to 300 words.
   % (The above example is 190 words without the final section, and 250 words with it).
 
-  We compare the inferred tree to the simulated tree, and find that ....
+
 
 \end{abstract}
 
 {\bf Keywords:} computational biology, evolution, phylogenetics, Bayesian analysis, tree prior
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\gio{@richel: A) I am throwing down some main points to follow to develop a convincing story that follows a clear logic. It might happen that some of these points are repeated and/or in the wrong order. We need to check that.}
+\gio{@richel: B) According to my fine graining approach we should at each step deepen every small section. At a certain level I think we can start to re-coarse-grain what we wrote to create the abstract.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{itemize}
 
-The computational tools that are currently available 
-to the phylogeneticists go beyond the wildest 
-imagination of those living four decades ago.
-Advances in computational power allowed the first cladograms to be inferred 
-from DNA alignments in 1981 (\cite{felsenstein1981}), and  
-the first Bayesian tools emerged in 1996 (\cite{rannala1996}),
-providing unprecedented flexibility in the setup of a phylogenetic model.
+\item Tools like BEAST provide the possibility to infer a phylogeny from genetic data (DNA, RNA, proteins).
 
-Currently, the most popular Bayesian phylogenetics tools are
-BEAST (\cite{beast}) and its offshoot BEAST2 (\cite{beast2}), 
-MrBayes (\cite{mrbayes}) and RevBayes (\cite{revbayes}). 
-They allow to incorporate known or hypothesized structure of a phylogenetic 
-tree-to-be-inferred through model priors. 
-With these priors and an alignment of DNA, RNA or protein sequences, 
-they create a sample of the posterior distribution
-of phylogenies and parameter estimates (of the models used as a prior), 
-in which more probable combinations are represented more often.
-Each of these tools use efficient tree sampling routines to rapidly create an 
-informative posterior.
+\item There are a number of options that can be set up while using BEAST.
 
-The model priors in Bayesian phylogenetic reconstruction 
-can be grouped into three categories: (1) site model, specifying 
-nucleotide substitutions, (2) clock model, specifying
-the rate of mutation per lineage in time, and (3) tree model, 
-constituting the speciation model underlying branching events (speciation) 
-and branch termination (extinction).
-The choice of site model (\cite{posada_and_buckley_2004}), 
-clock model (\cite{baele_et_al_2012}) 
-or tree prior (\cite{moller2018, yang_and_ranalla_2005}) is known to affect
-the posterior.
+\item Current limits in current tools.
 
-Current phylogenetic tools assume that only a single speciation event can occur at any given time.
-While this assumption is useful to construct a wide variety of successful 
-models (for example: \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}),
-they disallow for environmental changes that trigger speciations in multiple clades at a same point in time.
+\item BEAST2 gives us the possibility to introduce new tree priors to infer phylogenies based on different assumptions.
 
+\item One of these is the multiple birth hypothesis.
+
+\item Multiple birth hypothesis can be useful to explain a phenomenon that have always puzzled evolutionary biologists: what are the drivers of the diversification processes for those phylogenies that show an impressive amount of speciation events in relatively short times.
 The (constant-rate) birth-death (BD) model embodies the common assumption that 
 only a single speciation event can occur at any given time.
 The MBD model relaxes this assumption, allowing events in which 
@@ -169,368 +137,100 @@ in relatively short time intervals. Such hypothesis can be useful to describe, f
 systems like cichlid fish diversification in the 
 African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017}).
 
-In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
+\item However it can be argued that current tree priors could be good enough to detect such events involving, at the same time, a lower level of complexity. If this is the case one should always be more keen to adopt the simplest model.
+
+\item Here we present our study with the aim of proving that there is indeed the necessity of a new tree prior for such cases.
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methods}
+
+\subsection{Model}
+\begin{itemize}
+
+\item Current phylogenetic tools assume that only a single speciation event can occur at any given time.
+While this assumption is useful to construct a wide variety of successful 
+models (for example: \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}),
+they disallow for environmental changes that trigger speciations in multiple clades at a same point in time.
+
+\item The (constant-rate) birth-death (BD) model embodies the common assumption that 
+only a single speciation event can occur at any given time.
+The MBD model relaxes this assumption, allowing events in which 
+large-scale environmental changes lead to a great number of species 
+in relatively short time intervals. Such hypothesis can be useful to describe, for example, 
+systems like cichlid fish diversification in the 
+African Great Lakes: Malawi, Tanganyika and Victoria (\cite{janzen2016}, \cite{janzen2017}).
+
+\item In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
 to the usual per-species speciation and extinction rates. 
 Additionally, $\nu$ is the rate at which an environmental change is triggered.
 When such event is triggered, all species present in the phylogeny at that moment
 have a probability $q$ to speciate (independent on $\lambda$).
 The number of species that speciate due to this can also be zero. 
-\richel{Is this correct?}
-\gio{
-  this is the code used for the simulation: 
-  "stats::rbinom(n = 1, size = N, prob = q)". 
-  It can actually yield zero. 
-  Now I am wondering if it is correct or not...
-}
-\richel{
-  I read in the PDF describing the likelihood 
-  derivation 'The $L^\lambda_m$ term takes into account, being in 
-  the state $Q^k_m(t)$, all the possible ways to have at least one birth event from whichever pool'.
-  I would suggested changing the code to
-  "1 + stats::rbinom(n = 1, size = N, prob = q)"
-  and test it somehow to be sure the sim matches the likelihood
-}	.
 
-Unfortunately, a tree prior according to this model, 
-providing the probability of a species tree under the MBD model, 
-is unavailable in current Bayesian phylogenetic tools. 
-Whilst a likelihood equation has been derived (\cite{mbd}),
-it has not been implemented as tree prior yet. 
-There are various reasons for this.
-First, the computation of the MBD likelihood involves solving a set of 
-non-linear differential equations 
-\gio{are they actually non-linear?}
-\richel{Definitely, I see an exponentiation and combinatorial term, both are non-linear}, 
-and while this computation is quite fast, 
-it still takes much more time than the corresponding probability 
-of the BD model which is a simple analytical formula. 
-In a Bayesian MCMC chain, the tree prior probability must be calculated many times, 
-and hence the total computation will take considerably longer with a PBD tree prior. 
+\item It is also possible to write down a likelihood function for such processes as in \cite{mbd}.
+    
+\end{itemize}
 
-Here we aim to explore the effect of using the
-BD prior on MBD simulated phylogenies.
-In brief, we simulate phylogenies with co-occuring speciation events using the MBD process. 
-Given this species tree, we simulate a DNA sequence alignment. Then, we use BEAST2 on these alignments
-to infer a posterior of phylogenies, using a BD prior. We quantify the difference
-between the (BD) posterior phylogenies and the simulated (MBD) species tree.
-Furthermore, while we evidently know the clock and site models used in the simulation, 
-using a different clock and/or site model prior in inference 
-may compensate or increase this difference between inferred and simulated tree. 
-To study this, we also explore the effect of 
-a different clock and site model prior in inference.
+\subsection{Simulations}
+\begin{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Methods (but we are not allowed to use this header)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item To prove our hypothesis we simulate two twin datasets. All the simulations are produced in continuous time, using the Doob-Gillespie algorithm. 
 
-\richel{This setup is wrong, discuss described setup by Gio today}
-The MBD model has 4 parameters, depicted in table \ref{table:parameters}. 
-We pick values of $\nu$ in such a way we expect a multiple speciation
-event to be triggered zero ($\nu = 0$), once, twice , four and eight times 
-\gio{
-  One thing Rampal and I discussed to do was to use an 
-  equivalent $\lambda$ in BD to have a similar amount of mutations for both kind of simulated trees. 
-  In the code there should be already something like 
-  that (it might be not completely accurate though). I explain myself 
-  better: 
-  a) you simulate with some MBD par setup; 
-  b) you count the amount of mutations you had; 
-  c) from this number you decide what $lambda$ to use to simulate the BD process 
-  to have the (expected) same amount of mutations. It's probably much much easier 
-  than going from BD to MBD.
-}
-. For each
-expected number of triggered events, we only keep those phylogenies
-that actually realized the expected number of triggered events.
-We pick values of $q$ that are 0.0 (a speciation barrier at the
-triggered event), 0.25, 0.5 and 1.0.
-We set our extinction rate $\mu$ to 0.1 in all simulation.
-As we select our phylogenies on their number of lineages,
-we calculate $\lambda$ in a such a way that the mean expected number
-of lineages equals the desired numbers of taxa of 50, 100 and 200. 
-For $\nu = 0$, the model falls back to a standard BD model.
-Note that the $\lambda$ and $q$ have different units
-and it is a misconception to think that for $\lambda = q$ (already
-impossible due to their units) the MBD model would reduce to a BD model.
+\item We start simulating a number (100?) of trees for the MBD model. We then use, for each tree, the 'pirouette' package (\cite{pirouette}) to obtain the sequence alignments corresponding to the given tree. 'pirouette' then calls BEAST to use these alignments to infer a posterior distribution of phylogenies. To perform this operation BEAST will use a BD prior.
 
-We simulate protracted birth-death trees, using the MBD package (\cite{mbd}) in the R programming language (\cite{r}).
-The first tree has a random number generator seed of 1, which is incremented by 1 for each simulated tree.
-For each combination of $\lambda, \mu, \nu$ and $q$, 
-we generate species trees with a crown age of 15 million years 
-Only trees with the desired number of good taxa are kept.
-
-From an (MBD) species tree, we create a BEAST2 posterior using
-the 'pirouette' (\cite{pirouette}) R package: 
-'pirouette' first simulates a DNA alignment that has the same history
-as the species tree, using the \verb;phangorn; package (\cite{phangorn}).
-The DNA sequence of the root ancestor consists of four equally sized single-nucleotide 
-blocks of adenine, cytosine, guanine and thymine 
-respectively (for example, for a DNA sequence length of 12, this would 
-be AAACCCGGGTTT). Throughout evolutionary time, we use equal 
-mutation rates between the four DNA nucleotides, 
-also called the Jukes-Cantor (\cite{jc69}) nucleotide substitution model.
-The neat seperation of the nucleotides is for visualization and debugging
-purposes and has no effect in any other way. 
-The equal amount of nucleotides does matter, assuring any nucleotide
-mutation is equally likely to be observed.
-
-In our Bayesian inference (see below) we use the same site model as the (obviously correct) site model prior,
-but we also explore the effect of assuming a more complex site model prior.
-We predict with the more complex substitution model, 
-that there will be more noise and hence our inference error will increase.
-On the other hand, we dare not rule out that the inference error will decrease,
-due to more flexibility in the more complex prior.
-We set the mutation rate in such a way to maximize the information contained in the alignment.
-To do so, we set the mutation rate such that we expect on average one (possibly silent) mutation per nucleotide
-between crown age and present, which equates to $\frac{1}{15}$ mutations
-per million years.
-The DNA sequence length is chosen to provide a
-resolution of $10^3$ years, 
-% If sims take too long, we will decrease this resolution
-that is, to have one expected nucleotide change 
-per $10^3$ years per lineage on average. As one nucleotide is expected 
-to have on average one (possibly silent) mutation per 15 million years, $15 \cdot 10^3$
-nucleotides result in 1 mutation per alignment per $10^3$ years (which is
-coincidentally the same as \cite{moller2018}). 
-The simulation of these DNA aligments follows a strict clock model, 
-which we will specify as one of the two clock models assumed in the Bayesian inference (see below).
-
-From here, the 'babette' R package (\cite{babette})
-takes over and converts the DNA alignment to a BEAST2 posterior.
-We set up the BEAST2 analysis to assume either a Jukes-Cantor or GTR nucleotide substitution model.
-The Jukes-Cantor model is the correct one, as it is used for simulating that alignment,
-where the GTR model is the site model that is picked as a default by most users.
-For our clock model, we assume either a strict or relaxed log-normal 
-clock model. 
-Also here, the strict clock model is the correct one, as it is used for simulating the alignment,
-but the relaxed log-normal clock model is the one most commonly used.
-We set the BD model as a tree prior, 
-as gauging the effect of this incorrect assumption is the goal of this study. 
-We assume an MRCA prior with a tight normal distribution
-around the crown age, by choosing the crown age as mean, and a standard deviation 
-of $0.5 \cdot 10^{-3}$ time units,
-resulting in 95\% of the crown ages inferred have the same resolution (of $10^{-3}$ time 
-units) as the alignment. 
-We ran the MCMC chain to generate 1111 states,
-of which we remove the first 10\% (also called the 'burn-in'). 
-Of the remaining
-1000 MCMC states, the Effective Sample Size (ESS) of the posterior 
-must at least be 200
-for a strong enough inference (\cite{beastbook}). An ESS can be increased by increasing
-the number of samples or decreasing the autocorrelation between samples. 
-If the ESS is less than 200, we decrease autocorrelation by doubling 
-the MCMC sampling interval of that simulation, until the ESS exceeds 200.
-
-We compare each posterior phylogeny to the (sampled) species tree
-using the nLTT statistic (\cite{janzen2015}), from the \verb;nLTT; package (\cite{nltt}). 
-The nLTT statistic equals the area between the normalized
-lineages-through-time-plots of two phylogenies, which has a range 
-from zero (for identical phylogenies) to one. We use inference error 
-and nLTT statistic interchangeably. Comparing the simulated species tree
-with each of the posterior species trees yields a distribution of nLTT statistics. 
-
-The input trees generated with a $\nu = 0$, 
-in which all BEAST2's
-assumptions are met,
-allow us to measure the noise of the experiment.
-
-We produce one data set as a comma-separated file.
-The general data set has ?144 \richel{recalc} different combinations
-of parameter combinations.
-The experiment is computationally intensive:
-pilot experiments show that the experiment takes roughly 100 days
-of CPU time and 20 days of wall clock time (which includes the queued 
-waiting for computational resources) per replicate. 
-Due to this, we choose to perform ten replicates, so that the complete
-experiment will take an acceptable time of roughly seven months. 
-
-We display the data set as an nLTT statistics distribution per
-parameter combination as a faceted violin plot, showing
-the effect of the number of species (a proxy for the amount of 
-information), the number of triggered events and the intensity of such
-a triggered event.
-We only show the nLTT distributions
-that were generated under the (correct) assumptions of a Jukes-Cantor site model
-and a strict clock model, separated per sampling method used. 
-We display the nLTT statistic distributions separated per site or clock model 
-in the supplementary information.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item For each tree 
+\gio{QUESTION 1: Do we convert each single tree or the entire distribution?} 
+\richel{SUGGEST 1: Each tree, as (1) it's easier (2) I so no benefit (nor difference) with the second option} 
+generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform the same analysis and compare the results. To do so we need to be sure that the comparison is fair. The method we adopt to achieve this goal is to impose that the average number of substitution will be the same 
+\gio{QUESTION 2: What criterion are we going to use? Same amount of information? Same number of tips? Something else? The answer has to be given mostly according to biological reasons, I think.}.
+\richel{SUGGEST 2: I would prefer the same amount of tips and mutations. See figure.}
+\item Here we explain how the conversion is done, with formulas if necessary.
 
 \begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{fig_general.png}
+  \includegraphics[width=\textwidth]{mbd.jpg}
   \caption{
-    nLTT statistic distribution per setup,
-    under the (correct) assumptions of a strict clock and Jukes-Cantor site model.
+    How to create twin trees and alignments. From a focal MBD tree, a twin tree is produced as 
+    such: (1) estimate the $\lambda_{BD}$ to get the same expected number of tips, (2) simulate a BD tree with that amount of tips (discard trees with different number of tips), (3) estimate a mutation rate to get an alignment with the same expected number of mutations, (4) simulate alignments with that amount of mutations (discard those that don't, the picture shows an alignment that should be discarded) 
   }
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Glossary}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Please supply, as a separate list, the definitions of field-specific terms used in your article.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-  \centering 
-  \begin{tabular}{l p{0.65\textwidth}}
-    \hline
-    Term                  & Definition \\
-    \hline
-    \hline
-    Phylogenetics         & The inference of evolutionary relationships of groups of organisms using genetics \\
-    Model prior           & Knowledge or assumptions about the ontogeny of evolutionary histories \\
-    Posterior             & A collection of phylogenies and parameter estimates, in which more probable combinations (determined by the data and the model prior) are presented more frequently \\
-    \hline
-  \end{tabular}
-  \caption{
-    Glossary
-  }
-  \label{table:glossary}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item We explained how we set the parameters for each twin BD tree. Using this rules we generate a BD dateset. We repeat the raket analysis, producing alignments for each tree and subsequently using BEAST to produce a posterior for each of them.
 
-% Bibliography
+\item Now we have to datasets of posteriors to compare, one for the BD model and one for the MBD model.
+
+\item To compare the results for the two models we measure the inference error using the nLTT statistic between known/true tree and posterior/inferred trees.
+\richel{Rewrote this a bit. I suggest to drop the Bayes factor for now. It can be used if we would let BEAST2 infer with different nucleotide substitution models (a.k.a. site models), to answer the question: which nucleotide substitution model should be used in inference? Using different site models was Rampal's idea and I hope we can cite the raket paper to demonstrate it does not matter}
+
+\item The BF method allows us to compare the two marginal distributions. \gio{insert mathematical formula}
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MEE style
+\section{Results}
+\begin{itemize}
+
+\item
+
+\item
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography % MEE style
 \bibliographystyle{mee}
 \bibliography{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{fig_clock_model.png}
-  \caption{
-    nLTT statistic distribution per biological parameter set per clock model,
-    using the general data set, 
-    under the (correct) assumption of a Jukes-Cantor site model.
-  }
-\end{figure}
-
-\begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{fig_site_model.png}
-  \caption{
-    nLTT statistic distribution per biological parameter set per site model,
-    using the general data set, 
-    under the (correct) assumption of a strict clock model.
-  }
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-  \centering 
-  \begin{tabular}{p{0.05\textwidth} p{0.6\textwidth} p{0.2\textwidth}}
-    \hline
-                          & Description & Values \\
-    \hline
-    \hline
-    $\lambda$             & Per-species speciation rate & calculated \\
-    $\mu$                 & Per-species extinction rate & 0.0, 0.1 \\
-    $\nu$                 & Multiple speciation trigger rate & occurs never, once, twice, four and eight times \\
-    $q$                   & Per-species probability of multiple speciation & 0, 0.25, 0.5, 1.0 \\
-    \hline
-    \hline
-    $n$                   & Number of good taxa & 50, 100, 200 \\
-    $t_c$                 & Crown age & 15 \\
-    $\sigma_c$            & Standard deviation around crown age & 0.001 \\
-    $M_c$                 & Clock model & S, RLN \\
-    $M_t$                 & Site model & JC69, GTR \\
-    $r$                   & Mutation rate & $\frac{1}{15}$ \\
-    $l_a$                 & DNA alignment length & $15K$ \\
-    $f_i$                 & MCMC sampling interval & 1K or more \\
-    $R_i$                 & RNG seed MBD tree generation & 1, 2, etc. \\
-    $R_a$                 & RNG seed alignment simulation & $R_i$ \\
-    $R_b$                 & RNG seed BEAST2 & $R_i$ \\
-    \hline
-  \end{tabular}
-  \caption{
-    Overview of the simulation parameters. Above the horizontal line are 
-    the MBD model's parameters. 
-    The RNG seed $R_i$ is 1 for the first simulation, 2 for the next,
-    and so on.  
-    The clock models are abbreviated as 'S' for a strict and 'RLN' for a relaxed log-normal model.
-    The site models are abbreviated as 'JC69' for Jukes-Cantor (\cite{jc69}) and 'GTR' for the generalized 
-    time-reversible model (\cite{gtr}).
-  }
-  \label{table:parameters}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-  \centering 
-  \begin{tabular}{l l}
-    \hline
-    $n$ & Description \\
-    \hline
-    \hline
-    $12$ \richel{recalc} & simulation parameters, see table \ref{table:parameters} \\
-    $1000$ & nLTT statistic values \\
-    $11$ & ESSes of all parameters estimated by BEAST2 (see specs below) \\
-    \hline
-  \end{tabular}
-  \caption{
-    Specification of the data sets. Each row will contain one experiment,
-    where the columns contain parameters, measurements and diagnostics.
-    This table displays the content of the columns. 
-    $n$ denotes the number
-    of columns a certain item will occupy, resulting in a table of 
-    1023 \richel{recalc} columns and 20K rows.
-  }
-  \label{table:specs}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}
-  \centering 
-  \begin{tabular}{l l}
-    \hline
-    \# & Description \\
-    \hline
-    \hline
-    1 & posterior \\
-    2 & likelihood \\
-    3 & prior \\
-    4 & treeLikelihood \\
-    5 & TreeHeight \\
-    6 & BirthDeath \\
-    7 & BDBirthRate \\
-    8 & BDDeathRate \\
-    9 & logP.mrca \\
-    10 & mrcatime \\
-    11 & clockRate \\
-    \hline
-  \end{tabular}
-  \caption{
-    Overview of the 11 parameters estimated by BEAST2
-  }
-  \label{table:estimated_parameters}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Acknowledgements}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\richel{put this section here, as the journal does not request for this}
-We would like to thank the Center for Information Technology of the University of Groningen for their support
-and for providing access to the Peregrine high performance computing cluster.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Authors' contributions}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\richel{put this section here, as the journal does not request for this}
-RSE conceived the idea for this experiment.
-GL created and tested the MBD package.
-RJCB created and tested the experiment.
-GL and RJCB wrote the first draft of the manuscript. 
-RSE contributed substantially to revisions.
 
 \end{document}
