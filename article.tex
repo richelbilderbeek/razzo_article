@@ -256,70 +256,84 @@ or first focus on the proper tree twinning}
 
 \section{Creating twin trees}
 
-\richel{I put your work here and LaTeXed it. Maybe this moves
-to the Methods, but this seemed a good place to start}
-
-The expected number of mutations, $m$ of a phylogeny 
-with crown age $T$,
-depends on the number of DNA nucleotides $L$,
-per-site mutation rate $\mu$ and the number of species $n$
-of time as such:
-
-\begin{equation}
-m = L \cdot \mu \cdot \int_{t=0}^{T} n_t\ dt
-\end{equation}
-
-\richel{I suggest to use a different symbol for mutation rate, 
-  for example $\alpha$ or $\rho$. Using lambda here as well feels
-  needlessly confusing.
-}
-
-It can be easily seen considering that $\mu$ is the number of mutations
-per unit time per site. For this reason it's needed to multiply by
-time and number of sites.
-
 To obtain twin trees with an equal amount of information, we impose
 that the expected number of mutations in an MBD tree, $m_{MBD}$ equals
 the expected number of mutations in a BD tree, $m_{BD}$:
 
 \begin{equation}
-m_{MBD} = m_{BD}
-\end{equation}
+m_{MBD} = m_{BD} \label{m equivalence}
+\end{equation} 
 
-From which follows:
+We first generate a set of MBD trees. For each of them we can measure the amount of mutations $m_{MBD}$.
+
+\richel{I put your work here and LaTeXed it. Maybe this moves
+to the Methods, but this seemed a good place to start}
+\gio{Thanks Richel, It was actually the next thing that I planned to do. I think this should definitely go to the methods}
+
+The number of mutations $m$ of a phylogeny 
+with crown age $-T$ in fact is given by
 
 \begin{equation}
-m_{BD} = L \cdot \mu \cdot \int_{t=0}^{T} n_{BD}(t)\ dt
+m = L \cdot \rho \cdot \int_{0}^{T} n(t)\ dt \label{m calculation}
 \end{equation}
 
-Obviously we cannot know $n_{BD}(t)$ before running the simulations but
-we can replace it with a proxy, for example the average number of
-species in time according to the BD model
+where $L$ is the number of DNA nucleotides, 
+$\rho$ is the per-site per-species mutation rate and
+$n(t)$ the number of species at each time.
+
+\richel{I suggest to use a different symbol for mutation rate, 
+  for example $\alpha$ or $\rho$. Using lambda here as well feels
+  needlessly confusing.
+}
+\gio{ok}
+
+%It can be easily seen considering that $\rho$ is the number of mutations
+%per unit time per site. For this reason it's needed to multiply by
+%time and number of sites. 
+\gio{This feels kind of a repetitions of what we wrote before the formula. I comment it. We can think of reinsert it afterwards, if needed (see comment above).}
+
+Since we cannot know $n_{BD}(t)$ before running simulations
+we need to replace it with a proxy. For this reason we will use the average number of
+species in time according to the BD model. 
+It's well known that this is equal to \gio{insert proper citation}
+
+\begin{equation}
+    <n_{BD}>(t) = n_{0} \cdot e^{(\mu_{BD} - \lambda_{BD})t} \label{BD average n}
+\end{equation}
+
+where $n_{0} = n_{BD}(-T) = n_{MBD}(-T)$ is the initial number of species at the crown age.
+From \ref{m equivalence}, \ref{m calculation} and \ref{BD average n} follows:
+
+\begin{equation}
+m_{MBD} = L \cdot \rho \cdot \int_{0}^{T} <n_{BD}>(t)\ dt \\
+= L \cdot \rho \cdot n_{0} \cdot \left[ \frac{e^{(\mu_{BD} - \lambda_{BD})T} - 1}{\mu_{BD} - \lambda_{BD}} \right]
+\end{equation}
+
+If we set $\mu_{BD} = \mu_{MBD}$ and reverse this relation we can extrapolate the value of $\lambda_{BD}$ to use to generate BD trees.
+
 \richel{I suggest $n_{BD} = n_{MBD}$ and only 
 change $\mu_{BD}$ to reach $m_{MBD} = m_{BD}$}
+\gio{@Richel: Don't you think it might make more sense to set $\mu_{BD} = \mu_{MBD}$? What changes in the two model is the way we use to generate new species, not the way to remove them. Maybe one thing that's possible to do would be to make $\lambda_{BD}$ a function of time, a bit like Théo is doing in his comparison between DD and TD4 (which, by the way, seem to yield very different results). In case you are wondering the theory can be found in Caesar's master thesis.}
 
-\gio{START}
+%$$
+%<n_{BD}(t)> = n(t=0) * exp[(mu - lambda) * t] (6)
+%$$
 
-$$
-<n_{BD}(t)> = n(t=0) * exp[(mu - lambda) * t] (6)
-$$
+%The relation to use to get the equivalent lambda should therefore be
 
-The relation to use to get the equivalent lambda should therefore be
+%$$ 
+%m_{MBD} 
+%  = L * mu * integral[exp[(mu - lambda) * t] dt] 
+%  = (L * mu * exp[(mu - lambda) * t]) / (mu - lambda) (7)
+%$$
 
-$$
-m_{MBD} 
-  = L * mu * integral[exp[(mu - lambda) * t] dt] 
-  = (L * mu * exp[(mu - lambda) * t]) / (mu - lambda) (7)
-$$
+%Here everything is known but lambda. So solve the lambda and use that value.
 
-Here everything is known but lambda. So solve the lambda and use that value.
-
-My doubt is if we need to use $m_{MBD}$ for the single tree or the same
+\gio{My doubt is if we need to use $m_{MBD}$ for the single tree or the same
 quantity averaged on the full MBD dataset $<m_{MBD}>$.
-
-Does it make sense to you? Do you think is better to use the
+Do you think is better to use the
 individual $m_{MBD}$ for each tree or the average across the whole
-dataset?
+dataset?}
 
 \gio{END}
 
