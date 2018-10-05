@@ -266,12 +266,23 @@ m_{MBD} = m_{BD} \label{m equivalence}
 
 We first generate a set of MBD trees. For each of them we can measure the amount of mutations $m_{MBD}$.
 
-\richel{I put your work here and LaTeXed it. Maybe this moves
-to the Methods, but this seemed a good place to start}
-\gio{Thanks Richel, It was actually the next thing that I planned to do. I think this should definitely go to the methods}
+\gio{I think this should definitely go to the methods}
+\richel{I put it there for use, hopefully at a spot you liked :-)}
 
-The number of mutations $m$ of a phylogeny 
-with crown age $-T$ in fact is given by
+The expected number of mutations $m$ of a phylogeny 
+\richel{
+  I think 'expected number of mutations' would be more correct.
+  Do you agree?
+}
+with crown age $T$ in fact is given by
+\richel{
+  above stood 'crown age -T'. 
+  I feel that a crown age is a positive number,
+  but I know you have had a good reason.
+  Perhaps better would be to write something explicit like:
+  t_now - t_crown = T.
+  Looking forward for a better suggestion than mine :-)
+}
 
 \begin{equation}
 m = L \cdot \rho \cdot \int_{0}^{T} n(t)\ dt \label{m calculation}
@@ -281,21 +292,31 @@ where $L$ is the number of DNA nucleotides,
 $\rho$ is the per-site per-species mutation rate and
 $n(t)$ the number of species at each time.
 
-\richel{I suggest to use a different symbol for mutation rate, 
-  for example $\alpha$ or $\rho$. Using lambda here as well feels
-  needlessly confusing.
-}
-\gio{ok}
-
 %It can be easily seen considering that $\rho$ is the number of mutations
 %per unit time per site. For this reason it's needed to multiply by
 %time and number of sites. 
 \gio{This feels kind of a repetitions of what we wrote before the formula. I comment it. We can think of reinsert it afterwards, if needed (see comment above).}
+\richel{
+  I suggest to remove such commented-out lines. 
+  Although I sometimes get attached to my sentences,
+  they clog up the document by non-info and 
+  I usually delete them anyways in the end.
+  I cannot remember ever regretting this (would I, 
+  I could find it in the git history).
+  Would you agree?
+}
 
 Since we cannot know $n_{BD}(t)$ before running simulations
-we need to replace it with a proxy. For this reason we will use the average number of
+we need to replace it with a proxy. 
+For this reason we will use the average number of
 species in time according to the BD model. 
 It's well known that this is equal to \gio{insert proper citation}
+\richel{
+  I see you use angle bracket as a notation for the expected
+  value. I usually see 'E(x)' as the expected value for 'x',
+  and this is used at the beloved https://en.wikipedia.org/wiki/Expected_value.
+  What are the reasons you prefer the notation with the angle brackets?  
+}
 
 \begin{equation}
     <n_{BD}>(t) = n_{0} \cdot e^{(\mu_{BD} - \lambda_{BD})t} \label{BD average n}
@@ -312,8 +333,18 @@ m_{MBD} = L \cdot \rho \cdot \int_{0}^{T} <n_{BD}>(t)\ dt \\
 If we set $\mu_{BD} = \mu_{MBD}$ and reverse this relation we can extrapolate the value of $\lambda_{BD}$ to use to generate BD trees.
 
 \richel{I suggest $n_{BD} = n_{MBD}$ and only 
-change $\mu_{BD}$ to reach $m_{MBD} = m_{BD}$}
+change $\rho_{BD}$ to reach $<m_{MBD}> = <m_{BD}>$}
 \gio{@Richel: Don't you think it might make more sense to set $\mu_{BD} = \mu_{MBD}$? What changes in the two model is the way we use to generate new species, not the way to remove them. Maybe one thing that's possible to do would be to make $\lambda_{BD}$ a function of time, a bit like Théo is doing in his comparison between DD and TD4 (which, by the way, seem to yield very different results). In case you are wondering the theory can be found in Caesar's master thesis.}
+\richel{
+  I fully agree to use the same extinction rates!
+  The 'mu' used in the context of mutations (now 'rho') messed me up.
+  I hope this is clear now. To recap: 
+  (1) calculate the speciation rate of the twin tree as you wrote down excellently,
+  (2) simulate a twin tree with same number of taxa,
+  (3) calculate the mutation rates of the trees, 
+    so their alignments contain as much information
+}
+
 
 %$$
 %<n_{BD}(t)> = n(t=0) * exp[(mu - lambda) * t] (6)
@@ -334,13 +365,12 @@ quantity averaged on the full MBD dataset $<m_{MBD}>$.
 Do you think is better to use the
 individual $m_{MBD}$ for each tree or the average across the whole
 dataset?}
-
-\gio{END}
-
-\richel{I think I see your point: in single trees stochasticity works per tree twin, in a distribution per distribution. To circumvent this: what if I would be 
-able to measure the actual number of mutations? Then twinning trees by
-having an exact equal amount of mutations would be very clean. Let me know: 
-you think I should investigate this?}
+\richel{
+  I think a per-tree calculation of the mutation rates 
+  is the best we can do. As there was some noise between us above,
+  I think the iteration after the next will allow us to get a better
+  idea about this
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
