@@ -190,73 +190,16 @@ suite from R. We let the Bayesian analysis assume a BD prior, to investigate
 the error this inference makes due to this.
 
 \item For each tree 
-generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform the same analysis and compare the results. To do so we need to be sure that the comparison is fair. The method we adopt to achieve this goal is to impose that the amount of information used in the Bayesian information will be the same. These are the same number of taxa and the same (expected) 
-number of DNA mutations. See appendix for the exact procedure.
-
-\begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{mbd.jpg}
-  \caption{
-    How to create twin trees and alignments. From a focal MBD tree, a twin tree is produced as 
-    such: (1) estimate the $\lambda_{BD}$ to get the same expected number of tips, (2) simulate a BD tree with that amount of tips (discard trees with different number of tips), (3) estimate a mutation rate to get an alignment with the same expected number of mutations, (4) simulate alignments with that amount of mutations (discard those that don't, the picture shows an alignment that should be discarded) 
-  }
-\end{figure}
-
-\item We explained how we set the parameters for each twin BD tree. Using this rules we generate a BD dateset. We repeat the analysis, producing alignments for each tree and subsequently using BEAST to produce a posterior for each of them.
-
-\item Now we have two datasets of posteriors to compare, one for the BD model and one for the MBD model.
-
-\item To compare the results for the two models we measure the inference error using the nLTT statistic between known/true tree and posterior/inferred trees.
+generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform a fair comparison, using trees 
+with the same amount of information, 
+which is the number of taxa 
+and the same (expected) number of DNA mutations.
+To obtain these twin trees, 
 \richel{
-  I would love to describe this more concrete. For example, when do
-  we say something has an effect? If we avoid making such judgements,
-  how will we visualize?
+  I suggest to first start with the equal number of taxa,
+  and the calculation of the speciation rates first.
 }
-
-\richel{I removed the Bayes factor text. It is useful when letting BEAST2
-pick more/overly complex models and see if that more complex model fits the
-data better (penalized by its increased complexity, similar to the AIC). It has
-its uses, but I am unsure if we already want to discuss this now
-or first focus on the proper tree twinning}
-
-
-
-\end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
-\begin{itemize}
-
-\item
-\richel{
-  I guess you know I am a fan of the Open Science Framework,
-  in which you first register you work before you do the experiment
-  (note: I will do some small pilots to estimate the complete time
-  of the experiment). I think it is the proper and superior science,
-  which helps us against writing down bullshit stories after having
-  obtained the results (e.g. 'We expected A and indeed found it!').
-  It also helps me structure my work: first think
-  deeply about the experiment, then do it (instead of the mixing
-  up the two phases). What are your thoughts on that?
-}
-
-\item
-
-\end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bibliography % MEE style
-\bibliographystyle{mee}
-\bibliography{article}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\appendix
-
-\section{Creating twin trees}
-
-To obtain twin trees with an equal amount of information, we impose
+we impose
 that the expected number of mutations in an MBD tree, $m_{MBD}$ equals
 the expected number of mutations in a BD tree, $m_{BD}$:
 
@@ -371,6 +314,68 @@ dataset?}
   I think the iteration after the next will allow us to get a better
   idea about this
 }
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{mbd.jpg}
+  \caption{
+    How to create twin trees and alignments. From a focal MBD tree, a twin tree is produced as 
+    such: (1) estimate the $\lambda_{BD}$ to get the same expected number of tips, (2) simulate a BD tree with that amount of tips (discard trees with different number of tips), (3) estimate a mutation rate to get an alignment with the same expected number of mutations, (4) simulate alignments with that amount of mutations (discard those that don't, the picture shows an alignment that should be discarded) 
+  }
+\end{figure}
+
+\item We explained how we set the parameters for each twin BD tree. Using this rules we generate a BD dateset. We repeat the analysis, producing alignments for each tree and subsequently using BEAST to produce a posterior for each of them.
+
+\item Now we have two datasets of posteriors to compare, one for the BD model and one for the MBD model.
+
+\item To compare the results for the two models we measure the inference error using the nLTT statistic between known/true tree and posterior/inferred trees.
+\richel{
+  I would love to describe this more concrete. For example, when do
+  we say something has an effect? If we avoid making such judgements,
+  how will we visualize?
+}
+
+\richel{I removed the Bayes factor text. It is useful when letting BEAST2
+pick more/overly complex models and see if that more complex model fits the
+data better (penalized by its increased complexity, similar to the AIC). It has
+its uses, but I am unsure if we already want to discuss this now
+or first focus on the proper tree twinning}
+
+
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+\begin{itemize}
+
+\item
+\richel{
+  I guess you know I am a fan of the Open Science Framework,
+  in which you first register you work before you do the experiment
+  (note: I will do some small pilots to estimate the complete time
+  of the experiment). I think it is the proper and superior science,
+  which helps us against writing down bullshit stories after having
+  obtained the results (e.g. 'We expected A and indeed found it!').
+  It also helps me structure my work: first think
+  deeply about the experiment, then do it (instead of the mixing
+  up the two phases). What are your thoughts on that?
+}
+
+\item
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography % MEE style
+\bibliographystyle{mee}
+\bibliography{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
