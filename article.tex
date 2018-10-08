@@ -18,6 +18,7 @@
 \usepackage{natbib}
 \bibpunct{(}{)}{;}{a}{}{;}
 
+\usepackage{amssymb}
 \usepackage[english]{babel}
 
 % Use 'It was found that something is something (Name 1234)' style
@@ -370,7 +371,8 @@ $P_{i}(\theta | X^{BD}_{i}, BD)$ and $P_{i}(\theta | X^{MBD}_{i}, BD)$.
 \richel{
   I definitely get your point! 
   I would prefer something expressive over a number, perhaps a fancy letter, like
-  for example $\mathbb{B}$ and $\mathbb{M}$ for a Birth-Death and Multiple-Birth Death. 
+  for example $\mathbb{B}$ and $\mathbb{M}$ 
+  for a Birth-Death and Multiple-Birth Death. 
 }
 \gio{
 2) Writing down things to tidy up manuscript and thoughts I just realized that 
@@ -403,7 +405,7 @@ To obtain such statistics the procedure is the following:
   present $N_{i,j}(t)=\frac{n_{i,j}(t)}{n^{max}_{i,j}}$. We then define the 
   nLTT measure as
 
-$nLTT_{i,j} = \int_{0}^{T} \abs{N_{i,j}(t) - N_{T_{i}}} dt$
+$nLTT_{i,j} = \int_{0}^{T} | N_{i,j}(t) - N_{T_{i}} | dt$
 
 \gio{I am running out of letters :(}
 \richel{Haha! I suggest to use the same equation and symbols 
@@ -412,7 +414,7 @@ $nLTT_{i,j} = \int_{0}^{T} \abs{N_{i,j}(t) - N_{T_{i}}} dt$
 }
 
 $$
-\delta nLTT = \int_{0}^{1} \abs{nLTT_1(t) - nLTT_2{t}} dt$
+\Delta nLTT = \int_{0}^{1} | nLTT_1(t) - nLTT_2{t} | dt
 $$
 
 \subsubsection{Option 2: Bayes Factor (BF)}
