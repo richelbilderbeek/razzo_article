@@ -111,11 +111,9 @@
 
 {\bf Keywords:} computational biology, evolution, phylogenetics, Bayesian analysis, tree prior
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\gio{According to my fine graining approach we should at each step deepen every small section. At a certain level I think we can start to re-coarse-grain what we wrote to create the abstract.}
-\richel{I enjoy this approach! Did some minor fine-graining}
-\richel{Have you already looked up for a target journal? I know how a journal's constraints have helped me 
+\richel{Have you already looked up for a target journal?} 
 \gio{Honestly I have literally no idea how to select a good journal for this kind of article.}
-in writing an article, for example, by having a maximum number of pictures}
+\richel{I suggest you ask Rampal} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
@@ -197,14 +195,24 @@ the error this inference makes due to this.
 \item For each tree 
 generated under the MBD model we aim to generate a "twin" tree under the BD model in order to perform a fair comparison. 
 We want trees from the two models to contain the same amount of information, 
-i.e. the same (expected) number of DNA mutations. %option 1
-%i.e. the same number of taxa at the present. %option 2
+i.e. the same (expected) number of DNA mutations and 
+the same number of taxa at the present.
 To obtain these twin trees, 
 \richel{
-  I suggest to first start with the equal number of taxa,
-  and the calculation of the speciation rates first.
+  I suggest to first start describing how to create the twin tree,
+  calculation of the speciation rates, then the twin alignment.
 }
-\gio{@richel: both assumptions seem to make sense to me. If possible I would run both and see which one performs better. For now let's stick to option 1 in the manuscript.}
+\gio{@richel: both assumptions seem to make sense to me. 
+  If possible I would run both and see which one performs better. For now
+  let's stick to option 1 in the manuscript.
+}
+\richel{
+  Sorry for the confusion: the previous comment was about the order
+  of describing out methods in this manuscript. As of the methods,  
+  I really meant to create twin trees with 
+  both equal number of taxa and equal expected number of mutations.
+}
+  
 we impose
 that the expected number of mutations in an MBD tree, $m_{MBD}$ equals
 the expected number of mutations in a BD tree, $m_{BD}$:
@@ -215,15 +223,27 @@ m_{MBD} = m_{BD} \label{m equivalence}
 
 We first generate a set of MBD trees. For each of them we can measure the amount of mutations $m_{MBD}$.
 
-\gio{I think this should definitely go to the methods}
-\richel{I put it there for use, hopefully at a spot you liked :-)}
-
 The expected number of mutations $m$ of a phylogeny 
 \richel{
   I think 'expected number of mutations' would be more correct.
   Do you agree?
 }
-\gio{I don't agree. It is expected if you use an expected number of species over time. If you have the correct $n(t)$ in principle you should be able to get the exact number of mutations.}
+\gio{
+  I don't agree. It is expected if you use an expected number 
+  of species over time. If you have the correct $n(t)$ in principle you 
+  should be able to get the exact number of mutations.
+}
+\richel{
+  If you have the correct $n(t)$ you can indeed calculate exactly what
+  the number of mutations will be, if and only if the mutation rate is
+  zero. Except for this travial case, I am curious about how you
+  calculate this. What is the precise number of mutations on a DNA
+  sequence of 1000 base pairs over one time unit with an 
+  expected average per-nucleotide
+  mutation rate of once per time? I would say one expects on average 1000 mutations
+  to occur. What would your claim be?
+} 
+
 with crown age $-T$ (with $T>0$) in fact is given by
 \richel{
   above stood 'crown age -T'. 
@@ -233,7 +253,27 @@ with crown age $-T$ (with $T>0$) in fact is given by
   t\_now - t\_crown = T.
   Looking forward for a better suggestion than mine :-)
 }
-\gio{We can specify that the crown age is $-T$ where $T$ is a positive number (which should be already clear, I guess, if we report it as $-T$). In my opinion this makes everything nicer when we have to write down the integral which should, in principle, be $\int_{-T}^{0} f(t-(-T))$ but using integral properties can be rewritten as $\int_{0}^{T} f(t)$. Having a definite integral starting from $0$ always looks better ^^.}
+\gio{
+  We can specify that the crown age is $-T$ where $T$ is a positive number 
+  (which should be already clear, I guess, 
+  if we report it as $-T$). In my opinion this makes everything 
+  nicer when we have to write down the integral which should, 
+  in principle, be $\int_{-T}^{0} f(t-(-T))$ but using integral properties 
+  can be rewritten as $\int_{0}^{T} f(t)$. Having a definite integral 
+  starting from $0$ always looks better ^^.
+}
+\richel{
+  I see, in a conversion you would say 'the crown age of the phylogeny is 
+  minus ten million years', where I would the say 'the crown age of the 
+  phylogeny is ten million years' to say exactly the same thing!
+  To try to resolve this, I checked one (actually two) of Rampal's papers (
+    'Diversity-dependence brings molecular phylogenies closer to agreement with the fossil record',
+    by Rampal, Bart Haegeman, Tanja Stadler, Tracy Aze, Paul N. Pearson, Andy Purvis, Albert B. Phillimore
+  ). Rampal avoids this point altogether: '... crown age $t_c = t_p − t_1$'
+  and '... and crown ages (5, 10 and 15 Myr)'. I suggest we do the same in
+  both writing and derivations: he is even more famous than us :-) 
+}
+
 
 \begin{equation}
 m = L \cdot \rho \cdot \int_{0}^{T} n(t)\ dt \label{m calculation}
@@ -242,21 +282,6 @@ m = L \cdot \rho \cdot \int_{0}^{T} n(t)\ dt \label{m calculation}
 where $L$ is the number of DNA nucleotides, 
 $\rho$ is the per-site per-species mutation rate and
 $n(t)$ the number of species at each time.
-
-%It can be easily seen considering that $\rho$ is the number of mutations
-%per unit time per site. For this reason it's needed to multiply by
-%time and number of sites. 
-\gio{This feels kind of a repetitions of what we wrote before the formula. I comment it. We can think of reinsert it afterwards, if needed (see comment above).}
-\richel{
-  I suggest to remove such commented-out lines. 
-  Although I sometimes get attached to my sentences,
-  they clog up the document by non-info and 
-  I usually delete them anyways in the end.
-  I cannot remember ever regretting this (would I, 
-  I could find it in the git history).
-  Would you agree?
-}
-\gio{Agree. Remove them. CLOSED}
 
 Since we cannot know $n_{BD}(t)$ before running simulations
 we need to replace it with a proxy. 
@@ -269,7 +294,14 @@ It's well known that this is equal to \gio{insert proper citation}
   and this is used at the beloved https://en.wikipedia.org/wiki/Expected\_value.
   What are the reasons you prefer the notation with the angle brackets?  
 }
-\gio{Because the capital E is inelegant, plebeian and boor. And we want to be classy, don't we? :D}
+\gio{
+  Because the capital E is inelegant, plebeian and boor. 
+  And we want to be classy, don't we? :D
+}
+\richel{
+  If the angle brackets are the new hip kids in mathematics town, sure,
+  we'll use those!
+}
 
 \begin{equation}
     <n_{BD}>(t) = n_{0} \cdot e^{(\mu_{BD} - \lambda_{BD})t} \label{BD average n}
@@ -309,8 +341,13 @@ dataset?}
   I think the iteration after the next will allow us to get a better
   idea about this
 }
-\gio{I am still very debated about this. I actually would like to ask also Rampal's opinion.
+\gio{
+  I am still very debated about this. I actually would like to ask also Rampal's opinion.
 }
+\richel{
+  Sounds like a good idea!
+}
+
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{mbd.jpg}
   \caption{
@@ -323,38 +360,97 @@ dataset?}
 
 \subsection{Model selection}
 
-\item So far we have simulated two datasets of trees under the two models: $\{T_{i}^{BD}\}_{i=1}^{N_{S}}$ and $\{T_{i}^{MBD}\}_{i=1}^{N_{S}}$.
+\item So far we have simulated two datasets of trees under the two models: 
+$\{T_{i}^{BD}\}_{i=1}^{N_{S}}$ and $\{T_{i}^{MBD}\}_{i=1}^{N_{S}}$.
 We used them to generate a dataset of alignments for each model: $\{X^{BD}_{i}\}_{i=1}^{N_{S}}$ and $\{X^{MBD}_{i}\}_{i=1}^{N_{S}}$. From each dataset we produced a posterior distribution from a BD prior: 
 $P_{i}(\theta | X^{BD}_{i}, BD)$ and $P_{i}(\theta | X^{MBD}_{i}, BD)$.
-\gio{1) We might want to rename the models, e.g. BD = (0) and MBD = (1). These names with capital letters are too big and ugly;
-2) Writing down things to tidy up manuscript and thoughts I just realized that actually the "model" is the same for the two posteriors. In fact with the word "model" Maturana et al. refer to the prior used (see eq. 1, $\pi(\theta | M)$). In such case are we sure we can actually use the Bayes factor for model selection?}
-%Now we have two datasets  of posteriors to compare, one for the BD model and one for the MBD model.
+\gio{
+  1) We might want to rename the models, e.g. BD = (0) and MBD = (1). These names with capital letters are too big and ugly;
+}
+\richel{
+  I definitely get your point! 
+  I would prefer something expressive over a number, perhaps a fancy letter, like
+  for example $\mathbb{B}$ and $\mathbb{M}$ for a Birth-Death and Multiple-Birth Death. 
+}
+\gio{
+2) Writing down things to tidy up manuscript and thoughts I just realized that 
+  actually the "model" is the same for the two posteriors. 
+  In fact with the word "model" Maturana et al. refer to the prior 
+  used (see eq. 1, $\pi(\theta | M)$). In such case are we sure we can actually 
+  use the Bayes factor for model selection?
+}
+\richel{
+  Correct! The assumed model of the posterior is a Birth-Death model. To do
+  model selection, we could assume a different nucleotide substitution 
+  model (GTR instead of JC69) and/or a different clock model (relaxed clock,
+  instead of a strict clock). I hope this clears things up. I will add
+  'generative model' for the model (BD or MBD) that created a phylogeny
+  and 'inferential model' for the model used in generating a posterior.
+}
 
 \subsubsection{Option 1: nLTT statistics}
-\item To compare the results for the two models we measure the inference error using the nLTT statistic between known/true tree and posterior/inferred trees (\cite{nltt}). To obtain such statistics the procedure is the following:
+\item To compare the results for the two models we measure the inference 
+error using the nLTT statistic between known/true tree and 
+posterior/inferred trees (\cite{nltt}). 
+To obtain such statistics the procedure is the following:
 
-- From each tree $T_{i,j}^{M}$ (with $j=1,...,N_{S}$) belonging to the posterior $P_{i}(\theta | X^{M}_{i}, BD)$ and relative to the model $M$, we extrapolate the lineage-through-time (LTT), in other words we measure the number of species as a function of time $n_{i,j}(t)$. To allow a comparison we normalize dividing by the maximum number of species of each tree, i.e. the number of tips at the present $N_{i,j}(t)=\frac{n_{i,j}(t)}{n^{max}_{i,j}}$. We then define the nLTT measure as
+- From each tree $T_{i,j}^{M}$ (with $j=1,...,N_{S}$) 
+  belonging to the posterior $P_{i}(\theta | X^{M}_{i}, BD)$ 
+  and relative to the model $M$, we extrapolate the lineage-through-time (LTT), 
+  in other words we measure the number of species as a function of 
+  time $n_{i,j}(t)$. To allow a comparison we normalize dividing by the 
+  maximum number of species of each tree, i.e. the number of tips at the 
+  present $N_{i,j}(t)=\frac{n_{i,j}(t)}{n^{max}_{i,j}}$. We then define the 
+  nLTT measure as
 
 $nLTT_{i,j} = \int_{0}^{T} \abs{N_{i,j}(t) - N_{T_{i}}} dt$
 
 \gio{I am running out of letters :(}
-\richel{
-  I would love to describe this more concrete. For example, when do
-  we say something has an effect? If we avoid making such judgements,
-  how will we visualize?
+\richel{Haha! I suggest to use the same equation and symbols 
+  as equation 1 in
+  the nLTT article of Janzen, Hoehna and Etienne, 2015:
 }
+
+$$
+\delta nLTT = \int_{0}^{1} \abs{nLTT_1(t) - nLTT_2{t}} dt$
+$$
 
 \subsubsection{Option 2: Bayes Factor (BF)}
 
-\richel{I removed the Bayes factor text. It is useful when letting BEAST2
-pick more/overly complex models and see if that more complex model fits the
-data better (penalized by its increased complexity, similar to the AIC). It has
-its uses, but I am unsure if we already want to discuss this now
-or first focus on the proper tree twinning}
-\gio{But after we describe the tree twinning we will have to describe the method we use for model selection anyways. BF and nLTT are mutually exclusive choices, right?}
-\gio{The point is: what method do we choose? According to the choice we have to describe that. I'd also like to know Rampal's opinion on that. In principle I like more the BF method cause it looks more solid while the nLTT looks a bit like the last resort to me.}
-
-
+\richel{
+  I removed the Bayes factor text. It is useful when letting BEAST2
+  pick more/overly complex models and see if that more complex model fits the
+  data better (penalized by its increased complexity, similar to the AIC). It has
+  its uses, but I am unsure if we already want to discuss this now
+  or first focus on the proper tree twinning
+}
+\gio{
+  But after we describe the tree twinning we will have to describe 
+  the method we use for model selection anyways. 
+  BF and nLTT are mutually exclusive choices, right?
+}
+\richel{
+  BF and nLTT are not mutually exclusive choices, but do complementary things:
+  nLTT measures the difference between the 'true' tree and the inferred trees,
+  which is the most important thing: we are interested in the error BEAST2
+  makes when using an overly simple (single-)BD tree prior.
+  With the BF we can compare BEAST2 posteriors that use (the same
+  tree prior, but) different site models (e.g. JC69, the simplest, 
+  versus GTR, the most complex). Although we know we generated the DNA
+  alignment with JC69, there are some hints that the GTR model is the
+  superior choice to do inference with.
+}
+\gio{
+  The point is: what method do we choose? 
+  According to the choice we have to describe that. 
+  I'd also like to know Rampal's opinion on that. 
+  In principle I like more the BF method cause it looks 
+  more solid while the nLTT looks a bit like the last resort to me.
+}
+\richel{
+  I hope this is now more clear. If not, I'll happily
+  elaborate :-)
+}
 
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -376,6 +472,10 @@ or first focus on the proper tree twinning}
   up the two phases). What are your thoughts on that?
 }
 \gio{I agree on the principle but I don't fully agree on the open science procedure. Sometimes you do find something good while you're looking for something else. That happened many times in the history of science. This doesn't necessarily implies that we will end up p-hacking the results. I think we need to be open to new findings that might be not forecasted by our hypothesis. I think this is the good way to do science: be critical with our results but not imposing that reality will follow the theory.}
+\richel{
+  Looks like we are on the same page here: we both dislike making up bullshit 
+  stories after the results are known. Great!
+}
 \item
 
 \end{itemize}
