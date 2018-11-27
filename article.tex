@@ -168,6 +168,33 @@ If this is the case one should always be more keen to adopt the simplest model.
 \item Here we present our study with the aim of exploring 
 when using a more complex MBD tree prior is warranted.
 
+% Hypothesis: general
+\item We hypothesize that the error made today, using BD tree priors,
+increases with an increased number or stronger effect of multiple birth events.
+This is straightforward: without multiple birth events or such event having
+no effect, the MBD model falls back to a BD model. We expect larger
+errors when we deviate more from the BD model's assumptions. 
+
+\item Additionally, we hypothesize MBD having a stronger effect if the normal
+speciation process is less pronounced. The more speciations are caused by the
+BD process, there are relatively less multiple-birth events. 
+
+\item We expect the effect of extinction rates to be neutral, as extinctions will
+hit lineages created by both speciation processes equally. 
+
+\item Summarized, we expect the error made be correlated to the number 
+of species created by the multiple-birth process over the total number 
+of species created:
+
+\begin{equation}
+<e> = f(\frac{n_{taxa}^{MBD}}{n_{taxa}^{BD} + n_{taxa}^{MBD}})
+\end{equation} 
+
+Where $<e>$ denotes the expected error, $f$ is a monotonously increasing 
+function of unknown shape, $n_{taxa}^{MBD}$ is the number of taxa created
+in multiple-birth events and $n_{taxa}^{BD}$ is the number of taxa created
+by the standard BD specition process.
+
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
