@@ -395,6 +395,56 @@ $$
 
 \subsection{Model selection}
 
+We simulate alignments using the simplest nucleotide substitution model (JC69),
+the simplest clock model (strict). It is thus imminent to assume these
+models in our Bayesian inference. Nevertheless, the phylogeny the alignment
+was based on, could have followed either an MBD or BD tree model, 
+where we in both cases assume a BD tree model. This will have 
+an unknown effect on our inference: it may theoretically be that an MBD model
+generates (a tree that generates) an alignment in which a different site 
+and/or clock model is favored. 
+
+We investigate this by measuring if the generative model (with the simplest
+nucleotide substitution and simplest clock model) is indeed selected 
+to be the best fitting model. 
+To be precise, we look at the model 
+with the highest marginal likelihood 
+(also called evidence \cite{mackay2003information}),
+$f(D|M)$, which is the probability of the data D given model M.
+In the context of this research, D consists of the DNA alignment,
+and M is the combination of site, clock and tree models.
+
+To estimate the marginal likelihood, 
+we use an algorithm named nested sampling \cite{skilling2006nested}.
+Nested sampling is attractive to use
+in a phylogentic context, as it gives a good estimation,
+requires little tuning \cite{maturana2018}.
+Nested sampling is available as a BEAST2 package
+and can be used by babette \cite{babette}.
+
+The nested sampling algorithm stops its run 
+when the marginal likelihood estimation error 
+reaches below a certain tolerance.  
+Similar to \cite{maturana2018},
+we use a (relative) error tolerance $\epsilon$ of $10^{-13}$,
+1 particle to explore the parameter space
+and 100 active points. 
+To achieve the latter, we use the MCMC chain length $L_c$ of 1M 
+(as also used in the parameter estimates),
+and a sub-chain length $L_{sc}$ of 10K.
+
+The models we use in our model comparison are the four combinations
+of two site models and two clock models. We use the JC69 site model, which
+is the (generative and) simplest model and GTR, the site model with most
+degrees of freedom. For the clock models, we use the strict clock model,
+which is the (generative and) simplest clock model, and the RLN clock model.
+
+From these four marginal likelihood estimates, we calculate the weight of
+the generative model and plot this in figure 2. We do this for both the 
+alignments derived from the MBD tree and the BD twin tree. We expect that
+the generative model has the heighest weight in both the MBD and BD alignments.
+We expect this weight to be higher in the BD alignments.
+
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -417,6 +467,29 @@ $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+  \centering 
+  \begin{tabular}{p{0.05\textwidth} p{0.6\textwidth} p{0.2\textwidth}}
+    \hline
+                          & Description & Value(s) \\
+    \hline
+    \hline
+    $L_c$                 & MCMC chain length & $10^6$ \\
+    $L_{sc}$              & MCMC sub-chain length & $10^4$ \\
+    $\epsilon$            & relative error tolerance in marginal likelihood estimation & $10^{-13}$ \\
+    \hline
+  \end{tabular}
+  \caption{
+    Overview of the simulation parameters. 
+  }
+  \label{table:parameters}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
