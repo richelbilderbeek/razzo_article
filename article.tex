@@ -317,14 +317,19 @@ Using this rules we generate a BD dataset.
 We repeat the analysis, producing alignments for each tree 
 and subsequently using BEAST to produce a posterior for each of them.
 
-\subsection{Model selection}
+\subsection{Measuring the inference error}
 
 \item So far we have simulated two datasets of trees under the two models: 
 $\{T_{i}^{BD}\}_{i=1}^{N_{S}}$ and $\{T_{i}^{MBD}\}_{i=1}^{N_{S}}$.
 We used them to generate a dataset of alignments for each model: $\{X^{BD}_{i}\}_{i=1}^{N_{S}}$ and $\{X^{MBD}_{i}\}_{i=1}^{N_{S}}$. From each dataset we produced a posterior distribution from a BD prior: 
 $P_{i}(\theta | X^{BD}_{i}, BD)$ and $P_{i}(\theta | X^{MBD}_{i}, BD)$.
 \gio{
-  1) We might want to rename the models, e.g. BD = (0) and MBD = (1). These names with capital letters are too big and ugly;
+  1) We might want to rename the models, e.g. BD = (0) and MBD = (1). 
+  These names with capital letters are too big and ugly;
+}
+\richel{
+  I would strongly prefer MBD and BD, as I feel replacing the big ugly 
+  capital letters by short pretty numbers hurts readability even more 
 }
 
 \item To compare the results for the two models we measure the inference 
@@ -352,6 +357,8 @@ $nLTT_{i,j} = \int_{0}^{T} | N_{i,j}(t) - N_{T_{i}} | dt$
 $$
 \Delta nLTT = \int_{0}^{1} | nLTT_1(t) - nLTT_2{t} | dt
 $$
+
+\subsection{Model selection}
 
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
