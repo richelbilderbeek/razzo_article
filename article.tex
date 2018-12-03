@@ -174,15 +174,10 @@ increases with an increased number or stronger effect of multiple birth events.
 This is straightforward: without multiple birth events or such event having
 no effect, the MBD model falls back to a BD model. We expect larger
 errors when we deviate more from the BD model's assumptions. 
-
-\item Additionally, we hypothesize MBD having a stronger effect if the normal
+Additionally, we hypothesize MBD having a stronger effect if the normal
 speciation process is less pronounced. The more speciations are caused by the
-BD process, there are relatively less multiple-birth events. 
-
-\item We expect the effect of extinction rates to be neutral, as extinctions will
-hit lineages created by both speciation processes equally. 
-
-\item To put into an explicit equation, 
+BD process, there are relatively less multiple-birth events.
+To put this hypothesis, H1, into an explicit equation, 
 we expect the error made be correlated to the number 
 of species created by the multiple-birth process over the total number 
 of species created:
@@ -194,14 +189,45 @@ of species created:
 Where $<e>$ denotes the expected error, $f$ is a monotonously increasing 
 function of unknown shape, $n_{taxa}^{MBD}$ is the number of taxa created
 in multiple-birth events and $n_{taxa}^{BD}$ is the number of taxa created
-by the standard BD specition process.
+by the standard BD specition process. 
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_1.png}
+  \caption{
+    Hypothesis 1: we expect the error made be correlated to the number 
+    of species created by the multiple-birth process over the total number 
+    of species created
+  }
+  \label{fig_h_1}
+\end{figure}
+
+\item We have the hypothesis, H2, 
+that the effect of extinction rates is neutral, 
+as extinctions will hit lineages created by both speciation processes equally. 
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_2.png}
+  \caption{
+    Hypothesis 2: the effect of extinction rates is neutral
+  }
+  \label{fig_h_2}
+\end{figure}
 
 \item Due to the proportionality of the term within $f$, 
-we expect the timing of a multiple births event (be it close to the
+we have the hypothesis, H3, 
+that the timing of a multiple birth event (be it close to the
 crown age or close to the present) to have no effect. Compared to a late
 multiple birth event, an early multiple birth event may have a 
 longer-lasting effect (as the next speciation event will be later), but it
 will create less new species, as there are still fewer taxa.
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_3.png}
+  \caption{
+    Hypothesis 3: the timing of a multiple birth event has no effect.
+  }
+  \label{fig_h_3}
+\end{figure}
 
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,8 +282,34 @@ for such processes as in \cite{mbd}.
 All the simulations are produced in continuous time, 
 using the Doob-Gillespie algorithm. 
 
-\item We start simulating $N_{S} = 1000$ MBD trees. 
-From each MBD tree, a DNA sequence alignment is simulated. 
+\item We start simulating $N_{S} = 1000$ MBD trees,
+with either 50, 100 and 200 taxa.
+We have the hypothesis H5, that the number of taxa does not
+have an effect on the error being made, as there is no
+diversity dependency in any of the processes.
+We have the hypothesis H6, that for a higher number of taxa 
+the variance in the error decreases, as more information is present
+in the simulated phylogenies.
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_5.png}
+  \caption{
+    Hypothesis 5: the number of taxa does not
+    have an effect on the error being made
+  }
+  \label{fig_h_5}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_6.png}
+  \caption{
+    Hypothesis 6: for a higher number of taxa 
+    the variance in the error decreases
+  }
+  \label{fig_h_6}
+\end{figure}
+
+\item From each MBD tree, a DNA sequence alignment is simulated. 
 For each sequence alignment we then perform a Bayesian analysis 
 to recover a posterior distribution of trees, 
 each composed of $N_{P}$ phylogenies. 
@@ -286,6 +338,21 @@ from the package "\texttt{TESS}" (\cite{Hoehna2013}).
 We simulate the tree in such a way the new tree 
 has the same number of tips and the same crown age as the MBD tree. 
 We furthermore require that the BD tree conserve the topology of the MBD tree.
+We have hypothesis H4 that, compared to the MBD trees, 
+the error will be less in the BD twin tree.
+The difference between the errors made in MBD and twin BD trees indicates
+the impact the MBD process has on the error we make in inference using a
+contemporary BD prior.
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_4.png}
+  \caption{
+    Hypothesis 4: compared to the MBD trees, 
+    the error will be less in the BD twin tree
+  }
+  \label{fig_h_4}
+\end{figure}
+
 
 We want the MBD and twin BD trees to contain the same amount of information, 
 i.e. the same number of DNA mutations and the same number of taxa at the present:
