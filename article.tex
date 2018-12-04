@@ -353,6 +353,15 @@ be computationally feasible. For the different values of $n$, we show
 the relation between $s$ and $e$ in figure \ref{fig:5} and its effect
 on the variance of $e$ in figure \ref{fig:6}.
 
+\item To see the effect of the extinction rate on the relation 
+between $s$ and $e$, we simulate phylogenies
+with different extinction rates $\mu$. We use values of $\mu$
+of 0.0, 0.1 and 0.2. An extinction rate of zero has two features:
+(1) the model falls back to a pure multiple-birth model, 
+(2) all multiple-birth events are observed.
+For the different values of $\mu$, we show
+the relation between $s$ and $e$ in figure \ref{fig:2}.
+
 \item We start simulating $N_{S} = 1000$ MBD trees,
 with either 50, 100 and 200 taxa.
 
@@ -606,6 +615,19 @@ measured in this experiment.
   \label{fig:6}
 \end{figure}
 
+\item We expected the effect of extinction on the relation
+between $s$ and $e$ to be neutral (figure \ref{fig:h_2}). 
+Figure \ref{fig:2} shows the effect 
+measured in this experiment. 
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_2.png}
+  \caption{
+    The effect of extinction on the relation between s on e
+  }
+  \label{fig:2}
+\end{figure}
+
 
 \item
 
@@ -630,11 +652,11 @@ measured in this experiment.
     \hline
     \hline
     $\mathcal{H}_1$       & For a higher $s$, $e$ will increase monotonously & \ref{fig:h_1} & \ref{fig:1} \\
-    $\mathcal{H}_2$       & Extinction rates have no effect on $e$ & \ref{fig:h_2} & Not yet \\
+    $\mathcal{H}_2$       & Extinction rates have no effect on $e$ & \ref{fig:h_2} & \ref{fig:2} \\
     $\mathcal{H}_3$       & The timing of multiple-birth events has no effect on $e$ & \ref{fig:h_3} & Not yet \\
     $\mathcal{H}_4$       & An MBD tree will have a higher $e$ than its twin BD counterpart & \ref{fig:h_4} & Not yet \\
-    $\mathcal{H}_5$       & The number of taxa has no effect on $e$ & \ref{fig:h_5} & Not yet \\
-    $\mathcal{H}_6$       & A higher number of taxa decreases the variance in $e$ & \ref{fig:h_6} & Not yet \\
+    $\mathcal{H}_5$       & The number of taxa has no effect on $e$ & \ref{fig:h_5} & \ref{fig:5} \\
+    $\mathcal{H}_6$       & A higher number of taxa decreases the variance in $e$ & \ref{fig:h_6} & \ref{fig:6} \\
     $\mathcal{H}_7$       & The MBD regime has no effect on $e$ & \ref{fig:h_7} & Not yet \\
     \hline
   \end{tabular}
