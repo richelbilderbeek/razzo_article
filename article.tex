@@ -190,6 +190,12 @@ s = \frac{n_{\mathbb{M}}}{n_{\mathbb{M}} + n_{\mathbb{B}}}
 Here, $n_{\mathbb{B}}$ is the number of extinct and extant species created
 during a default single-birth speciation event.
 
+From such phylogenies with different degrees of $s$, we measure the
+inference error we make today, would nature follow such a phylogeny.
+The inference error we make today is caused by the assumption of a BD process
+and by inherent noise in this inference. 
+
+We expect
 % Hypothesis: general
 \item We hypothesize that the error made today, using BD tree priors,
 increases with an increased number or stronger effect of multiple birth events.
@@ -205,7 +211,7 @@ of species created by the multiple-birth process over the total number
 of species created:
 
 \begin{equation}
-<e> = f(\frac{n_{taxa}^{MBD}}{n_{taxa}^{BD} + n_{taxa}^{MBD}})
+<e> = f(s)
 \end{equation} 
 
 Where $<e>$ denotes the expected error, $f$ is a monotonously increasing 
@@ -577,12 +583,35 @@ We expect this weight to be higher in the BD alignments.
   \centering 
   \begin{tabular}{p{0.05\textwidth} p{0.6\textwidth} p{0.2\textwidth}}
     \hline
-                          & Description & Value(s) \\
+                          & Description\\
     \hline
     \hline
-    $L_c$                 & MCMC chain length & $10^6$ \\
-    $L_{sc}$              & MCMC sub-chain length & $10^4$ \\
-    $\epsilon$            & relative error tolerance in marginal likelihood estimation & $10^{-13}$ \\
+    $n_{\mathbb{M}}$      & Number of extinct and extant taxa created by a multiple-birth event \\
+    $n_{\mathbb{B}}$      & Number of extinct and extant taxa created by a single-birth event \\
+    $s$                   & Extent/strength of the multiple birth process \\
+    $L_c$                 & MCMC chain length \\
+    $L_{sc}$              & MCMC sub-chain length \\
+    $\epsilon$            & relative error tolerance in marginal likelihood estimation \\
+    \hline
+  \end{tabular}
+  \caption{
+    Overview of the symbols. 
+  }
+  \label{table:symbols}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+  \centering 
+  \begin{tabular}{r l}
+    \hline
+                          & Value(s) \\
+    \hline
+    \hline
+    $L_c$                 & $10^6$ \\
+    $L_{sc}$              & $10^4$ \\
+    $\epsilon$            & $10^{-13}$ \\
     \hline
   \end{tabular}
   \caption{
