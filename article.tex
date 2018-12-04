@@ -21,6 +21,10 @@
 \usepackage{amssymb}
 \usepackage[english]{babel}
 
+\usepackage{bbm}
+\usepackage{dsfont}
+
+
 % Use 'It was found that something is something (Name 1234)' style
 \setcitestyle{authoryear,open={},close={}}
 
@@ -172,6 +176,19 @@ If this is the case one should always be more keen to adopt the simplest model.
 
 \item Here we present our study with the aim of exploring 
 when using a more complex MBD tree prior is warranted.
+To do so, we simulate phylogenies using the MBD process, with
+varying degrees of that process. To be explicit, we define
+that degree, $s$, as the number of extinct and extant species created
+during a co-occuring speciation event, 
+$n_{\mathbb{M}}$, from the total number of extinct and extant species:
+
+\begin{equation}
+s = \frac{n_{\mathbb{M}}}{n_{\mathbb{M}} + n_{\mathbb{B}}}
+\end{equation}
+
+
+Here, $n_{\mathbb{B}}$ is the number of extinct and extant species created
+during a default single-birth speciation event.
 
 % Hypothesis: general
 \item We hypothesize that the error made today, using BD tree priors,
