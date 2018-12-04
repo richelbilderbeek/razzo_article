@@ -195,29 +195,14 @@ inference error we make today, would nature follow such a phylogeny.
 The inference error we make today is caused by the assumption of a BD process
 and by inherent noise in this inference. 
 
-We expect
-% Hypothesis: general
-\item We hypothesize that the error made today, using BD tree priors,
-increases with an increased number or stronger effect of multiple birth events.
-This is straightforward: without multiple birth events or such event having
-no effect, the MBD model falls back to a BD model. We expect larger
-errors when we deviate more from the BD model's assumptions. 
-Additionally, we hypothesize MBD having a stronger effect if the normal
-speciation process is less pronounced. The more speciations are caused by the
-BD process, there are relatively less multiple-birth events.
-To put this hypothesis, H1, into an explicit equation, 
-we expect the error made be correlated to the number 
-of species created by the multiple-birth process over the total number 
-of species created:
+We have the hypothesis $\mathcal{H}_1$ that, for a higher $s$, 
+the inference error $e$ will increase:
 
 \begin{equation}
-<e> = f(s)
+e = f(s)
 \end{equation} 
 
-Where $<e>$ denotes the expected error, $f$ is a monotonously increasing 
-function of unknown shape, $n_{taxa}^{MBD}$ is the number of taxa created
-in multiple-birth events and $n_{taxa}^{BD}$ is the number of taxa created
-by the standard BD specition process. 
+Where $f$ is a monotonously increasing function of unknown shape.
 
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{fig_h_1.png}
@@ -229,9 +214,15 @@ by the standard BD specition process.
   \label{fig_h_1}
 \end{figure}
 
-\item We have the hypothesis, H7, 
-that there is no difference in inference errors if the MBD process
-generates many species in many modest MB events or few intense MB events.
+The MBD process has multiple components, that may cause 
+different values of $e$ for identical values of $s$.
+
+One MBD component that may cause 
+different values of $e$ for identical values of $s$
+is the MBD regime: which can be many modest 
+multiple-speciation events, or few intense ones. 
+As we have no prior expectations, we have the (null) hypothesis, 
+$\mathcal{H}_7$, that the MBD regime has no effect on $e$.
 
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{fig_h_7.png}
@@ -242,9 +233,13 @@ generates many species in many modest MB events or few intense MB events.
   \label{fig_h_7}
 \end{figure}
 
-\item We have the hypothesis, H2, 
-that the effect of extinction rates is neutral, 
-as extinctions will hit lineages created by both speciation processes equally. 
+Another MBD component that may cause 
+different values of $e$ for identical values of $s$
+is the effect of extinction. 
+As extinctions will hit lineages created by both speciation processes equally,
+and we have no additionaly prior expectations,
+we have the (null) hypothesis, 
+$\mathcal{H}_2$, that extinction has no effect on $e$.
 
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{fig_h_2.png}
@@ -254,13 +249,16 @@ as extinctions will hit lineages created by both speciation processes equally.
   \label{fig_h_2}
 \end{figure}
 
-\item Due to the proportionality of the term within $f$, 
-we have the hypothesis, H3, 
-that the timing of a multiple birth event (be it close to the
-crown age or close to the present) to have no effect. Compared to a late
-multiple birth event, an early multiple birth event may have a 
+Another MBD component that may cause 
+different values of $e$ for identical values of $s$,
+is the timing of a multiple-birth event: be it close to the
+crown age or close to the present. 
+Compared to a late multiple birth event, an early multiple birth event may have a 
 longer-lasting effect (as the next speciation event will be later), but it
 will create less new species, as there are still fewer taxa.
+As we have no prior expectations,
+we have the (null) hypothesis, 
+$\mathcal{H}_3$, that the timing of multiple-birth events has no effect on $e$.
 
 \begin{figure}[!htbp]
   \includegraphics[width=\textwidth]{fig_h_3.png}
@@ -268,6 +266,35 @@ will create less new species, as there are still fewer taxa.
     Hypothesis 3: the timing of a multiple birth event has no effect.
   }
   \label{fig_h_3}
+\end{figure}
+
+Another MBD component that may cause 
+different values of $e$ for identical values of $s$,
+is the number of taxa in a phylogeny,
+As there is no diversity dependency in any of the processes
+and we have no further prior expectations, we have
+the (null) hypothesis $\mathcal{H}_5$, that the number of
+taxa has no effect on $e$.
+As a higher number of taxa increases the information content in a
+phylogeny, we have hypothesis $\mathcal{H}_6$ that the
+variance in $e$ decreases.
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_5.png}
+  \caption{
+    Hypothesis 5: the number of taxa does not
+    have an effect on the error being made
+  }
+  \label{fig_h_5}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{fig_h_6.png}
+  \caption{
+    Hypothesis 6: for a higher number of taxa 
+    the variance in the error decreases
+  }
+  \label{fig_h_6}
 \end{figure}
 
 \end{itemize}
@@ -326,30 +353,6 @@ using the Doob-Gillespie algorithm.
 
 \item We start simulating $N_{S} = 1000$ MBD trees,
 with either 50, 100 and 200 taxa.
-We have the hypothesis H5, that the number of taxa does not
-have an effect on the error being made, as there is no
-diversity dependency in any of the processes.
-We have the hypothesis H6, that for a higher number of taxa 
-the variance in the error decreases, as more information is present
-in the simulated phylogenies.
-
-\begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{fig_h_5.png}
-  \caption{
-    Hypothesis 5: the number of taxa does not
-    have an effect on the error being made
-  }
-  \label{fig_h_5}
-\end{figure}
-
-\begin{figure}[!htbp]
-  \includegraphics[width=\textwidth]{fig_h_6.png}
-  \caption{
-    Hypothesis 6: for a higher number of taxa 
-    the variance in the error decreases
-  }
-  \label{fig_h_6}
-\end{figure}
 
 \item From each MBD tree, a DNA sequence alignment is simulated. 
 For each sequence alignment we then perform a Bayesian analysis 
@@ -586,6 +589,7 @@ We expect this weight to be higher in the BD alignments.
                           & Description\\
     \hline
     \hline
+    $e$                   & Inference error \\
     $n_{\mathbb{M}}$      & Number of extinct and extant taxa created by a multiple-birth event \\
     $n_{\mathbb{B}}$      & Number of extinct and extant taxa created by a single-birth event \\
     $s$                   & Extent/strength of the multiple birth process \\
