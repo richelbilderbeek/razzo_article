@@ -342,7 +342,7 @@ for such processes as in \cite{mbd}.
 for different values of $s$ spread equally from zero (no multiple-birth
 event, thus a BD model) to one (species are created only from multiple-birth
 events) and three intermediate values of 0.25, 0.5 and 0.75. Aggregating all
-components of $s$, we show the effect of $s$ on $e$ in figure 1.
+components of $s$, we show the effect of $s$ on $e$ in figure \ref{fig:1}.
 
 \item We start simulating $N_{S} = 1000$ MBD trees,
 with either 50, 100 and 200 taxa.
@@ -617,6 +617,10 @@ measured in this experiment.
                           & Description\\
     \hline
     \hline
+    $\lambda$             & Speciation rate from default single-birth process \\
+    $\mu$                 & Extinction rate \\
+    $\nu$                 & Multiple-birth event trigger rate \\
+    $q$                   & Proportion of taxa that speciate during a multiple-birth event \\
     $e$                   & Inference error \\
     $n_{\mathbb{M}}$      & Number of extant taxa created by a multiple-birth event \\
     $n_{\mathbb{B}}$      & Number of extant taxa created by a single-birth event \\
@@ -644,6 +648,7 @@ measured in this experiment.
     \hline
     \hline
     $s$                   & 0.0, 0.25, 0.5, 0.75, 1.0 \\
+    $\mu$                 & 0.0, 0.1, 0.2 [TODO: can be more extreme] \\
     $L_c$                 & $10^6$ \\
     $L_{sc}$              & $10^4$ \\
     $\epsilon$            & $10^{-13}$ \\
