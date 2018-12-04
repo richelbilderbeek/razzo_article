@@ -180,14 +180,14 @@ To do so, we simulate phylogenies using the MBD process, with
 varying degrees of that process. To be explicit, we define
 that degree, $s$, as the number of extinct and extant species created
 during a co-occuring speciation event, 
-$n_{\mathbb{M}}$, from the total number of extinct and extant species:
+$N_{\mathbb{M}}$, from the total number of extinct and extant species:
 
 \begin{equation}
-s = \frac{n_{\mathbb{M}}}{n_{\mathbb{M}} + n_{\mathbb{B}}}
+s = \frac{N_{\mathbb{M}}}{N_{\mathbb{M}} + N_{\mathbb{B}}}
 \end{equation}
 
 
-Here, $n_{\mathbb{B}}$ is the number of extinct and extant species created
+Here, $N_{\mathbb{B}}$ is the number of extinct and extant species created
 during a default single-birth speciation event.
 
 From such phylogenies with different degrees of $s$, we measure the
@@ -306,7 +306,9 @@ variance in $e$ decreases.
 \subsection{Model}
 \begin{itemize}
 
-\item Current phylogenetic tools assume that only a single speciation event 
+\item 
+\richel{TODO: move to Introduction}
+Current phylogenetic tools assume that only a single speciation event 
 can occur at any given time.
 While this assumption is useful to construct a wide variety of successful 
 models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, 
@@ -314,7 +316,9 @@ models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015},
 they disallow for environmental changes that trigger speciations 
 in multiple clades at a same point in time. 
 
-\item In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
+\item 
+\richel{TODO: move to Introduction}
+In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
 to the common per-species speciation and extinction rates present 
 also in the standard BD model. 
 Additionally, MBD relies on two additional parameters. 
@@ -334,9 +338,10 @@ for such processes as in \cite{mbd}.
 \subsection{Simulations}
 \begin{itemize}
 
-\item To prove our hypothesis we simulate two twin datasets. 
-All the simulations are produced in continuous time, 
-using the Doob-Gillespie algorithm. 
+\item To investigate the effect of $s$ on $e$, we simulate phylogenies
+for different values of $s$ spread equally from zero (no multiple-birth
+event, thus a BD model) to one (species are created only from multiple-birth
+events) and three intermediate values of 0.25, 0.5 and 0.75.
 
 \item We start simulating $N_{S} = 1000$ MBD trees,
 with either 50, 100 and 200 taxa.
@@ -577,8 +582,10 @@ We expect this weight to be higher in the BD alignments.
     \hline
     \hline
     $e$                   & Inference error \\
-    $n_{\mathbb{M}}$      & Number of extinct and extant taxa created by a multiple-birth event \\
-    $n_{\mathbb{B}}$      & Number of extinct and extant taxa created by a single-birth event \\
+    $n_{\mathbb{M}}$      & Number of extant taxa created by a multiple-birth event \\
+    $n_{\mathbb{B}}$      & Number of extant taxa created by a single-birth event \\
+    $N_{\mathbb{M}}$      & Number of extinct and extant taxa created by a multiple-birth event \\
+    $N_{\mathbb{B}}$      & Number of extinct and extant taxa created by a single-birth event \\
     $s$                   & Extent/strength of the multiple birth process \\
     $L_c$                 & MCMC chain length \\
     $L_{sc}$              & MCMC sub-chain length \\
@@ -627,6 +634,7 @@ We expect this weight to be higher in the BD alignments.
                           & Value(s) \\
     \hline
     \hline
+    $s$                   & 0.0, 0.25, 0.5, 0.75, 1.0 \\
     $L_c$                 & $10^6$ \\
     $L_{sc}$              & $10^4$ \\
     $\epsilon$            & $10^{-13}$ \\
