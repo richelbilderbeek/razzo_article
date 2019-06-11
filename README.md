@@ -9,5 +9,5 @@ about the [razzo](https://github.com/richelbilderbeek/razzo) project.
 
 ## References
 
- * [1] Laudanno, G, Bilderbeek, Richel JC, and Rampal S. Etienne. 
+ * [1] Laudanno, G, Bilderbeek, Richel JC, and Etienne, Rampal S. 
    "The error when inferring phylogenies with co-occuring births by a birth-death model.".
