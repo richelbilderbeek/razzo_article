@@ -7,28 +7,49 @@ to the common per-species speciation and extinction rates present
 also in the standard BD model. 
 Additionally, MBD relies on two additional parameters. 
 Parameter $\nu$ is the rate at which an environmental change is triggered.
-When such event is triggered, each species present in the phylogeny at that moment has a probability $q$ to speciate at that time.
-This kind of speciation is of a different nature respect to the one triggered by $\lambda$. In fact, whereas parameter $\lambda$ can be seen as describing a sympatric process, $\nu$ induces the rise of geographical barriers interrupting the gene flow and leading to an allopatric speciation.
-Even though multiple speciations can co-occur, polytomies are not allowed in such process as each species can speciate only once at the time.
+When such event is triggered, each species present in the phylogeny at that mome
+nt has a probability $q$ to speciate at that time.
+This kind of speciation is of a different nature respect to the one triggered by
+ $\lambda$. In fact, whereas parameter $\lambda$ can be seen as describing a sym
+patric process, $\nu$ induces the rise of geographical barriers interrupting the
+ gene flow and leading to an allopatric speciation.
+Even though multiple speciations can co-occur, polytomies are not allowed in suc
+h process as each species can speciate only once at the time.
 A likelihood expression for the process is provided in \cite{mbd}.
 
 \subsection{Tree simulations}
 
-We can easily simulate such processes in continuous time using the Doob-Gillespie algorithm. Simulations are performed using the function "mbd\_sim" from the \verb;mbd; package (\citep{mbd}).
-We let parameters vary using all possible combinations of value included in Table~\ref{tab:simulation_parameters} to simulate $1000$ independent trees for each parameter setting.
+We can easily simulate such processes in continuous time using the Doob-Gillespi
+e algorithm. Simulations are performed using the function "mbd\_sim" from the \v
+erb;mbd; package (\citep{mbd}).
+We let parameters vary using all possible combinations of value included in Tabl
+e~\ref{tab:simulation_parameters} to simulate $1000$ independent trees for each 
+parameter setting.
 
 \input{razzo-tables/tab_simparameters.tex}
 
 \subsection{Pirouette}
 
-Once the MBD dataset has been simulated we exploit the \verb;pirouette; package (\citep{pirouette}) to assess the error made by BEAST2, executing  the inference using a BD tree prior.
+Once the MBD dataset has been simulated we exploit the \verb;pirouette; package 
+(\citep{pirouette}) to assess the error made by BEAST2, executing  the inference
+ using a BD tree prior.
 
 We briefly summarize here how the \verb;pirouette; routine works.
 From each MBD tree a DNA sequence alignment is simulated. 
-For each sequence alignment we then perform a Bayesian inference analysis (using BEAST2) to recover a posterior distribution of trees. 
-For each parameter setting, this process leads to an inference error distribution. To evaluate the extent of this error we also run a \verb;pirouette; "twin" pipeline, through which we mimic the original pipeline in every aspect but starting instead from "twin" trees.
-From each MBD simulated tree we can produce its BD twin, inferring the most likely BD parameters (i.e. $\lambda$ and $\mu$) through maximum likelihood, and use them to simulate a standard BD tree (see \cite{pirouette} for more information), keeping the topology of the original tree.
-We let the Bayesian analysis assume a BD prior in both cases, to investigate the extent of the error we make under this assumption. The twin pipeline serves as an estimation of the baseline error, as its error it is not due by the mismatch of the generative prior with the inference prior.
+For each sequence alignment we then perform a Bayesian inference analysis (using
+ BEAST2) to recover a posterior distribution of trees. 
+For each parameter setting, this process leads to an inference error distributio
+n. To evaluate the extent of this error we also run a \verb;pirouette; "twin" pi
+peline, through which we mimic the original pipeline in every aspect but startin
+g instead from "twin" trees.
+From each MBD simulated tree we can produce its BD twin, inferring the most like
+ly BD parameters (i.e. $\lambda$ and $\mu$) through maximum likelihood, and use 
+them to simulate a standard BD tree (see \cite{pirouette} for more information),
+ keeping the topology of the original tree.
+We let the Bayesian analysis assume a BD prior in both cases, to investigate the
+ extent of the error we make under this assumption. The twin pipeline serves as 
+an estimation of the baseline error, as its error it is not due by the mismatch 
+of the generative prior with the inference prior.
 
 \iffalse
 \subsection{Model selection}
