@@ -108,3 +108,27 @@ alignments derived from the MBD tree and the BD twin tree. We expect that
 the generative model has the heighest weight in both the MBD and BD alignments.
 We expect this weight to be higher in the BD alignments.
 \fi
+
+\subsection{Quantifying the impact of the speciation model}
+\richel{this is a proposal}
+
+To quantify the impact of the speciation model, we propose to
+use impact = complete error - baseline error / complete error.
+
+
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{razzo-figures/pir_ex_3_errors.png}
+  \caption{
+    Uses Yule tree, impact of speciation model should be low
+  }
+  \label{fig:results}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \includegraphics[width=\textwidth]{razzo-figures/pir_ex_6_errors.png}
+  \caption{
+    Uses non-standard tree, impact of speciation model should be high
+  }
+  \label{fig:results}
+\end{figure}
