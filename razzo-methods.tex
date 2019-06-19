@@ -22,9 +22,12 @@ A likelihood expression for the process is provided in \cite{mbd}.
 We can easily simulate such processes in continuous time using the 
 Doob-Gillespie algorithm. Simulations are performed using the 
 function "mbd\_sim" from the \verb;mbd; package (\citep{mbd}).
-We let parameters vary using all possible combinations of value included 
-in Table~\ref{tab:simulation_parameters} to simulate $1000$ independent 
-trees for each parameter setting.
+We let parameters vary using all possible combinations of values
+as shown in Table~\ref{tab:simulation_parameters}.
+For each parameter setting, we simulate $1000$ independent trees.
+
+We have picked the parameters in such a way that in the most speciose
+setting, the simulated trees have usually less than 200 taxa.
 
 \input{razzo-tables/tab_simparameters.tex}
 
