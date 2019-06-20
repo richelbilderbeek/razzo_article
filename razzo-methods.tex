@@ -5,8 +5,8 @@
 In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
 to the common per-species speciation and extinction rates present 
 also in the standard BD model. 
-Additionally, MBD relies on two additional parameters. 
-Parameter $\nu$ is the rate at which an environmental change is triggered.
+Additionally, MBD relies on two additional parameters, $\nu$ and $q$. 
+$\nu$ is the rate at which an environmental change is triggered.
 When such event is triggered, each species present in the phylogeny at that 
 moment has a probability $q$ to speciate at that time.
 This kind of speciation is of a different nature respect to the one triggered 
@@ -19,92 +19,62 @@ A likelihood expression for the process is provided in \cite{mbd}.
 
 \subsection{Tree simulations}
 
-We can easily simulate such processes in continuous time using the 
-Doob-Gillespie algorithm. Simulations are performed using the 
-function "mbd\_sim" from the \verb;mbd; package (\citep{mbd}).
+We simulate the speciation process in continuous time using the 
+Doob-Gillespie algorithm, using 
+the \verb;mbd_sim; function in the \verb;mbd; package (\citep{mbd}).
 We let parameters vary using all possible combinations of values
 as shown in Table~\ref{tab:simulation_parameters}.
-For each parameter setting, we simulate $1000$ independent trees.
-
+For each parameter setting, we generate $1000$ independent 
+reconstructed trees of the same crown age.
 We have picked the parameters in such a way that in the most speciose
 setting, the simulated trees have usually less than 200 taxa.
 
 \input{razzo-tables/tab_simparameters.tex}
 
-\subsection{Pirouette}
+\subsection{Inference error estimation}
 
-Once the MBD dataset has been simulated we exploit the \verb;pirouette; 
-package (\citep{pirouette}) to assess the error made by BEAST2, executing 
-the inference using a BD tree prior.
+From each MBD tree, we measure the impact 
+of using the simpler BD tree prior, 
+using the \verb;pirouette; R package, as described
+in detail in \citep{pirouette}.
 
-We briefly summarize here how the \verb;pirouette; routine works.
-From each MBD tree a DNA sequence alignment is simulated. 
-For each sequence alignment we then perform a Bayesian inference 
-analysis (using BEAST2) to recover a posterior distribution of trees. 
-For each parameter setting, this process leads to an inference error 
-distribution. To evaluate the extent of this error we also run 
-a \verb;pirouette; "twin" pipeline, through which we mimic the original 
-pipeline in every aspect but starting instead from "twin" trees.
-From each MBD simulated tree we can produce its BD twin, inferring the most 
-likely BD parameters (i.e. $\lambda$ and $\mu$) through maximum likelihood, 
-and use them to simulate a standard BD tree (see \cite{pirouette} for more 
-information), keeping the topology of the original tree.
-We let the Bayesian analysis assume a BD prior in both cases, to investigate 
-the extent of the error we make under this assumption. The twin pipeline 
-serves as an estimation of the baseline error, as its error it is not due by 
-the mismatch of the generative prior with the inference prior.
+In brief: \verb;pirouette; starts from a 'true' (but 
+unobservable in nature) starting phylogeny,
+from which a DNA sequence alignment (which is observable 
+in nature) is simulated. 
+From each sequence alignment, a Bayesian inference is run, 
+to obtain a posterior distribution of jointly-estimated 
+trees and model parameter estimates.
+By comparing the true tree and the posterior trees,
+an inference error distribution is generated. 
+We use the twinning option available in \verb;pirouette;
+to measure a minimum and full error, in which
+the minimum error is caused
+by stochasticity in the full pipeline, where the full error
+is the added error from using an invalid but standard speciation model.
 
-\iffalse
-\subsection{Model selection}
+In our context, the alignments are 1000 nucleotides in length,
+with a known root sequence of four 250 mono-nucloetide blocks,
+following the simplest nucleotide substitution model (JC69)
+and clock model (strict), with a mutation rate of $\frac{1}{2}\cdot c$, 
+in which $c$ is the crown age. With this mutation rate, each nuclotide is
+expected to mutate (both silently and non-silently) 
+in half of the histories from the root sequence in the past 
+to the sequence in the tips in the present.
 
-We simulate alignments using the simplest nucleotide substitution model (JC69),
-the simplest clock model (strict). It is thus imminent to assume these
-models in our Bayesian inference. Nevertheless, the phylogeny the alignment
-was based on, could have followed either an MBD or BD tree model, 
-where we in both cases assume a BD tree model. This will have 
-an unknown effect on our inference: it may theoretically be that an MBD model
-generates (a tree that generates) an alignment in which a different site 
-and/or clock model is favored. 
+For the Bayesian inference, we use a JC69 site model, a strict
+clock model and a BD tree prior. Additionally, we use 
+an MRCA prior equal to the crown age with a normal distribution 
+of width $\sigma = 0.01$. We pick an MCMC setup of 10M states,
+which is sampled each 1k moves.
 
-We investigate this by measuring if the generative model (with the simplest
-nucleotide substitution and simplest clock model) is indeed selected 
-to be the best fitting model. 
-To be precise, we look at the model 
-with the highest marginal likelihood 
-(also called evidence \cite{mackay2003information}),
-$f(D|M)$, which is the probability of the data D given model M.
-In the context of this research, D consists of the DNA alignment,
-and M is the combination of site, clock and tree models.
+For the error measurement, we use the nLTT statistic and
+a burn-in of 0.1.
 
-To estimate the marginal likelihood, 
-we use an algorithm named nested sampling \cite{skilling2006nested}.
-Nested sampling is attractive to use
-in a phylogentic context, as it gives a good estimation,
-requires little tuning \cite{maturana2018}.
-Nested sampling is available as a BEAST2 package
-and can be used by babette \cite{babette}.
+For the twinning, we let the twin trees follow a BD model.
 
-The nested sampling algorithm stops its run 
-when the marginal likelihood estimation error 
-reaches below a certain tolerance.  
-Similar to \cite{maturana2018},
-we use a (relative) error tolerance $\epsilon$ of $10^{-13}$,
-1 particle to explore the parameter space
-and 100 active points. 
-To achieve the latter, we use the MCMC chain length $L_c$ of 1M 
-(as also used in the parameter estimates),
-and a sub-chain length $L_{sc}$ of 10K.
-
-The models we use in our model comparison are the four combinations
-of two site models and two clock models. We use the JC69 site model, which
-is the (generative and) simplest model and GTR, the site model with most
-degrees of freedom. For the clock models, we use the strict clock model,
-which is the (generative and) simplest clock model, and the RLN clock model.
-\richel{Could also just be all site models and clock models = 8 models}
-
-From these four marginal likelihood estimates, we calculate the weight of
-the generative model and plot this in figure 2. We do this for both the 
-alignments derived from the MBD tree and the BD twin tree. We expect that
-the generative model has the heighest weight in both the MBD and BD alignments.
-We expect this weight to be higher in the BD alignments.
-\fi
+For the experiments, we use both a hand-picked generative model
+and a set of candidate models. We set a BD tree prior, JC69 site
+model and strict clock model as the generative model. We used
+all other combinations of four tree priors, two clock models and
+five speciation models, resulting in a set of 39 candidate models.
