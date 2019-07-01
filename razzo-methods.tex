@@ -1,66 +1,37 @@
 \section{Methods}
 
+We proceed in the following way: we build simulated datasets generated under the multiple birth model. Then we run a \verb;pirouette; analysis, which will lead to error distributions between the inference posterior and the original simulated trees. Importantly, the \verb;pirouette; analysis includes also a 'twin' parallel pipeline, which will provide a measure of the baseline error due to pure stochasticity, unavoidably occurring in the process.
+
 \subsection{Model}
 
-In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
-to the common per-species speciation and extinction rates present 
-also in the standard BD model. 
+In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, to the common per-species speciation and extinction rates already present in the standard BD model. 
 Additionally, MBD relies on two additional parameters, $\nu$ and $q$. 
-$\nu$ is the rate at which an environmental change is triggered.
-When such event is triggered, each species present in the phylogeny at that 
-moment has a probability $q$ to speciate at that time.
-This kind of speciation is of a different nature respect to the one triggered 
-by $\lambda$. In fact, whereas parameter $\lambda$ can be seen as describing 
-a sympatric process, $\nu$ induces the rise of geographical barriers 
-interrupting the gene flow and leading to an allopatric speciation.
-Even though multiple speciations can co-occur, polytomies are not allowed 
-in such process as each species can speciate only once at the time.
+The first, $\nu$, is the rate at which an environmental change is triggered.
+When such event is triggered, each species present in the phylogeny at that moment has a probability $q$ to speciate at that time.
+This kind of speciation is of a different nature respect to the one triggered by $\lambda$. In fact, whereas parameter $\lambda$ can be seen as describing a sympatric process, $\nu$ induces the rise of geographical barriers interrupting the gene flow \giovanni{@richel: please check if biology here is accurate} and leading to an allopatric speciation.
+Even though multiple speciations can co-occur, polytomies are not allowed in such process as each species can speciate only once at the time.
 A likelihood expression for the process is provided in \cite{mbd}.
 
 \subsection{Tree simulations}
 
-We simulate the speciation process in continuous time using the 
-Doob-Gillespie algorithm, using 
-the \verb;mbd_sim; function in the \verb;mbd; package (\citep{mbd}).
-We let parameters vary using all possible combinations of values
-as shown in Table~\ref{tab:simulation_parameters}.
-For each parameter setting, we generate $1000$ independent 
-reconstructed trees of the same crown age.
-We have picked the parameters in such a way that in the most speciose
-setting, the simulated trees have usually less than 200 taxa.
+We simulate the speciation process in continuous time using the Doob-Gillespie algorithm, using the \verb;mbd_sim; function from the \verb;mbd; package (\citep{mbd}).
+We let parameters vary using all possible combinations of values as shown in Table~\ref{tab:simulation_parameters}.
+For each parameter setting, we generate $1000$ independent reconstructed trees of the same crown age.
+\giovanni{Do we need to add more information on the Doob-Gillespie algorithm or it is overkilling?}
 
 \input{razzo-tables/tab_simparameters.tex}
 
 \subsection{Inference error estimation}
 
-From each MBD tree, we measure the impact 
-of using the simpler BD tree prior, 
-using the \verb;pirouette; R package, as described
-in detail in \citep{pirouette}.
+From each MBD tree, we measure the impact of using the simpler BD tree prior on the inference, using the \verb;pirouette; R package, as described in detail in \citep{pirouette}.
 
-In brief: \verb;pirouette; starts from a 'true' (but 
-unobservable in nature) starting phylogeny,
-from which a DNA sequence alignment (which is observable 
-in nature) is simulated. 
-From each sequence alignment, a Bayesian inference is run, 
-to obtain a posterior distribution of jointly-estimated 
-trees and model parameter estimates.
-By comparing the true tree and the posterior trees,
-an inference error distribution is generated. 
-We use the twinning option available in \verb;pirouette;
-to measure a minimum and full error, in which
-the minimum error is caused
-by stochasticity in the full pipeline, where the full error
-is the added error from using an invalid but standard speciation model.
+In brief: \verb;pirouette; starts from a 'true' (but unobservable in nature) starting phylogeny, from which a DNA sequence alignment (which is observable in nature) is simulated. 
+From each sequence alignment, a Bayesian inference is run, to obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
+By comparing the true tree and the posterior trees, an inference error distribution is generated. 
+We use the twinning option available in \verb;pirouette; to measure a minimum and full error, in which the minimum error is caused by stochasticity in the full pipeline, where the full error is the added error from using an invalid but standard speciation model \giovanni{I am not sure I get this. What do you mean?}.
 
-In our context, the alignments are 1000 nucleotides in length,
-with a known root sequence of four 250 mono-nucloetide blocks,
-following the simplest nucleotide substitution model (JC69)
-and clock model (strict), with a mutation rate of $\frac{1}{2}\cdot c$, 
-in which $c$ is the crown age. With this mutation rate, each nuclotide is
-expected to mutate (both silently and non-silently) 
-in half of the histories from the root sequence in the past 
-to the sequence in the tips in the present.
+In our context, the alignments are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, following the simplest nucleotide substitution model (JC69) and clock model (strict), with a mutation rate of $\frac{1}{2}\cdot c$,  in which $c$ is the crown age. With this mutation rate, each nucleotide is expected to mutate (both silently and non-silently) 
+in half of the histories from the root sequence in the past to the sequence in the tips in the present.
 
 For the Bayesian inference, we use a JC69 site model, a strict
 clock model and a BD tree prior. Additionally, we use 
@@ -68,8 +39,8 @@ an MRCA prior equal to the crown age with a normal distribution
 of width $\sigma = 0.01$. We pick an MCMC setup of 10M states,
 which is sampled each 1k moves.
 
-For the error measurement, we use the nLTT statistic and
-a burn-in of 0.1.
+For the error measurement, we use the nLTT statistic \citet{janzen2015} and
+a burn-in fraction of $10\%$.
 
 For the twinning, we let the twin trees follow a BD model.
 

@@ -18,51 +18,33 @@ to determine the evolutionary history of species.
 Starting from heritable material and explicit assumptions,
 Bayesian phylogenetics allows to infer a jointly-estimated 
 phylogeny and parameter estimates distribution.
-One of these assumptions in the speciation model, which
+One of these assumptions is the speciation model, which
 mathematically describes the branching process of a phylogeny in time.
-The most used speciation model assumes that speciation events are
-independent, where we know that certain events can trigger speciation 
-events in multiple species.
+Speciation models commonly assume that speciation events are independent and disjointed. Yet, such assumption may overlook the complexity of certain processes, where environmental changes promote speciation events in multiple lineages.
+% Purpose of the paper
+This new layer of complexity can be captured developing a novel ad hoc speciation model. However, the introduction of a new model could be not necessary if current models are capable of describing the process, under simpler assumptions.
+Here we investigate the extent of the discrepancy produced by current BEAST2's tree priors, when trying to infer back trees where speciation can co-occur.
 
-% One sentence clearly stating the general
-% problem being addressed by this particular
-% study.
+\iffalse
 This research answers the question what the impact is of using a
 species tree model that assumes speciation is independent, when it
 is used on phylogenies created by a tree model in which speciation can
 co-occur.
+\fi
 
-% One sentence summarising the main
-% result (with the words “here we show”
-% their equivalent).
-Here we show the inference error made,
-when nature has varying degrees of co-occurring speciation
-over a wide range of parameter settings.
+% Summarising the main result
+We let the impact of co-occurring speciation vary on datasets of simulated trees and show the corresponding error produced during the inference process.
 
 % Two or three sentences explaining what
 % the main result reveals in direct
 % comparison to what was thought to be the case
 % previously, or how the main result adds to
 % previous knowledge.
-We show that the inference error correlates
-with the amount of co-occuring speciation events,
-which valudates
+We show that the extent of the inference error grows with the amount of co-occuring speciation events to establish the limits of BEAST2's standard tree priors.
 
 % One or two sentences to put the results into a
 % more general context.
-These results allow phylogeneticist to judge under which
-circumstances the commonly used speciation model can be safely 
-used. 
-
-% Two or three sentences to provide a
-% broader perspective, readily comprehensible
-% to a scientist in any discipline, may be included
-% in the first paragraph if the editor considers that the accessibility of the paper is significantly enhanced
-% by their inclusion. Under these circumstances, the length of the paragraph can be up to 300 words.
-In a bigger picture, these results showcase the use of a general and 
-flexible method we used to assess the impact of using an oversimplistic tree 
-prior, helping phylogeneticists to find the line between 'too simple'
-and 'too complex' speciation models.
+These results allow phylogeneticists to judge under which circumstances the commonly used speciation model can be safely used. 
 
 \end{abstract}
 
