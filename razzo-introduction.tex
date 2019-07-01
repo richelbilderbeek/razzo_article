@@ -1,58 +1,31 @@
 \section{Introduction}
 
+\giovanni{Introduce "BD" and "MBD" acronyms at some point.}
+
 Modern computational techniques allow to infer phylogenies from genetic data 
 such as DNA, RNA or proteins. BEAST (\cite{beast}) and its descendant 
-BEAST2 (\cite{beast2}) are widely used tools to perform this task, which they 
-can achieve by running a Bayesian analysis given data and tree priors.
+BEAST2 (\cite{beast2}) are widely used tools to perform such task. They 
+return posterior distributions of phylogenies and estimated parameters by running a Bayesian analysis, given genetic data and tree priors. A tree prior is a mathematical description of the a priori characteristics that we expect to be reflected in posterior phylogenies. The choice of a specific prior is, by definition, arbitrary but the consequences of such choice can be vet analyzing the so-obtained posteriors.
 
-BEAST2 gives to the user the option to set up several possible phylogenetic 
-priors (e.g. substitution/clock/speciation models). However, currently 
-available priors can be not suitable to analyze some specific datasets.
+BEAST2 gives to the user the option to set up several possible phylogenetic priors (e.g. substitution/clock/speciation models). However, currently available priors might be not suitable to analyze some specific datasets.
+For this reason BEAST2 provides users with the possibility to introduce new tree priors, to infer phylogenies based on different assumptions on how the speciation process takes place.
 
-For this reason BEAST2 provides users with the possibility to introduce new 
-tree priors, to infer phylogenies based on different assumptions on how the 
-speciation process takes place.
+Current phylogenetic tools assume that only a single speciation event can occur at any given time.
+While this assumption has been proved to be useful to construct a wide variety of successful models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}), they do not take into account the possibility for environmentally-driven contemporary speciations on multiple lineages.
 
-Current phylogenetic tools assume that only a single speciation event can occur 
-at any given time.
-While this assumption has been proved to be useful to construct a wide 
-variety of successful models (e.g \cite{Maddison2007biSSE}, 
-\cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}), 
-they disallow for environment
-al changes that trigger speciations in multiple clades at a same point in time. 
+We explore such case introducing the multiple-birth death model (MBD), currently absent in BEAST2. The multiple birth hypothesis aims to describe how large-scale environmental changes (also known as species pumps \giovanni{add some ref?}) can lead phylogenies to sport an impressive amount of speciation events in relatively short times.
 
-We explore such case introducing the multiple birth model, currently absent 
-in BEAST. The multiple birth hypothesis aims to include species pump 
-mechanisms to investigate drivers and modes of such diversification processes 
-whose phylogenies show an impressive amount of speciation events 
-in relatively short times.
+\iffalse
+\giovanni{This might be good for the abstract}
+The (constant-rate) birth-death (BD) model embodies the common assumption that only a single speciation event can occur at any given time. The multiple-birth-death (MBD) model relaxes this assumption allowing, in addition to standard BD events, also events in which large-scale environmental changes lead to speciation bursts.
+\fi
 
-The (constant-rate) birth-death (BD) model embodies the common assumption that 
-only a single speciation event can occur at any given time. The 
-multiple-birth-death (MBD) model relaxes this assumption allowing, in additi
-on to standard BD events, also events in which large-scale environmental 
-changes lead to speciation bursts.
-Such hypothesis can be useful to better understand the history of systems of 
-particular interests for evolutionary biologists, such as the 
-diversification of cichlid fish in the African Great Lakes (Malawi, 
-Tanganyika and Victoria), where 
-water level fluctuations are thought to play an important role in promoting 
-diversification (\citep{verheyen1996mitochondrial}, \citep{sturmbauer2001lake}, 
-\citep{janzen2016}, \citep{janzen2017}).
+Such hypothesis can be useful to better understand the history of systems of particular interests for evolutionary biologists, such as the diversification of cichlid fish in the African Great Lakes (Malawi, Tanganyika and Victoria), where water level fluctuations are thought to play an important role in promoting diversification (\citep{verheyen1996mitochondrial}, \citep{sturmbauer2001lake}, \citep{janzen2016}, \citep{janzen2017}).
 
-However, the introduction of new tree priors is not always 
-desirable (\citep{bilderbeek2019pirouette}). Current BD tree priors might, 
-in principle, prove to be 
-good enough at detecting such events despite the lower level of complexity. 
-If this is the case one should always be more keen to adopt the simplest model.
+However, the introduction of new tree priors is not always desirable (\citep{bilderbeek2019pirouette}). Current standard birth death (BD) tree priors might, in principle, prove to be good enough at detecting such events despite their lower level of complexity.
+If this is the case one should always choose to adopt the simplest model.
 
-We used the R package \verb;pirouette; (\citep{pirouette}) to perform such 
-test, starting on phylogenies simulated under the MBD regime using 
-the \verb;mbd; package (\citep{mbd}).
-From such phylogenies we measure the inference error made adopting a 
-standard BD tree prior in the inference process.
+We used the R package \verb;pirouette; (\citep{pirouette}) to perform such test, starting on phylogenies simulated under the MBD regime using the \verb;mbd; package (\citep{mbd}).
+From such phylogenies we measure the inference error made adopting a standard BD tree prior in the inference process.
 
-With this work we aim, using such inference error distributions, to test 
-whether or not it is advantageous to implement a new prior model that can 
-allow the construction of trees where multiple speciations can co-occur at 
-the same time.
+With this work we aim, using such inference error distributions, to test whether or not it is advantageous to implement a new prior model that can allow the construction of trees where multiple speciations can co-occur at the same time.
