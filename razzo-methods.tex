@@ -7,23 +7,23 @@ We proceed in the following way: we build simulated datasets generated under the
 In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, to the common per-species speciation and extinction rates already present in the standard BD model. 
 Additionally, MBD relies on two additional parameters, $\nu$ and $q$. 
 The first, $\nu$, is the rate at which an environmental change is triggered.
-When such event is triggered, each species present in the phylogeny at that moment has a probability $q$ to speciate at that time.
+When such event is triggered, each species present in the phylogeny at that time has a probability $q$ to speciate.
 This kind of speciation is of a different nature respect to the one triggered by $\lambda$. In fact, whereas parameter $\lambda$ can be seen as describing a sympatric process, $\nu$ induces the rise of geographical barriers interrupting the gene flow \giovanni{@richel: please check if biology here is accurate} and leading to an allopatric speciation.
 Even though multiple speciations can co-occur, polytomies are not allowed in such process as each species can speciate only once at the time.
 A likelihood expression for the process is provided in \cite{mbd}.
 
 \subsection{Tree simulations}
 
-We simulate the speciation process in continuous time using the Doob-Gillespie algorithm, using the \verb;mbd_sim; function from the \verb;mbd; package (\citep{mbd}).
+We simulate the speciation process in continuous time exploiting the Doob-Gillespie algorithm, using the \verb;mbd_sim; function from the \verb;mbd; package (\citep{mbd}).
 We let parameters vary using all possible combinations of values as shown in Table~\ref{tab:simulation_parameters}.
-For each parameter setting, we generate $1000$ independent reconstructed trees of the same crown age.
+For each parameter setting, we generate $1000$ independent reconstructed trees with the same crown age.
 \giovanni{Do we need to add more information on the Doob-Gillespie algorithm or it is overkilling?}
 
 \subsection{Inference error estimation}
 
-From each MBD tree, we measure the impact of using the simpler BD tree prior on the inference, using the \verb;pirouette; R package, as described in detail in \citep{pirouette}.
+From each MBD tree, we measure the impact of using the simpler BD tree prior on the inference, using the \verb;pirouette; R package, as described in detail in \citet{bilderbeek2019pirouette}.
 
-In brief: \verb;pirouette; starts from a 'true' (but unobservable in nature) starting phylogeny, from which a DNA sequence alignment (which is observable in nature) is simulated. 
+In brief: \verb;pirouette; starts from a 'true' (but unobservable in nature) starting phylogeny, from which a DNA sequence alignment (which is instead observable) is simulated. 
 From each sequence alignment, a Bayesian inference is run, to obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
 By comparing the true tree and the posterior trees, an inference error distribution is generated. 
 We use the twinning option available in \verb;pirouette; to measure a minimum and full error, in which the minimum error is caused by stochasticity in the full pipeline, where the full error is the added error from using an invalid but standard speciation model \giovanni{I am not sure I get this. What do you mean?}.
@@ -45,5 +45,4 @@ For the twinning, we let the twin trees follow a BD model.
 For the experiments, we use both a hand-picked generative model
 and a set of candidate models. We set a BD tree prior, JC69 site
 model and strict clock model as the generative model. We used
-all other combinations of four tree priors, two clock models and
-five speciation models, resulting in a set of 39 candidate models.
+all other combinations of five tree priors, four site models and two clock models, resulting in a set of 39 candidate models.
