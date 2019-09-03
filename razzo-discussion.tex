@@ -1,12 +1,87 @@
 \section{Discussion}
 
+We \richel{(at least I. If you do not expect this, let me know the 
+reasoning why)} expected to find a bigger inference error 
+when increasing the amount of co-occurring speciation events.
+The reason is simple: the tree prior used assumes speciation does not
+co-occur. The stronger the amount of co-occurring speciation, the stronger
+the deviation from the species tree prior.
+
+\subsection{Research}
+
+The MBD model is a BD model that allows for co-occurring speciation,
+with the same drawbacks as the BD model: it allows for an unlimited 
+number of species and does not take into account that speciation takes time.
+That does make the MBD model a very focussed model, only taking into 
+account the essence of co-occurring speciation. The MBD model can probably
+be extended to have a diversity-dependent speciation rate (as in the 
+DDD model) and/or making speciation take time by adding 
+an incipient species state (as in the PBD model).
+The idea of this experiment, however, is to measure the impact a novel
+tree prior has on the inference error. To do so, we could have picked
+any other non-standard (as in, not included within BEAST2) tree prior.
+
+\subsection{Methodological choices}
+
+When simulating a DNA alignment, we chose to use the simplest (JC69) site
+model and the simplest (strict) clock model. One could argue these models
+are overly simplistic and biologically irrelevant. We argue that this
+actually improves the clarity of our results for two reasons. The first
+reason is a practical one: because the computational load was lowered,
+we were able to perform more replicates. For a process with this
+amount of stochaticity, we think this is highly favored. The second reason
+is .. less noise,
+more replicates.
+
+
+ * Choice of generative (JC69 and strict) DNA alignment 
+ * Choice of generative tree prior (BD)
+ * Using Nested Sampling to do model comparison
+ * Using the absolute nLTT statistic as an error function
+
+\subsection{Choices to constrain time}
+
+ * MBD parameters
 From the four MBD parameters $\lambda$, $\mu$, $\nu$ and $q$,
 we investigated 1, 2, 4 and 3 different values respectively.
 We chose to use only one $\lambda$, as the proportion of species
 created in a co-occurent speciation event is dependent on the ratio
 between $\lambda$ and a combination of $\nu$ and $q$.  
 
+ * Crown age, and thus the number of taxa in the true species tree
+ * Number of replicates
+ * DNA sequence length
+ * Effective sample size
+ * Choice of candidate models
+ 
 We had to constrain ourselves on the number of replicates.
 
 We had to constrain ourselves on the number of taxa in
 the true species trees.
+
+\subsection{Future research}
+
+This research measures the impact an MBD tree prior 
+has on the inference error. 
+
+Because the MBD tree prior has only recently been 
+developed, it's biological relevance is unknown.
+Would the MBD tree prior be employed on biological data of a system
+in which co-occuring speciation is known to have taken a strong role,
+it will be hard to conclude its performance is superior to a
+rate-shift model or an early-burst model. One way to do so, is
+to add the MBD other speciation models as a species tree prior
+in a phylogentic tool and do a model comparision (e.g. using Nested Sampling).
+Another way to do so, is measure the impact a rate-shift or early-burst model
+has on the inference error in the same way as this research.
+Doing so would also allow to put the quantitative results into perspective,
+helping us in how to judge the error distributions. 
+
+Expressing the inference error of an MBD process as a distribution
+is a good first step in judging the impact an MBD process has on
+our predictions, when compared to standard models. It is only a first
+step as one still needs to subjectively judge these error distributions,
+which was exactly what \verb;pirouette; was hoping to avoid. 
+One way to improve our judgement, is by testing it on known species tree
+priors, for example, by simulating true trees with a BD model, when assuming
+a Yule tree prior.  
