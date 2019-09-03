@@ -39,35 +39,62 @@ correctly assume these were the generative site and clock model.
 But that would be besides the point of the experiment: to measure the impact
 of the tree prior.
 
-For the generative tree prior, we picked the BD tree prior.
+When simulating our phylogenies, we used an MBD model with and without
+extinction. In the case in which extinction is present,
+picking the BD tree prior as the generative tree prior seems justified:
+it is the best-fitting standard tree prior. For the MBD model without
+extinction, \richel{@Giappo: I think this is an interesting insight:} 
+we could have picked the Yule tree prior. We \richel{at least I do} predicted
+that the Yule tree prior will be selected as the best candidate model
+more often in this scenario, which shows the sensitity of the method we used.
 
+To compare multiple inference models, we picked the Nested Sampling
+approach to directly compare marginal likelihoods. We could have used
+alternative methods like \richel{forgot the term for now: where you
+do an MCMC that can switch between models}. The reason we used Nested
+Sampling was mostly pragmatic and we think other methods are equivalent.
 
- * Choice of generative (JC69 and strict) DNA alignment 
-
-
- * Choice of generative tree prior (BD)
- * Using Nested Sampling to do model comparison
- * Using the absolute nLTT statistic as an error function
+We used the absolute nLTT statistic to measure the difference between
+two phylogenies. Because the crown age of all phylogenies are equal,
+normalization on the time has no effect at all. Also because of these
+same crown ages, we could have picked many tree difference metrics, like
+\richel{must check:} Pagel's delta or Pigot's delta-r. The reason we used
+the nLTT statistic was mostly pragmatic. \verb;pirouette; does allow to 
+use a different tree difference metric.
 
 \subsection{Choices to constrain time}
 
- * MBD parameters
 From the four MBD parameters $\lambda$, $\mu$, $\nu$ and $q$,
 we investigated 1, 2, 4 and 3 different values respectively.
 We chose to use only one $\lambda$, as the proportion of species
 created in a co-occurent speciation event is dependent on the ratio
 between $\lambda$ and a combination of $\nu$ and $q$.  
 
- * Crown age, and thus the number of taxa in the true species tree
- * Number of replicates
- * DNA sequence length
- * Effective sample size
- * Choice of candidate models
- 
-We had to constrain ourselves on the number of replicates.
+The crown age we selected for our experiments was based on trial and error
+of pilot experiments. Because the number of species in an MBD process is
+expected to increase exponentially, increasing the crown age has a
+profound effect on the number of taxa, with the consequence of having
+runs that took days to calculate. We decided to prefer a lower number of
+taxa at the gain of having more replicates. As a consequence, 
+this made our research findings 
+\richel{that is, I predict, a bigger error in settings with
+more co-occurring speciation} more likely to happen: we know that the
+choice of a Bayesian prior is most important in weaker data. 
 
-We had to constrain ourselves on the number of taxa in
-the true species trees.
+The DNA sequence length we used was 1000 base pairs. This is a DNA
+sequence length that we \richel{at least I} feel is informative enough
+for the amount of taxa we simulate. Additionally (although sequencing
+techniques advance at a great pace), this is -to our knowledge- 
+of the same magnitude as the DNA length sequenced in the field.
+
+Ideally, our ESSes would all be above the recommended value of 
+200 \richel{I predict not all will be above 200, simply due to 
+stochasticity}. Also here, we preferred to have more replicates
+and a minimum median of 200 over less replicates. 
+
+We compare our generative to model to \richel{I predict we will} 
+a limited set of candidate models. Also this was for practical
+reasons.
 
 \subsection{Future research}
 
@@ -95,3 +122,13 @@ which was exactly what \verb;pirouette; was hoping to avoid.
 One way to improve our judgement, is by testing it on known species tree
 priors, for example, by simulating true trees with a BD model, when assuming
 a Yule tree prior.  
+
+The effect of using the absolute nLTT tree statistic to quantify the error
+is unknown. A pilot experiment \richel{pirouette example 14} shows that
+using the logarithmically transformed nLTT statistic gives a messier and
+flatter error distribution, but this is not to be taken for granted.
+
+We chose to use few taxa (as we preferred more replicates), but we do not
+know the results would the data be more informative (that is, have more taxa).
+A cool feature of \verb;pirouette; is that it can quantify when this happen;
+when the prior is uninformative due to strong data.
