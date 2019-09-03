@@ -28,13 +28,23 @@ model and the simplest (strict) clock model. One could argue these models
 are overly simplistic and biologically irrelevant. We argue that this
 actually improves the clarity of our results for two reasons. The first
 reason is a practical one: because the computational load was lowered,
-we were able to perform more replicates. For a process with this
+we were able to perform more replicates. For a process with this high
 amount of stochaticity, we think this is highly favored. The second reason
-is .. less noise,
-more replicates.
+is that we think this reduces the noise of our results, without 
+hurting the experiment: in our setup, it is essential
+to assume the same generative site and clock model as the one that is actually 
+used. Sure, we could have generated the alignment with a 
+complex (GTR) site model and a complex (relaxed log-normal) clock model, then
+correctly assume these were the generative site and clock model.
+But that would be besides the point of the experiment: to measure the impact
+of the tree prior.
+
+For the generative tree prior, we picked the BD tree prior.
 
 
  * Choice of generative (JC69 and strict) DNA alignment 
+
+
  * Choice of generative tree prior (BD)
  * Using Nested Sampling to do model comparison
  * Using the absolute nLTT statistic as an error function
