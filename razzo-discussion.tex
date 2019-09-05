@@ -89,8 +89,12 @@ of the same magnitude as the DNA length sequenced in the field.
 
 Ideally, our ESSes would all be above the recommended value of 
 200 \richel{I predict not all will be above 200, simply due to 
-stochasticity}. Also here, we preferred to have more replicates
-and a minimum median of 200 over less replicates. 
+stochasticity}. We are aware ESSes can be increased easily by
+making the MCMC chain longer. The shape of the ESS distribution
+(see figure \ref{fig:esses_cumulative}), however, is disadvantageous
+to do so: to reduce the percentage of $ESS < 200$ by fifty percent,
+we would have to increase the MCMC chain lengths by a factor of forty.
+We invested this run-time in doing more replicates.
 
 We compare our generative to model to \richel{I predict we will} 
 a limited set of candidate models. Also this was for practical
