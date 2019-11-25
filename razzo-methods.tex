@@ -24,6 +24,27 @@ once during a co-occuring speciation event.
 
 A likelihood expression for the process is provided in \cite{mbd}.
 
+\subsection{Parameter settings}
+
+We ran multiple pilot experiments with 1 replicate to arrive at our final
+parameter settings. We devised a set of rules to make a verdict about the
+settings \richel{(script at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/scripts/90_collect_run_times.R},
+resulting verdicts at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/verdict.md})}:
+\itemize{
+  \item quality: 95\% of all individual runs should have an ESS of at least 200.
+  \item feasibility: 95\% of all individual runs should finish within 10 days.
+  \item reproducibility: the mean run-time of all finished runs should be less than 24 hours 
+    \richel{I suggest}.
+  \item relevance: the percentage of taxa created by the MB process should be
+    as high as possible
+}
+
+We searched through parameter space until these criteria were met.
+All the parameter settings used in the pilot experiments can be found at 
+\url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
+Due to the low number of replicates, we were unable (nor tried)
+to draw conclusions based on the results. 
+
 \subsection{Tree simulations}
 
 We simulate the speciation process in continuous time 
