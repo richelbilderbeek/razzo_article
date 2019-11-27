@@ -3,13 +3,35 @@
 Modern computational techniques allow to infer phylogenies from genetic data 
 such as DNA, RNA or proteins. BEAST (\cite{beast}) and its descendant 
 BEAST2 (\cite{beast2}) are widely used tools to perform such task. They 
-return posterior distributions of phylogenies and estimated parameters by running a Bayesian analysis, given genetic data and tree priors. A tree prior is a mathematical description of the a priori characteristics that we expect to be reflected in posterior phylogenies. The choice of a specific prior is, by definition, arbitrary but the consequences of such choice can be vet analyzing the so-obtained posteriors.
+return posterior distributions of phylogenies 
+and estimated parameters by running a Bayesian analysis, 
+given genetic data and tree priors. 
 
-BEAST2 gives to the user the option to set up several possible phylogenetic priors (e.g. substitution/clock/speciation models). However, currently available priors might be not suitable to analyze some specific datasets.
-For this reason BEAST2 provides users with the possibility to introduce new tree priors, to infer phylogenies based on different assumptions on how the speciation process takes place.
+A tree prior is a mathematical description 
+of the a priori characteristics 
+that we expect to be reflected in posterior phylogenies. 
+The choice of a specific prior is, by definition, 
+arbitrary but the consequences of such choice 
+can be vet analyzing the so-obtained posteriors.
 
-Current phylogenetic tools assume that only a single speciation event can occur at any given time.
-While this assumption has been proved to be useful to construct a wide variety of successful models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, \cite{etienne2012diversity}, \cite{etienne2014estimating}), they do not take into account the possibility for environmentally-driven contemporary speciations on multiple lineages.
+BEAST2 gives to the user the option to set up 
+several possible phylogenetic 
+priors (e.g. substitution/clock/speciation models). 
+However, currently available priors 
+might be not suitable to analyze some specific datasets.
+For this reason BEAST2 provides users with the possibility 
+to introduce new tree priors, 
+to infer phylogenies based on different assumptions 
+on how the speciation process takes place.
+
+Current phylogenetic tools assume that 
+only a single speciation event can occur at any given time.
+While this assumption has been proved to be useful 
+to construct a wide variety of successful 
+models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, 
+\cite{etienne2012diversity}, \cite{etienne2014estimating}), 
+they do not take into account the possibility 
+for environmentally-driven contemporary speciations on multiple lineages.
 
 We explore such case introducing the multiple-birth death model (MBD), 
 currently absent in BEAST2. 
