@@ -1,6 +1,16 @@
 \section{Methods}
 
-We proceed in the following way: we build simulated datasets generated under the multiple birth model. Then we run a \verb;pirouette; analysis, which will lead to error distributions between the inference posterior and the original simulated trees. Importantly, the \verb;pirouette; analysis includes also a 'twin' parallel pipeline, which will provide a measure of the baseline error due to pure stochasticity, unavoidably occurring in the process.
+We proceed in the following way:
+under a range a parameter setting, 
+we build simulated datasets generated under the multiple birth model. 
+Then we run a \verb;pirouette; analysis, 
+which will lead to error distributions
+between the inference posterior and the original simulated trees. 
+Importantly, the \verb;pirouette; analysis includes 
+also a 'twin' parallel pipeline, 
+which will provide a measure of the baseline error 
+due to pure stochasticity, unavoidably occurring in the process.
+We then analyse the complete and baseline errors.
 
 \subsection{Model}
 
@@ -52,7 +62,8 @@ using the \verb;mbd_sim; function from the \verb;mbd; R package (\citep{mbd}).
 We let parameters vary using all possible combinations of values 
 as shown in Table~\ref{tab:simulation_parameters}.
 For each parameter setting, 
-we generate $2$ \richel{Will need to calculate how many replicates we can do} 
+we generate [as much as time permits] 
+\richel{Will need to calculate how many replicates we can do} 
 independent reconstructed trees of the same crown age.
 
 \subsection{Inference error estimation}
