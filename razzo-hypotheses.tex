@@ -28,6 +28,7 @@ $\mathcal{H}_4$: RJCB expects that, on average, the inference error is equal for
 parameter settings with an equal $\lambda$, $\nu$ and $q$, i.e. extinction
 has no effect on the error made, because extinction affects all species equally. 
 \richel{figure 1a and b, or a new figure}
+\giovanni{A higher extinction rate increases variance and tend to reduce to number of taxa in the tree. According to your other hypotheses (e.g. H5) these effects do affect the inference. Therefore you need to adjust for these variables to prove your hypothesis.}
 
 $\mathcal{H}_5$: RJCB expects that an increased number of taxa
 has a negative effect on the variance of the errors made, as there
@@ -43,7 +44,7 @@ to base inference on.
 $\mathcal{H}_7$: RJCB expects that the nLTT statistic between a true and twin
 tree at the start of the pipeline,
 will correlate strongly with the difference
-between the higest posterior density (HPD) of the 
+between the highest posterior density (HPD) of the 
 errors of the true and twin tree 
 generated at the end of the pipeline. 
 This hypothesis
@@ -53,6 +54,7 @@ with infinite information, the MCMC
 is able to infer the close-to-correct phylogeny.
 \richel{if this is true, we can use this shortcut (instead of running
 multiple pirouette replicates) to draw stronger conclusions}
+\giovanni{I can agree with the principle. However there are also other factors that you might overlook with such approximation. It might be useful, though, for a fast comparison to have a preliminary idea, if the hypothesys will be confirmed by the experiment.}
 \richel{figure 5}
 
 \begin{figure}[!htbp]
@@ -75,3 +77,4 @@ tree model. \richel{I would enjoy a hypothesis of actual biological relevance fo
 candidate models. If we cannot devise one, I suggest to remove the
 use of candidate models}
 
+$\mathcal{H}_9$: GL expects a positive correlation between $\nu \, q(1-q)$ and the error made by the inference process. This is due to the fact that this factor regulates the variance of the underlying binomial distribution that regulates multiple births events.
