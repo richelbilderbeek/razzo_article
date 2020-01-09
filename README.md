@@ -1,11 +1,18 @@
 # razzo_article
 
-Branch|[![Travis CI logo](pics/TravisCI.png)](https://travis-ci.org)
----|---
+Branch  |[![Travis CI logo](pics/TravisCI.png)](https://travis-ci.org)
+--------|-----------------------------------------------------------------------
 `master`|[![Build Status](https://travis-ci.org/richelbilderbeek/razzo_article.svg?branch=master)](https://travis-ci.org/richelbilderbeek/razzo_article)
 
 Article by Giovanni Laudanno, Richel J.C. Bilderbeek and Rampal S. Etienne 
 about the [razzo](https://github.com/richelbilderbeek/razzo) project.
+
+The research project uses these GitHub repo's:
+
+ * [razzo](https://github.com/richelbilderbeek/razzo): R code
+ * [razzo_project](https://github.com/richelbilderbeek/razzo_project): bash scripts to run and analyse an experiment
+ * [razzo_article (private)](https://github.com/richelbilderbeek/razzo_article): scientific manuscript (private GitHub for now)
+ * [razzo_pilot_results (private)](https://github.com/richelbilderbeek/razzo_pilot_results)
 
 ## Which file contains the article?
 
