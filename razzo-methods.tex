@@ -1,21 +1,15 @@
 \section{Methods}
 
-We proceed in the following way:
-under a range a parameter setting, 
-we build simulated datasets generated under the multiple birth model. 
-Then we run a \verb;pirouette; analysis, 
-which will lead to error distributions
-between the inference posterior and the original simulated trees. 
-Importantly, the \verb;pirouette; analysis includes 
-also a 'twin' parallel pipeline, 
-which will provide a measure of the baseline error 
-due to pure stochasticity, unavoidably occurring in the process.
+We proceed in the following way: under a range of parameter setting, we build simulated datasets generated under the multiple birth model. 
+Then we run a \verb;pirouette; analysis, which will lead to error distributions between the inferred posterior and the original simulated trees, for each setting. 
+Importantly, the \verb;pirouette; analysis includes also a 'twin' parallel pipeline, which will provide a measure of the baseline error due to pure stochasticity, unavoidably occurring in the process.
 We then analyse the complete and baseline errors.
+\subsection{The Framework}
 
-\subsection{Model}
+\subsubsection{Simulation Model}
 
 In the MBD model, parameters $\lambda$ and $\mu$ correspond, respectively, 
-to the common per-species speciation and extinction rates 
+to the traditional per-species speciation and extinction rates 
 already present in the standard BD model. 
 Additionally, MBD relies on two additional parameters, $\nu$ and $q$. 
 The first, $\nu$, is the rate at which an environmental change is triggered.
@@ -25,17 +19,32 @@ at that moment has a probability $q$ to speciate at that time.
 This kind of speciation is of a different nature with respect to 
 the one triggered by $\lambda$. 
 In fact, whereas parameter $\lambda$ can be seen as 
-describing a sympatric process, $\nu$ induces the rise of 
-geographical barriers that interrupt the gene flow,
-resulting in allopatric speciation. 
+describing a sympatric process, $\nu$ induces instead the rise of 
+geographical barriers able to interrupt the gene flow in the population,
+resulting in a possible allopatric speciation for each of the species.  
 Even though multiple speciations can co-occur, 
 polytomies are not allowed in such process as each species can speciate only 
 once during a co-occuring speciation event.
 
 A likelihood expression for the process is provided in \cite{mbd}.
 
+\subsubsection{Estimating the inference error}
+
+From each simulated 'true' MBD tree, we measure the impact of
+ignoring the more complex and non-standard MBD tree prior in
+Bayesian phylogenetic inference.
+We do so by assuming a simpler and standard BD tree prior,
+and compare the 'true' tree with the inferred trees.
+To do so, we use the \verb;pirouette; R package [\citep{pirouette}].
+
+Here we summarize briefly how \verb;pirouette; works: it starts from a 'true' starting phylogeny (in our case: the simulated MBD tree), from which a DNA sequence alignment is simulated. 
+From each sequence alignment, a Bayesian inference is run (in our case: with assuming a BD tree prior), to obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
+By comparing the true tree and the posterior trees, an inference error distribution is generated.
+We use the twinning option available in \verb;pirouette; that allows to quantify the impact of assuming a wrong tree prior in a Bayesian inference compared to a reference background error.
+
 \subsection{Parameter settings}
 
+\iffalse
 We ran multiple pilot experiments with 1 replicate to arrive at our final
 parameter settings. We devised a set of rules to make a verdict about the
 settings \richel{(script at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/scripts/90_collect_run_times.R},
@@ -53,83 +62,65 @@ resulting verdicts at \url{https://github.com/richelbilderbeek/razzo_project/blo
   \item relevance 2: the percentage of taxa should be
     as high as possible
 }
-
 We searched through parameter space until these criteria were met.
 All the parameter settings used in the pilot experiments can be found at 
 \url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
 Due to the low number of replicates, we were unable (nor tried)
-to draw conclusions based on the results. 
+to draw conclusions based on the results.
+\fi
 
-\subsection{Tree simulations}
+When working on simulated datasets the choice of the generating parameters is always an arbitrary choice. In principle one would choose a parameter range as wide as possible to characterize the most of the available parameter space. However, there are technical aspects that must be taken in consideration to be sure that both the simulation and the inference processes work out in an optimal way.
+We required the following criteria to be satisfied \giovanni{Does this apply only to the mbd parameters or also to the pirouette ones?}:
+\itemize{
+  \item Quality: At least 95\% of all individual runs should have an Estimated Sample Size (ESS) of at least 200 (see \cite{beast} for reference);
+    \richel{figure \ref{fig:esses}}
+  \item Feasibility: As time is a limited resource we impose that at least 95\% of all individual runs should finish within 10 days;
+    \richel{figure \ref{fig:runtimes}}
+  \item Reproducibility: the mean run-time of all finished runs should be less than 24 hours \richel{figure \ref{fig:runtimes}}
+    
+    \richel{I suggest}. \giovanni{What's the difference with the previous point?}
+  \item Relevance 1: In order to have a meaningful inference, we demand that the MB signal is detectable to a satisfactory extent. For this reason the percentage of taxa created by the MB process should be as high as possible;
+  \item Relevance 2: Small trees might not contain a significant amount of information to be analyzed. For this reason we demand that the number of taxa should be as high as possible, as long as all the other requirements are met;
+}
 
-We simulate the speciation process in continuous time 
-using the \verb;mbd_sim; function from the \verb;mbd; R package (\citep{mbd}).
-We let parameters vary using all possible combinations of values 
-as shown in Table~\ref{tab:simulation_parameters}.
-For each parameter setting, 
-we generate [as much as time permits] 
+Additional information about the choice of a suitable parameter setting can be found in the Supplementary Material.
+\iffalse
+\giovanni{This could be put in the appendix, if we manage to put in a handy format.}
+We searched through parameter space until these criteria were met.
+All the parameter settings used in the pilot experiments can be found at 
+\url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
+Due to the low number of replicates, we were unable (nor tried)
+to draw conclusions based on the results.
+\fi
+
+\subsubsection{Simulations setting}
+
+We simulate the speciation process in continuous time using the \verb;mbd_sim; function from the \verb;mbd; R package [\citep{mbd}].
+We let parameters vary using all possible combinations of values as shown in Table~\ref{tab:simulation_parameters}.
+For each parameter setting, we generate [as much as time permits] 
 \richel{Will need to calculate how many replicates we can do} 
-independent reconstructed trees of the same crown age.
+independent trees of the same crown age. Note that trees that are actually passed as \verb;pirouette; input are not full trees, but reconstructed trees instead. A reconstructed tree is a tree where all the species that went extinct before the present time are removed, as this information is usually unavailable on real data phylogenies.
 
-\subsection{Inference error estimation}
+\input{tab_simparameters.tex}
 
-From each simulated 'true' MBD tree, we measure the impact of
-ignoring the more complex and non-standard MBD tree prior in
-Bayesian phylogentic inference.
-We do so by assuming a simpler and standard BD tree prior,
-and compare the 'true' tree with the inferred trees.
-To do so, we use the \verb;pirouette; R package \citep{pirouette}.
+\subsubsection{pirouette setting}
 
-In brief: \verb;pirouette; starts from 
-a 'true' starting phylogeny (in our case: the simulated MBD tree), 
-from which a DNA sequence alignment is simulated. 
-From each sequence alignment, a Bayesian 
-inference is run (in our case: with assuming a BD tree prior), 
-to obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
-By comparing the true tree and the posterior trees, 
-an inference error distribution is generated.
-We use the twinning option available in \verb;pirouette;
-that allows to quantify the impact of assuming a wrong
-tree prior in a Bayesian inference.
+In our experiment, the alignments are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, generated using the simplest nucleotide substitution model (Jukes Cantor, JC69) and clock model (strict), with a mutation rate of $\frac{t_c}{2}$, where $t_c$ is the crown age. 
+With this mutation rate, each nucleotide has a 50\% chance to mutate (both silently and non-silently) from the ancestral root sequence to any of the contemporary species' sequences at the tips.
 
-In our experiment, the alignments are 1000 nucleotides in length, 
-with a known root sequence of four 250 mono-nucleotide blocks, 
-generated using the simplest nucleotide substitution model (JC69) 
-and clock model (strict), with a mutation rate of $\frac{1}{2}\cdot c$,
-in which $c$ is the crown age. 
-With this mutation rate, each nucleotide has a 50\% chance
-to mutate (both silently and non-silently) from the ancestral root sequence 
-to any of the contemporary species' sequences at the tips.
+For the Bayesian inference, we assume a generative model of a JC69 site model, a strict clock model and a BD tree prior.
+Additionally, we use a Most Recent Common Ancestor (MRCA) prior equal to the crown age with a normal distribution of width $\sigma = 0.01$. We pick a Markov Chain Monte Carlo (MCMC) setup of $10^6$ states with a sampling interval of once per $10^3$ states. Of the resulting $10^3$ states, we discard a burn-in of $10\%$.
 
-For the Bayesian inference, we assume a generative model of 
-a JC69 site model, a strict clock model and a BD tree prior. 
-Additionally, we use an MRCA prior equal to the crown age with a normal distribution 
-of width $\sigma = 0.01$. We pick an MCMC setup of $10^6$ states
-with a sampling interval of once per $10^3$ states. Of the resulting
-$10^3$ states, we discard a burn-in of $10\%$.
+To verify that the generative model (with a BD tree prior) is indeed the most appropriate standard model, we compare it to 39 other candidate inference models.
+These candidate models are all other combinations of four tree priors, two clock models and five speciation models, excluding the one combination used as a generative model.
+We let the best candidate model also generate an error distribution, which is expected to have a similar or high median.
+For models comparison, \verb;pirouette; uses a nested sampling approach to estimate marginal likelihoods, as described in \citet{russel2019model}, using the "\verb;NS;" BEAST2 package. We setup the MCMC for the nested sampling using its default values, which are a relative error $\epsilon$ of $10^{-12}$, 
+1 particle, a sub-chain sampling interval of $5 \cdot 10^3$ states with a maximum chain length of $10^6$ states.
 
-To verify that the generative model (with a BD tree prior) is
-indeed the most appropriate standard model, we compare it to
-39 other candidate inference models. These candidate models 
-are all other combinations of four tree priors, 
-two clock models and five speciation models, 
-excluding the one combination used as a generative model.
-We let the best candidate model also generate an error distribution,
-which is expected to have a similar or high median.
-For models comparison, \verb;pirouette; uses a nested sampling approach
-to estimate marginal likelihoods,
-as described in [\cite{maturana2018model}], 
-using the \verb;NS; BEAST2 package. We setup the MCMC for the nested sampling
-using its default values, which are a relative error $\epsilon$ of $10^-12$, 
-1 particle, a sub-chain sampling interval of $5.10^3$ states with
-a maximum chain length of $10^6$ states.
-
-To compare the true tree with any of the posterior trees,
-we use the absolute nLTT statistic \citet{janzen2015},
-which will result in an error distribution with values
-ranging from zero (when the inferred tree is identical 
-to the true tree) to a maximum of one (trees are completely different).
+To compare the true tree with any of the posterior trees, we use the absolute nLTT statistic by \citet{janzen2015}, which will result in an error distribution with values ranging from zero (when the inferred tree is identical to the true tree) to a maximum of one (trees are completely different).
 
 For the twinning, we let a birth-death process generate one random tree,
 so that the twin inference can be done with the correct phylogenetic
 model of a JC69 site model, strict clock model and a BD tree prior.
+
+\giovanni{Add mention to Jensen-Shannon divergence metric, if used.}
