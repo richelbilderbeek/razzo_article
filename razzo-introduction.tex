@@ -1,58 +1,26 @@
 \section{Introduction}
 
-Modern computational techniques allow to infer phylogenies from genetic data 
-such as DNA, RNA or proteins. BEAST (\cite{beast}) and its descendant 
-BEAST2 (\cite{beast2}) are widely used tools to perform such task. They 
+Modern computational techniques, such as BEAST (\cite{beast}) and its descendant 
+BEAST2 (\cite{beast2}), allow to infer phylogenetic trees from genetic data 
+such as DNA, RNA or proteins. \rampal{mention MrBayes and revBayes as well}. They 
 return posterior distributions of phylogenies 
 and estimated parameters by running a Bayesian analysis, 
-given genetic data and tree priors. 
-
-A tree prior is a mathematical description 
-of the a priori characteristics 
-that we expect to be reflected in posterior phylogenies. 
-The choice of a specific prior is, by definition, 
-arbitrary but the consequences of such choice 
-can be vet analyzing the so-obtained posteriors.
-
-BEAST2 gives to the user the option to set up 
+given aligned sequence data and a set of models. 
+One of these models is the diversification model, for which a prior distribution must be provided. This is called a tree prior; it is a mathematical description 
+of the probability distribution of possible branching patterns before looking at the data. Together with the signal from the data, this tree prior will determine the posterior distribution of phylogenies, i.e. after considering the data. Other models include the nucleotide substitution model (i.e. a model of relative transition rates between different nucleotides through time) and the clock model (a model determining the absolute rate of changes for each lineage). For each of these models choices must be made and prior distributions must be specified for their parameters. BEAST2 gives the user the option to set up 
 several possible phylogenetic 
-priors (e.g. substitution/clock/speciation models). 
+priors (e.g. substitution/clock/diversification models). 
 However, currently available priors 
 might be not suitable to analyze some specific datasets.
 For this reason BEAST2 provides users with the possibility 
-to introduce new tree priors, 
-to infer phylogenies based on different assumptions 
-on how the speciation process takes place.
+to introduce new models and corresponding priors. Particularly, one can specify the tree prior for a new model of diversification.
 
-Current phylogenetic tools assume that 
+Current phylogenetic tools such as BEAST2 assume that 
 only a single speciation event can occur at any given time.
-While this assumption has been proved to be useful 
-to construct a wide variety of successful 
-models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, 
-\cite{etienne2012diversity}, \cite{etienne2014estimating}), 
-they do not take into account the possibility 
-for environmentally-driven contemporary speciations on multiple lineages.
+This assumption is consistent with many different diversification models (e.g \cite{Maddison2007biSSE}, \cite{Valente2015}, 
+\cite{etienne2012diversity}, \cite{etienne2014estimating}). However, multiple speciation events can take place simultaneously and repeatedly when populations are intermittently disconnected and connected, for example due to climatic fluctuations. This has been called the species pump hypothesis.\rampal{Cite: Haffer, J. (1969). Speciation in Amazonian forest birds. Science, 165,
+131–137. https://doi.org/10.1126/science.165.3889.131.} and has been invoked particularly in mountainous areas that underwent glaciation. \rampal{ Origins of global mountain plant biodiversity: Testing the 'mountain-geobiodiversity hypothesis'
+By: Muellner-Riehl, Alexandra N.; Schnitzler, Jan; Kissling, W. Daniel; et al.
+JOURNAL OF BIOGEOGRAPHY}. Our own interest in the species pump hypotheses arose from its potential explanation of the radiation of cichlid fish in the African rift lakes (Malawi, Tanganyika and Victoria), where water level drops created multiple smaller lakes providing the opportunity for allopatric speciation in multiple species.  (\citep{verheyen1996mitochondrial}, \citep{sturmbauer2001lake}, \citep{janzen2016}, \citep{janzen2017}).
 
-We explore such case introducing the multiple-birth death model (MBD), 
-currently absent in BEAST2. 
-The multiple birth (MB) hypothesis aims to describe how large-scale environmental changes can lead phylogenies with a high abundance of speciation events in relatively short times.
-
-\iffalse
-\giovanni{This might be good for the abstract}
-The (constant-rate) birth-death (BD) model embodies the common assumption 
-that only a single speciation event can occur at any given time. 
-The multiple-birth-death (MBD) model relaxes this assumption allowing, 
-in addition to standard BD events, 
-also events in which large-scale environmental changes lead 
-to speciation bursts.
-\fi
-
-Such hypothesis can be useful to better understand the history of systems of particular interests for evolutionary biologists, such as the diversification of cichlid fish in the African Great Lakes (Malawi, Tanganyika and Victoria), where water level fluctuations are thought to play an important role in promoting diversification (\citep{verheyen1996mitochondrial}, \citep{sturmbauer2001lake}, \citep{janzen2016}, \citep{janzen2017}).
-
-However, the introduction of new tree priors is not always desirable (\citep{bilderbeek2019pirouette}). Current standard birth death (BD) tree priors might, in principle, prove to be good enough at detecting such events despite their lower level of complexity.
-If this is the case one should always choose to adopt the simplest model.
-
-We used the R package \verb;pirouette; (\citep{pirouette}) to perform such test, starting on phylogenies simulated under the MBD regime using the \verb;mbd; package (\citep{mbd}).
-From such phylogenies we measure the inference error made adopting a standard BD tree prior in the inference process.
-
-With this work we aim, using such inference error distributions, to test whether or not it is advantageous to implement a new prior model that can allow the construction of trees where multiple speciations can co-occur at the same time.
+One could study whether the species pump hypothesis is a viable explanation in empirical ystems by comparing divergence times of sister taxa \rampal{Oaks et al - doi:10.1111/evo.13754}. A more inclusive approach would involve using a model allowing multiple simultaneous speciation events as a new species tree prior in phylogenetic reconstruction. However, introducing a new tree prior may be computationally prohibitive (\citep{bilderbeek2019pirouette}), and may also not be necessary, as current standard birth death (BD) tree priors might prove to be good enough at inferring the correct tree. Here we use the R package \verb;pirouette; (\citep{pirouette}) to check whether this is the case by simulating phylogenies under a species pump model, i.e. the multiple-birth-death model (MBD), with the \verb;mbd; package (\citep{mbd}), then simulating sequence alignments for each of these trees and finally inferring a phylogenetic tree using BEAST2 from these alignment. By comparing the inferred phylogeny with the true (simulated) one, we measure the inference error made by adopting a standard BD tree prior.
