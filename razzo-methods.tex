@@ -31,7 +31,7 @@ We ran multiple pilot experiments with 1 replicate to arrive at our final
 parameter settings. We devised a set of rules to make a verdict about the
 settings \richel{(script at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/scripts/90_collect_run_times.R},
 resulting verdicts at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/verdict.md})}:
-\itemize{
+\begin{itemize}
   \item quality: 95\% of all individual runs should have an ESS of at least 200.
     \richel{figure \ref{fig:esses}}
   \item feasibility: 95\% of all individual runs should finish within 10 days.
@@ -43,7 +43,7 @@ resulting verdicts at \url{https://github.com/richelbilderbeek/razzo_project/blo
     as high as possible
   \item relevance 2: the percentage of taxa should be
     as high as possible
-}
+\end{itemize}
 We searched through parameter space until these criteria were met.
 All the parameter settings used in the pilot experiments can be found at 
 \url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
@@ -53,7 +53,7 @@ to draw conclusions based on the results.
 
 When working with simulated datasets the choice of the generating parameters is always somewhat arbitrary. In principle one would choose a parameter range as wide as possible to characterize most of parameter space. However, both simulation and inference need to be possible computationally. To ensure this
 we required the following criteria to be satisfied for a parameter set to be chosen: \giovanni{Does this apply only to the mbd parameters or also to the pirouette ones?}:
-\itemize{
+\begin{itemize}
   \item Quality: At least 95\% of all inferences should have an Estimated Sample Size (ESS) of at least 200 (see \cite{beast} for reference);
     \richel{figure \ref{fig:esses}}
   \item Feasibility: At least 95\% of all individual runs should finish within 10 days;
@@ -63,7 +63,7 @@ we required the following criteria to be satisfied for a parameter set to be cho
     \richel{I suggest}. \giovanni{What's the difference with the previous point?}
   \item Relevance 1: In order to have a meaningful inference, we demand that the MB signal is detectable to a satisfactory extent. For this reason the percentage of taxa created by the MB process should be as high as possible;
   \item Relevance 2: Small trees might not contain a significant amount of information to be analyzed. For this reason we demand that the number of taxa should be as high as possible, as long as all the other requirements are met;
-}
+\end{itemize}
 
 This resulted in the simulation parameters in Table~\ref{tab:simulation_parameters}.
 
