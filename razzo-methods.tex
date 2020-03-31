@@ -16,7 +16,8 @@ polytomies, because each species can only split once after a trigger event. This
 From each simulated 'true' MBD tree, we measure the impact of
 ignoring the more complex and non-standard MBD tree prior in
 Bayesian phylogenetic inference with the R package \verb;pirouette; [\citep{pirouette}].
- \verb;pirouette; starts from a 'true'  phylogeny (in our case: the simulated MBD tree), and simulates a DNA sequence alignment on it using a known nucleotide substitution model and a clock model. 
+
+\verb;pirouette; starts from a 'true'  phylogeny (in our case: the simulated MBD tree), and simulates a DNA sequence alignment on it using a known nucleotide substitution model and a clock model. 
 From each sequence alignment, a Bayesian inference is run with a particular choice of tree prior and substitution and clock models. One can choose the same substitution and clock models as used in generating the tree, or pick the ones that fit the data best. For the tree prior we assume the BD model (as the effect of this choice is our focus). We obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
 By comparing the true tree and the posterior trees, an inference error distribution is generated. For this comparison we used the absolute nLTT statistic by \citet{janzen2015}, which results in an error distribution with values ranging from zero (when the inferred tree is identical to the true tree) to a maximum of one (trees are completely different).
 Another advantage of using the nLTT statistic is that its behavior is best
@@ -28,12 +29,13 @@ of the twin tree, the effect of using an incorrect tree prior is negligible \cit
 
 \subsection{Parameter settings}
 
-We ran multiple pilot experiments with increasingly more replicate to arrive 
+We ran multiple pilot experiments with increasingly more replicates to arrive 
 at our final parameter settings. We devised a set of rules to make a 
-verdict about the settings:
+verdict about the settings.  
 
 \begin{itemize}
-  \item quality: 95\% of all individual runs should have an ESS of at least 200.
+  \item quality: 95\% of all individual runs should have an effective
+    sample size (ESS) of at least 200, as is recommended by \cite{beastbook}.
   \item feasibility: 95\% of all individual runs should finish within 10 days.
   \item reproducibility: the mean run-time of all finished runs should be less than 24 hours 
   \item relevance 1: the percentage of taxa created by the MB process should be
@@ -43,25 +45,20 @@ verdict about the settings:
 \end{itemize}
 
 We searched through parameter space until these criteria were met.
-All the parameter settings used in the pilot experiments can be found at 
-\url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
-Due to the low number of replicates used in these pilot experiments, 
-we were unable (nor tried) to draw conclusions based on these pilot results.
 This resulted in the simulation parameters in Table~\ref{tab:simulation_parameters}.
 
 \input{tab_simparameters.tex}
 
-We assumed that the alignments are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, generated using the simplest nucleotide substitution model (Jukes Cantor, JC69) and clock model (strict), with a mutation rate of $\frac{0.5}{t_c}$, where $t_c$ is the crown age. 
-With this mutation rate, each nucleotide has a 50\% chance to mutate (both silently and non-silently) from the ancestral root sequence to any of the contemporary species' sequences at the tips.
+We generated alignments that are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, generated using the simplest nucleotide substitution model (Jukes Cantor, JC69) and clock model (strict), with a mutation rate of $\frac{0.5}{t_c}$, where $t_c$ is the crown age. 
+With this mutation rate, each nucleotide has a 50\% chance to mutate (both silently and non-silently) from the ancestral root sequence to any of the contemporary species' sequences at the tips. 
 
-For the Bayesian inference, we assumed a generative model of a site model with 
-a JC69 nucleotide substitution model, a strict clock model and a BD tree prior.
+For the Bayesian inference, we assumed a generative model of a site model that
+follows a JC69 nucleotide substitution model, a strict clock model and a BD tree prior.
 Additionally, we used a Most Recent Common Ancestor (MRCA) prior equal to the crown age with a normal distribution of width $\sigma = 0.01$. We used a Markov Chain Monte Carlo (MCMC) setup of $10^7$ states with a sampling interval of once per $10^4$ states. Of the resulting $10^3$ states, we discarded a burn-in of $10\%$.
 
-All the parameter settings used in the pilot experiments can be found at 
-\url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
-For each of the parameter settings, we simulated 40 MBD trees. We ran all
-960 \verb;pirouette; experiments on the computer cluster of the University
-of Groningen, which took 10 days. We used additionally R scripts to visualize
-the results.
+For each of the MBD parameter settings, we simulated 40 different trees
+that we put through the same \verb;pirouette; pipeline as described above.
+Of each of these 40 replicates, we aggregated the error distributions.
+
+
 

@@ -29,5 +29,3 @@ echo "\bibliography{razzo_article}" >> razzo_article.tex
 echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> razzo_article.tex
 echo " " >> razzo_article.tex
 
-cat razzo-supplement.tex >> razzo_article.tex
-
