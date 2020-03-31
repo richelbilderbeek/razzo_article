@@ -13,7 +13,6 @@
 
 cat razzo-abstract.tex \
   razzo-introduction.tex \
-  razzo-hypotheses.tex \
   razzo-methods.tex \
   razzo-results.tex \
   fig_results.tex \
