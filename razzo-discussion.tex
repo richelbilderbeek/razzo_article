@@ -1,15 +1,11 @@
 \section{Discussion}
 
-We \richel{(at least I. If you do not expect this, let me know the 
-reasoning why)} \giovanni{I expect the same thing.} expected to find a bigger inference error 
+We expected to find a bigger inference error 
 when increasing the amount of co-occurring speciation events.
 The reason is simple: the tree prior used assumes speciation does not
 co-occur. The stronger the amount of co-occurring speciation, the stronger
 the deviation from the species tree prior.
 
-\giovanni{Further conclusions are to be drawn after results are produced.}
-
-\iffalse % A model can always be made more accurate. There are two principles to follow when building one: accuracy, on one hand, is surely important but, at the same time, simplicity is important too as overcomplicated models miss the point of a research question. This is, for example, summarized in the request of a low AIC, which weights positively the accuracy of the model (high likelihood) and negatively its complexity (for which the number of parameters is a proxy).
 \subsection{Research}
 
 The MBD model is a BD model that allows for co-occurring speciation,
@@ -25,9 +21,7 @@ tree prior has on the inference error. To do so, we could have picked
 any other non-standard (as in, not included within BEAST2) tree prior.
 
 \subsection{Methodological choices}
-\fi
 
-\iffalse % I choose to remove this too, at least for now, as it's too soon to write any conclusion when no result is available.
 When simulating a DNA alignment, we chose to use the simplest (JC69) site
 model and the simplest (strict) clock model. One could argue these models
 are overly simplistic and biologically irrelevant. We argue that this
@@ -48,16 +42,15 @@ When simulating our phylogenies, we used an MBD model with and without
 extinction. In the case in which extinction is present,
 picking the BD tree prior as the generative tree prior seems justified:
 it is the best-fitting standard tree prior. For the MBD model without
-extinction, \richel{@Giappo: I think this is an interesting insight:} 
-we could have picked the Yule tree prior. We \richel{at least I do} predicted
-that the Yule tree prior will be selected as the best candidate model
+extinction, we could have picked the Yule tree prior. 
+We predicted that the Yule tree prior will be selected as the best candidate model
 more often in this scenario, which shows the sensitivity of the method we used.
 
 To compare multiple inference models, we picked the Nested Sampling
 approach to directly compare marginal likelihoods. We could have used
 alternative methods like \richel{forgot the term for now: where you
-do an MCMC that can switch between models}. The reason we used Nested
-Sampling was mostly pragmatic and we think other methods are equivalent.
+do an MCMC that can switch between models}. The reason we used nested
+sampling was mostly pragmatic and we think other methods are equivalent.
 
 We used the absolute nLTT statistic to measure the difference between
 two phylogenies. Because the crown age of all phylogenies are equal,
@@ -141,4 +134,4 @@ We chose to use few taxa (as we preferred more replicates), but we do not
 know the results would the data be more informative (that is, have more taxa).
 A cool feature of \verb;pirouette; is that it can quantify when this happen;
 when the prior is uninformative due to strong data.
-\fi
+
