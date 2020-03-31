@@ -19,3 +19,13 @@ cat razzo-abstract.tex \
   fig_results.tex \
   razzo-discussion.tex > razzo_article.tex
 
+
+echo " " >> razzo_article.tex
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> razzo_article.tex
+echo "% Bibliography" >> razzo_article.tex
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> razzo_article.tex
+echo "% MEE style" >> razzo_article.tex
+echo "\bibliographystyle{razzo_mee}" >> razzo_article.tex
+echo "\bibliography{razzo_article}" >> razzo_article.tex
+echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" >> razzo_article.tex
+
