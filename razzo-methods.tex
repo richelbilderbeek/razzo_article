@@ -9,7 +9,7 @@ Whereas parameter $\lambda$ can be interpreted as the rate of sympatric speciati
 geographical barriers able to interrupt the gene flow in the population,
 resulting in a possible allopatric speciation for each of the species.  
 Even though multiple speciation events can occur simultaneouly, it does not lead to  
-polytomies, because each species can only split once after a trigger event. This model can be easily simulated with a Doob-Gillespie algorithm. A probability distribution for the phylogeny under the MBD model can also be formulated using the integration approach developed for diversity-dependent diversification models \citep{etienne2012diversity}, which has been explored in \cite{mbd}.\rampal{Is this the mbd chapter?}. While this probability distribution could in principle be used as a tree prior in Bayesian phylogenetic inference, it is computationally very demanding, particularly for large trees. With the MBD model we generate simulated datasets for various parameter settings, using the \verb;mbd_sim; function from the \verb;mbd; R package [\citep{mbd}].
+polytomies, because each species can only split once after a trigger event. This model can be easily simulated with a Doob-Gillespie algorithm. A probability distribution for the phylogeny under the MBD model can also be formulated using the integration approach developed for diversity-dependent diversification models \citep{etienne2012diversity}. While this probability distribution could in principle be used as a tree prior in Bayesian phylogenetic inference, it is computationally very demanding, particularly for large trees. With the MBD model we generate simulated datasets for various parameter settings, using the \verb;mbd_sim; function from the \verb;mbd; R package [\citep{mbd}].
 
 \subsection{Estimating the inference error}
 
@@ -19,74 +19,49 @@ Bayesian phylogenetic inference with the R package \verb;pirouette; [\citep{piro
  \verb;pirouette; starts from a 'true'  phylogeny (in our case: the simulated MBD tree), and simulates a DNA sequence alignment on it using a known nucleotide substitution model and a clock model. 
 From each sequence alignment, a Bayesian inference is run with a particular choice of tree prior and substitution and clock models. One can choose the same substitution and clock models as used in generating the tree, or pick the ones that fit the data best. For the tree prior we assume the BD model (as the effect of this choice is our focus). We obtain a posterior distribution of jointly-estimated trees and model parameter estimates.
 By comparing the true tree and the posterior trees, an inference error distribution is generated. For this comparison we used the absolute nLTT statistic by \citet{janzen2015}, which results in an error distribution with values ranging from zero (when the inferred tree is identical to the true tree) to a maximum of one (trees are completely different).
+Another advantage of using the nLTT statistic is that its behavior is best
+explored in \citet{bilderbeek2019pirouette}.
 
 We used the twinning option available in \verb;pirouette; that allows to quantify the impact of assuming a wrong tree prior in a Bayesian inference compared to a reference background error that would arise even if the models used in inference were identical to those used in generating the tree (i.e. the twin tree was generated with a BD model).
-
-\giovanni{Add mention to Jensen-Shannon divergence metric, if used.}
+If the error distribution of the true tree matches the error distribution
+of the twin tree, the effect of using an incorrect tree prior is negligible \citet{bilderbeek2019pirouette}.
 
 \subsection{Parameter settings}
 
-\iffalse
-We ran multiple pilot experiments with 1 replicate to arrive at our final
-parameter settings. We devised a set of rules to make a verdict about the
-settings \richel{(script at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/scripts/90_collect_run_times.R},
-resulting verdicts at \url{https://github.com/richelbilderbeek/razzo_project/blob/master/verdict.md})}:
+We ran multiple pilot experiments with increasingly more replicate to arrive 
+at our final parameter settings. We devised a set of rules to make a 
+verdict about the settings:
+
 \begin{itemize}
   \item quality: 95\% of all individual runs should have an ESS of at least 200.
-    \richel{figure \ref{fig:esses}}
   \item feasibility: 95\% of all individual runs should finish within 10 days.
-    \richel{figure \ref{fig:runtimes}}
   \item reproducibility: the mean run-time of all finished runs should be less than 24 hours 
-    \richel{I suggest}.
-    \richel{figure \ref{fig:runtimes}}
   \item relevance 1: the percentage of taxa created by the MB process should be
     as high as possible
   \item relevance 2: the percentage of taxa should be
     as high as possible
 \end{itemize}
+
 We searched through parameter space until these criteria were met.
 All the parameter settings used in the pilot experiments can be found at 
 \url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
-Due to the low number of replicates, we were unable (nor tried)
-to draw conclusions based on the results.
-\fi
-
-When working with simulated datasets the choice of the generating parameters is always somewhat arbitrary. In principle one would choose a parameter range as wide as possible to characterize most of parameter space. However, both simulation and inference need to be possible computationally. To ensure this
-we required the following criteria to be satisfied for a parameter set to be chosen: \giovanni{Does this apply only to the mbd parameters or also to the pirouette ones?}:
-\begin{itemize}
-  \item Quality: At least 95\% of all inferences should have an Estimated Sample Size (ESS) of at least 200 (see \cite{beast} for reference);
-    \richel{figure \ref{fig:esses}}
-  \item Feasibility: At least 95\% of all individual runs should finish within 10 days;
-    \richel{figure \ref{fig:runtimes}}
-  \item Reproducibility: the mean run-time of all finished runs should be less than 24 hours \richel{figure \ref{fig:runtimes}}
-    
-    \richel{I suggest}. \giovanni{What's the difference with the previous point?}
-  \item Relevance 1: In order to have a meaningful inference, we demand that the MB signal is detectable to a satisfactory extent. For this reason the percentage of taxa created by the MB process should be as high as possible;
-  \item Relevance 2: Small trees might not contain a significant amount of information to be analyzed. For this reason we demand that the number of taxa should be as high as possible, as long as all the other requirements are met;
-\end{itemize}
-
+Due to the low number of replicates used in these pilot experiments, 
+we were unable (nor tried) to draw conclusions based on these pilot results.
 This resulted in the simulation parameters in Table~\ref{tab:simulation_parameters}.
 
 \input{tab_simparameters.tex}
 
-We assumed that the alignments are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, generated using the simplest nucleotide substitution model (Jukes Cantor, JC69) and clock model (strict), with a mutation rate of $\frac{t_c}{2}$, where $t_c$ is the crown age. 
+We assumed that the alignments are 1000 nucleotides in length, with a known root sequence of four 250 mono-nucleotide blocks, generated using the simplest nucleotide substitution model (Jukes Cantor, JC69) and clock model (strict), with a mutation rate of $\frac{0.5}{t_c}$, where $t_c$ is the crown age. 
 With this mutation rate, each nucleotide has a 50\% chance to mutate (both silently and non-silently) from the ancestral root sequence to any of the contemporary species' sequences at the tips.
 
-For the Bayesian inference, we assumed a generative model of a JC69 site model, a strict clock model and a BD tree prior.
-Additionally, we used a Most Recent Common Ancestor (MRCA) prior equal to the crown age with a normal distribution of width $\sigma = 0.01$. We used a Markov Chain Monte Carlo (MCMC) setup of $10^6$ states with a sampling interval of once per $10^3$ states. Of the resulting $10^3$ states, we discarded a burn-in of $10\%$.
+For the Bayesian inference, we assumed a generative model of a site model with 
+a JC69 nucleotide substitution model, a strict clock model and a BD tree prior.
+Additionally, we used a Most Recent Common Ancestor (MRCA) prior equal to the crown age with a normal distribution of width $\sigma = 0.01$. We used a Markov Chain Monte Carlo (MCMC) setup of $10^7$ states with a sampling interval of once per $10^4$ states. Of the resulting $10^3$ states, we discarded a burn-in of $10\%$.
 
-To verify that the generative model (with a BD tree prior) is indeed the most appropriate standard model, we compared it to 39 other candidate inference models.
-These candidate models are all other combinations of four tree priors, two clock models and five speciation models, excluding the one combination used as a generative model.
-We let the best candidate model also generate an error distribution, which is expected to have a similar or high median. \rampal{What do you mean by 'high median'?}
-For model comparison, \verb;pirouette; uses a nested sampling approach to estimate marginal likelihoods, as described in \citet{russel2019model}, using the "\verb;NS;" BEAST2 package. We setup the MCMC for the nested sampling using its default values, which are a relative error $\epsilon$ of $10^{-12}$, 
-1 particle, a sub-chain sampling interval of $5 \cdot 10^3$ states with a maximum chain length of $10^6$ states.
-
-Additional information about the choice of suitable parameter settings can be found in the Supplementary Material.\rampal{What kind of info is this? Explain. Why not put it here?}
-\iffalse
-\giovanni{This could be put in the appendix, if we manage to put in a handy format.}
-We searched through parameter space until these criteria were met.
 All the parameter settings used in the pilot experiments can be found at 
 \url{https://github.com/richelbilderbeek/razzo_project/blob/master/overview.md}.
-Due to the low number of replicates, we were unable (nor tried)
-to draw conclusions based on the results.
-\fi
+For each of the parameter settings, we simulated 40 MBD trees. We ran all
+960 \verb;pirouette; experiments on the computer cluster of the University
+of Groningen, which took 10 days. We used additionally R scripts to visualize
+the results.
+
