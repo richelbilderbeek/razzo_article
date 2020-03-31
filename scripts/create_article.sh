@@ -1,4 +1,6 @@
 #!/bin/bash
+./scripts/merge_files.sh
+
 pdflatex article.tex --shell-escape
 bibtex article.aux
 pdflatex article.tex --shell-escape
