@@ -8,6 +8,7 @@ install:
   - sudo npm install -g markdown-link-check
 
 script:
+  - make
   # Check dead links
   - rm .travis.yml
   - ./scripts/check_dead_links
