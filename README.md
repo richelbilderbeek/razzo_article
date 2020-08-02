@@ -17,9 +17,10 @@ The research project uses these GitHub repo's:
 
 ## Data
 
-Data              |DOI
-------------------|----------------------------------------------------------------------------------
-razzo_article v1.0|[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3969899.svg)](https://doi.org/10.5281/zenodo.3969899)
+Data                |DOI
+--------------------|----------------------------------------------------------------------------------
+razzo_project       |[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3969932.svg)](https://doi.org/10.5281/zenodo.3969932)
+razzo_article v1.0  |[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3969899.svg)](https://doi.org/10.5281/zenodo.3969899)
 
 ## Which file contains the article?
 
