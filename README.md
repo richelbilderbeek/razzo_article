@@ -15,6 +15,12 @@ The research project uses these GitHub repo's:
  * [razzo_article (private)](https://github.com/richelbilderbeek/razzo_article): scientific manuscript (private GitHub for now)
  * [razzo_pilot_results (private)](https://github.com/richelbilderbeek/razzo_pilot_results): results of the pilot runs
 
+## Data
+
+Data              |DOI
+------------------|----------------------------------------------------------------------------------
+razzo_article v1.0|[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3969899.svg)](https://doi.org/10.5281/zenodo.3969899)
+
 ## Which file contains the article?
 
 [article.tex](article.tex) contains the article. All other files are generated from it.
